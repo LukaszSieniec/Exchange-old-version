@@ -1,4 +1,5 @@
 import 'package:exchange/constants/colors.dart';
+import 'package:exchange/views/widgets/home/coin_item.dart';
 import 'package:exchange/views/widgets/home/trending_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -53,10 +54,10 @@ class HomePage extends StatelessWidget {
                   Expanded(
                       flex: 3,
                       child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
+                          scrollDirection: Axis.vertical,
                           itemCount: 10,
                           itemBuilder: (context, index) {
-                            return const Card(child: Text('Crypto'));
+                            return const CoinItem();
                           }))
                 ]))));
   }
