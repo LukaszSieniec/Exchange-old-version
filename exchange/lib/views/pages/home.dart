@@ -1,4 +1,5 @@
 import 'package:exchange/constants/colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -35,6 +36,27 @@ class HomePage extends StatelessWidget {
                       icon: Icon(Icons.history), label: 'Transactions'),
                 ],
               ),
-            )));
+            )),
+        body: SafeArea(
+          top: true,
+          child: Column(children: [
+            Expanded(
+                flex: 2,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 10,
+                    itemBuilder: (context, index) {
+                      return const Card(child: Text('Crypto'));
+                    })),
+            Flexible(
+                flex: 3,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 10,
+                    itemBuilder: (context, index) {
+                      return const Card(child: Text('Crypto'));
+                    }))
+          ]),
+        ));
   }
 }
