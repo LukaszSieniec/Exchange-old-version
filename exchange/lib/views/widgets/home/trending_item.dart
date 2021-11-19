@@ -1,6 +1,5 @@
 import 'package:exchange/constants/colors.dart';
 import 'package:exchange/utils/size_config.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TrendingItem extends StatelessWidget {
@@ -14,7 +13,9 @@ class TrendingItem extends StatelessWidget {
         width: SizeConfig.blockSizeHorizontal * 50.0,
         child: Card(
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16.0)),
+              side: const BorderSide(color: Colors.white10, width: 1),
+              borderRadius: BorderRadius.circular(24.0),
+            ),
             elevation: 2,
             color: const Color(MyColors.trendingBackground),
             child: Container(

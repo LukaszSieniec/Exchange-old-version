@@ -19,34 +19,29 @@ class HomePage extends StatelessWidget {
                   BoxShadow(color: Colors.white, spreadRadius: 1, blurRadius: 4)
                 ]),
             child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(32.0),
-                topRight: Radius.circular(32.0),
-              ),
-              child: BottomNavigationBar(
-                unselectedItemColor: Colors.grey[400],
-                selectedItemColor: Colors.white,
-                backgroundColor: const Color(MyColors.background),
-                elevation: 8,
-                items: const <BottomNavigationBarItem>[
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.home), label: 'Home'),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.attach_money), label: 'Wallet'),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.history), label: 'Transactions'),
-                ],
-              ),
-            )),
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(32.0),
+                    topRight: Radius.circular(32.0)),
+                child: BottomNavigationBar(
+                    unselectedItemColor: Colors.grey[400],
+                    selectedItemColor: Colors.white,
+                    backgroundColor: const Color(MyColors.background),
+                    elevation: 8,
+                    items: const <BottomNavigationBarItem>[
+                      BottomNavigationBarItem(
+                          icon: Icon(Icons.home), label: 'Home'),
+                      BottomNavigationBarItem(
+                          icon: Icon(Icons.attach_money), label: 'Wallet'),
+                      BottomNavigationBarItem(
+                          icon: Icon(Icons.history), label: 'Transactions'),
+                    ]))),
         body: SafeArea(
             top: true,
             child: Padding(
                 padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                 child: Column(children: [
-                  const Text(
-                    'Welcome to Dinero!',
-                    style: TextStyle(color: Colors.white, fontSize: 24.0),
-                  ),
+                  const Text('Welcome to Dinero!',
+                      style: TextStyle(color: Colors.white, fontSize: 24.0)),
                   Expanded(
                       flex: 2,
                       child: ListView.builder(
