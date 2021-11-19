@@ -1,6 +1,7 @@
 import 'package:exchange/constants/colors.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:exchange/views/widgets/home/trending_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -38,25 +39,30 @@ class HomePage extends StatelessWidget {
               ),
             )),
         body: SafeArea(
-          top: true,
-          child: Column(children: [
-            Expanded(
-                flex: 2,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 10,
-                    itemBuilder: (context, index) {
-                      return const Card(child: Text('Crypto'));
-                    })),
-            Flexible(
-                flex: 3,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 10,
-                    itemBuilder: (context, index) {
-                      return const Card(child: Text('Crypto'));
-                    }))
-          ]),
-        ));
+            top: true,
+            child: Padding(
+                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                child: Column(children: [
+                  const Text(
+                    'Welcome to Dinero!',
+                    style: TextStyle(color: Colors.white, fontSize: 24.0),
+                  ),
+                  Expanded(
+                      flex: 2,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 6,
+                          itemBuilder: (context, index) {
+                            return const TrendingItem();
+                          })),
+                  Expanded(
+                      flex: 3,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 10,
+                          itemBuilder: (context, index) {
+                            return const Card(child: Text('Crypto'));
+                          }))
+                ]))));
   }
 }
