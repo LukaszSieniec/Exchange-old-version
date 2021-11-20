@@ -38,27 +38,38 @@ class HomePage extends StatelessWidget {
                     ]))),
         body: SafeArea(
             top: true,
-            child: Padding(
-                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                child: Column(children: [
-                  const Text('Trending',
-                      style: TextStyle(color: Color(MyColors.homeColorText), fontSize: 24.0)),
-                  Expanded(
-                      flex: 3,
-                      child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 6,
-                          itemBuilder: (context, index) {
-                            return const TrendingItem();
-                          })),
-                  Expanded(
-                      flex: 4,
-                      child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          itemCount: 10,
-                          itemBuilder: (context, index) {
-                            return const CoinItem();
-                          }))
-                ]))));
+            child: Container(
+                margin: const EdgeInsets.only(
+                    top: 16.0, left: 12.0, right: 12.0, bottom: 12.0),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('Trending',
+                          style: TextStyle(
+                              color: Color(MyColors.homeColorText),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0)),
+                      Expanded(
+                          flex: 3,
+                          child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: 6,
+                              itemBuilder: (context, index) {
+                                return const TrendingItem();
+                              })),
+                      const Text('Cryptocurrencies',
+                          style: TextStyle(
+                              color: Color(MyColors.homeColorText),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0)),
+                      Expanded(
+                          flex: 4,
+                          child: ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              itemCount: 10,
+                              itemBuilder: (context, index) {
+                                return const CoinItem();
+                              }))
+                    ]))));
   }
 }

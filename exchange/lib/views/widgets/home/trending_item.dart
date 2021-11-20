@@ -10,8 +10,9 @@ class TrendingItem extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Container(
-        margin: const EdgeInsets.all(8.0),
-        width: SizeConfig.blockSizeHorizontal * 50.0,
+        margin:
+            const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 4.0, right: 4.0),
+        width: SizeConfig.blockSizeHorizontal * 45.0,
         child: Card(
             shape: RoundedRectangleBorder(
               side: const BorderSide(color: Colors.white10, width: 1),
@@ -40,7 +41,9 @@ class TrendingItem extends StatelessWidget {
                                             fontSize: 20.0)),
                                     Text('Bitcoin',
                                         style: TextStyle(
-                                            color: Colors.grey, fontSize: 16.0))
+                                            color:
+                                                Color(MyColors.homeColorText),
+                                            fontSize: 16.0))
                                   ])
                             ]),
                             getIcon()

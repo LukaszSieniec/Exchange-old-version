@@ -6,14 +6,16 @@ class ExperimentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Experiment'),
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [],
+        appBar: AppBar(
+          title: const Text('Experiment'),
         ),
-      ),
-    );
+        body: SafeArea(child: Column()));
   }
+}
+
+Widget getContainer(Widget child, Color color) {
+  return Container(
+    color: color,
+    child: child,
+  );
 }
