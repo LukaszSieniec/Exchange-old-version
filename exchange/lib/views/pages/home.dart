@@ -41,10 +41,10 @@ class HomePage extends StatelessWidget {
             child: Padding(
                 padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                 child: Column(children: [
-                  const Text('Welcome to Dinero!',
-                      style: TextStyle(color: Colors.white, fontSize: 24.0)),
+                  const Text('Trending',
+                      style: TextStyle(color: Color(MyColors.homeColorText), fontSize: 24.0)),
                   Expanded(
-                      flex: 2,
+                      flex: 3,
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: 6,
@@ -52,7 +52,7 @@ class HomePage extends StatelessWidget {
                             return const TrendingItem();
                           })),
                   Expanded(
-                      flex: 3,
+                      flex: 4,
                       child: ListView.builder(
                           scrollDirection: Axis.vertical,
                           itemCount: 10,
