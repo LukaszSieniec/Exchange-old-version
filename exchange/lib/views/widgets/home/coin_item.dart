@@ -11,18 +11,16 @@ class CoinItem extends StatelessWidget {
     return Card(
         margin: const EdgeInsets.all(8.0),
         shape: RoundedRectangleBorder(
-          side: const BorderSide(color: Colors.white10, width: 2),
-          borderRadius: BorderRadius.circular(24.0),
-        ),
+            side: const BorderSide(color: Colors.white10, width: 2),
+            borderRadius: BorderRadius.circular(24.0)),
         elevation: 2,
         color: const Color(MyColors.coinBackground),
         child: Container(
             padding: const EdgeInsets.all(12.0),
             child: Row(children: [
               Expanded(
-                flex: 2,
-                child: Row(
-                  children: [
+                  flex: 2,
+                  child: Row(children: [
                     const Icon(Icons.attach_money_outlined,
                         size: 40.0, color: Colors.white),
                     Column(
@@ -36,10 +34,8 @@ class CoinItem extends StatelessWidget {
                           Text('Bitcoin',
                               style:
                                   TextStyle(color: Colors.grey, fontSize: 16.0))
-                        ]),
-                  ],
-                ),
-              ),
+                        ])
+                  ])),
               Expanded(
                   flex: 1,
                   child: SfSparkLineChart(
@@ -48,19 +44,28 @@ class CoinItem extends StatelessWidget {
                       axisLineWidth: 0)),
               Expanded(
                   flex: 2,
-                  child: Column(children: [
-                    const Text('\$59,831,78',
-                        style: TextStyle(color: Colors.white, fontSize: 16.0)),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: const [
-                          Icon(Icons.arrow_drop_up_outlined,
-                              size: 40.0, color: Colors.red),
-                          Text('8,02 %',
-                              style:
-                                  TextStyle(color: Colors.red, fontSize: 16.0))
-                        ])
-                  ]))
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        const Text('\$59,831,78',
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 18.0)),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              getIcon(),
+                              const Text('8,02 %',
+                                  style: TextStyle(
+                                      color: Colors.red, fontSize: 16.0))
+                            ])
+                      ]))
             ])));
   }
+}
+
+Icon getIcon() {
+  return exampleData[exampleData.length - 1] >
+          exampleData[exampleData.length - 2]
+      ? const Icon(Icons.arrow_drop_up_outlined, color: Colors.green, size: 32)
+      : const Icon(Icons.arrow_drop_down_outlined, color: Colors.red, size: 32);
 }
