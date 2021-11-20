@@ -14,37 +14,37 @@ class CoinItem extends StatelessWidget {
         child: Row(children: [
           Expanded(
               flex: 2,
-              child: Row(children: [
-                Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text('BTC',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20.0)),
-                      Text('Bitcoin',
-                          style: TextStyle(
-                              color: Color(MyColors.homeColorText),
-                              fontSize: 16.0))
-                    ])
-              ])),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text('BTC',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0)),
+                    Text('Bitcoin',
+                        style: TextStyle(
+                            color: Color(MyColors.homeColorText),
+                            fontSize: 16.0))
+                  ])),
           Expanded(
               flex: 1,
               child: SfSparkLineChart(
                   color: Colors.green, data: exampleData, axisLineWidth: 0)),
           Expanded(
               flex: 2,
-              child:
-                  Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-                const Text('\$59,831,78',
-                    style: TextStyle(color: Colors.white, fontSize: 18.0)),
-                Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                  getIcon(),
-                  const Text('8,02 %',
-                      style: TextStyle(color: Colors.red, fontSize: 16.0))
-                ])
-              ]))
+              child: Container(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                    const Text('\$59,831,78',
+                        style: TextStyle(color: Colors.white, fontSize: 18.0)),
+                    Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                      getIcon(),
+                      const Text('8,02 %',
+                          style: TextStyle(color: Colors.red, fontSize: 16.0))
+                    ])
+                  ])))
         ]));
   }
 }
