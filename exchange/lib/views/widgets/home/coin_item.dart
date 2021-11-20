@@ -1,4 +1,3 @@
-import 'package:exchange/constants/colors.dart';
 import 'package:exchange/views/widgets/home/trending_item.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
@@ -8,58 +7,51 @@ class CoinItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        margin: const EdgeInsets.all(8.0),
-        shape: RoundedRectangleBorder(
-            side: const BorderSide(color: Colors.white10, width: 2),
-            borderRadius: BorderRadius.circular(24.0)),
-        elevation: 2,
-        color: const Color(MyColors.coinBackground),
-        child: Container(
-            padding: const EdgeInsets.all(12.0),
-            child: Row(children: [
-              Expanded(
-                  flex: 2,
-                  child: Row(children: [
-                    const Icon(Icons.attach_money_outlined,
-                        size: 40.0, color: Colors.white),
-                    Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text('BTC',
+    return Container(
+        padding: const EdgeInsets.all(12.0),
+        child: Row(children: [
+          Expanded(
+              flex: 2,
+              child: Row(children: [
+                const Icon(Icons.attach_money_outlined,
+                    size: 40.0, color: Colors.white),
+                Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text('BTC',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0)),
+                      Text('Bitcoin',
+                          style:
+                          TextStyle(color: Colors.grey, fontSize: 16.0))
+                    ])
+              ])),
+          Expanded(
+              flex: 1,
+              child: SfSparkLineChart(
+                  color: Colors.green,
+                  data: exampleData,
+                  axisLineWidth: 0)),
+          Expanded(
+              flex: 2,
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    const Text('\$59,831,78',
+                        style:
+                        TextStyle(color: Colors.white, fontSize: 18.0)),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          getIcon(),
+                          const Text('8,02 %',
                               style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20.0)),
-                          Text('Bitcoin',
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 16.0))
+                                  color: Colors.red, fontSize: 16.0))
                         ])
-                  ])),
-              Expanded(
-                  flex: 1,
-                  child: SfSparkLineChart(
-                      color: Colors.green,
-                      data: exampleData,
-                      axisLineWidth: 0)),
-              Expanded(
-                  flex: 2,
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        const Text('\$59,831,78',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 18.0)),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              getIcon(),
-                              const Text('8,02 %',
-                                  style: TextStyle(
-                                      color: Colors.red, fontSize: 16.0))
-                            ])
-                      ]))
-            ])));
+                  ]))
+        ]));
   }
 }
 
