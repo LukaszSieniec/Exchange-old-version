@@ -52,15 +52,14 @@ class DetailPage extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                   side: const BorderSide(
                                       color: Colors.white10, width: 1),
-                                  borderRadius: BorderRadius.circular(24.0)),
+                                  borderRadius: BorderRadius.circular(16.0)),
                               elevation: 2,
                               color: const Color(MyColors.trendingBackground),
                               child: Column(children: [
                                 Expanded(
-                                    flex: 4,
                                     child: Padding(
                                         padding: const EdgeInsets.only(
-                                            top: 8.0, bottom: 8.0),
+                                            top: 8.0, bottom: 16.0),
                                         child: SfSparkLineChart.custom(
                                             xValueMapper: (index) =>
                                                 coinsData[index].time,
@@ -69,31 +68,35 @@ class DetailPage extends StatelessWidget {
                                             dataCount: coinsData.length,
                                             color: Colors.green,
                                             axisLineWidth: 0))),
-                                Expanded(
-                                    child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                      _buildTimeButton('D'),
-                                      _buildTimeButton('W'),
-                                      _buildTimeButton('M'),
-                                      _buildTimeButton('3M'),
-                                      _buildTimeButton('Y'),
-                                      _buildTimeButton('All')
-                                    ]))
+                                DefaultTabController(
+                                    length: 6,
+                                    initialIndex: 0,
+                                    child: TabBar(
+                                        indicator: const UnderlineTabIndicator(
+                                            borderSide: BorderSide(
+                                                width: 3.0,
+                                                color: Color(0xFFFF773D)),
+                                            insets: EdgeInsets.symmetric(
+                                                horizontal: 16.0)),
+                                        onTap: (value) => debugPrint(
+                                            'Selected value: $value'),
+                                        tabs: [
+                                          _buildTimeButton('D'),
+                                          _buildTimeButton('W'),
+                                          _buildTimeButton('M'),
+                                          _buildTimeButton('3M'),
+                                          _buildTimeButton('Y'),
+                                          _buildTimeButton('All')
+                                        ]))
                               ])))),
                   Expanded(flex: 4, child: Container())
                 ]))));
   }
 
   Widget _buildTimeButton(String text) {
-    return GestureDetector(
-        onTap: () => debugPrint(text),
-        child: Text(text,
-            style: const TextStyle(
-                color: Colors.white,
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold)));
+    return Text(text,
+        style: const TextStyle(
+            color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.bold));
   }
 }
 
