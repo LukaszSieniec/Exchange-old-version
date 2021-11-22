@@ -45,17 +45,55 @@ class DetailPage extends StatelessWidget {
                         ])
                       ]),
                   Expanded(
+                      flex: 3,
                       child: Container(
-                          margin: const EdgeInsets.only(
-                              top: 32.0, left: 16.0, right: 16.0),
-                          child: SfSparkLineChart.custom(
-                              xValueMapper: (index) => coinsData[index].time,
-                              yValueMapper: (index) => coinsData[index].price,
-                              dataCount: coinsData.length,
-                              color: Colors.green,
-                              axisLineWidth: 0))),
-                  Expanded(flex: 2, child: Container())
+                          margin: const EdgeInsets.only(top: 32.0),
+                          child: Card(
+                              shape: RoundedRectangleBorder(
+                                  side: const BorderSide(
+                                      color: Colors.white10, width: 1),
+                                  borderRadius: BorderRadius.circular(24.0)),
+                              elevation: 2,
+                              color: const Color(MyColors.trendingBackground),
+                              child: Column(children: [
+                                Expanded(
+                                    flex: 4,
+                                    child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 8.0, bottom: 8.0),
+                                        child: SfSparkLineChart.custom(
+                                            xValueMapper: (index) =>
+                                                coinsData[index].time,
+                                            yValueMapper: (index) =>
+                                                coinsData[index].price,
+                                            dataCount: coinsData.length,
+                                            color: Colors.green,
+                                            axisLineWidth: 0))),
+                                Expanded(
+                                    child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                      _buildTimeButton('D'),
+                                      _buildTimeButton('W'),
+                                      _buildTimeButton('M'),
+                                      _buildTimeButton('3M'),
+                                      _buildTimeButton('Y'),
+                                      _buildTimeButton('All')
+                                    ]))
+                              ])))),
+                  Expanded(flex: 4, child: Container())
                 ]))));
+  }
+
+  Widget _buildTimeButton(String text) {
+    return GestureDetector(
+        onTap: () => debugPrint(text),
+        child: Text(text,
+            style: const TextStyle(
+                color: Colors.white,
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold)));
   }
 }
 
