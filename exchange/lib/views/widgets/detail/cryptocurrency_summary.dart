@@ -13,32 +13,36 @@ class CryptocurrencySummary extends StatelessWidget {
             side: const BorderSide(color: Colors.white10, width: 1),
             borderRadius: BorderRadius.circular(16.0)),
         child: Column(children: [
-          Container(
-              color: Colors.yellow,
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _buildSingleInformation(MyLabels.day, '#1'),
-                    _buildSingleInformation(MyLabels.dayVolume, '\$85431,123'),
-                    _buildSingleInformation(
-                        MyLabels.marketCap, '\$1023492325,12')
-                  ])),
-          Container(
-              color: Colors.green,
+          Expanded(
+            child: Row(
+              children: [
+                _buildSingleInformation('e', 'e'),
+                _buildSingleInformation('e', 'e'),
+                _buildSingleInformation('e', 'e')
+              ],
+            ),
+          ),
+          Expanded(
+            child: Container(
+              color: Colors.grey,
               child: Row(children: [
-                _buildSingleInformation(MyLabels.maxSupply, '21000000'),
-                _buildSingleInformation(MyLabels.circulating, 'N/A')
-              ]))
+                _buildSingleInformation('e', 'e'),
+                _buildSingleInformation('e', 'e')
+              ]),
+            ),
+          )
         ]));
   }
 
   Widget _buildSingleInformation(String firstText, String secondText) {
     return Expanded(
-        flex: 1,
-        child: Column(children: [
-          Text(firstText,
-              style: const TextStyle(color: Color(MyColors.colorText))),
-          Text(secondText, style: const TextStyle(color: Colors.white))
-        ]));
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Text(firstText,
+            style: const TextStyle(
+                color: Color(MyColors.colorText), fontSize: 16.0)),
+        Text(secondText,
+            style: const TextStyle(color: Colors.white, fontSize: 20.0))
+      ]),
+    );
   }
 }
