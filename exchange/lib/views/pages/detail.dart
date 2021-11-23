@@ -58,15 +58,17 @@ class DetailPage extends StatelessWidget {
                               child: Column(children: [
                                 Expanded(
                                     child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 8.0, bottom: 16.0),
-                                        child: SfSparkLineChart.custom(
+                                        padding:
+                                            const EdgeInsets.only(top: 8.0),
+                                        child: SfSparkAreaChart.custom(
+                                            borderColor: Colors.green,
+                                            color: const Color(
+                                                MyColors.background),
                                             xValueMapper: (index) =>
                                                 coinsData[index].time,
                                             yValueMapper: (index) =>
                                                 coinsData[index].price,
                                             dataCount: coinsData.length,
-                                            color: Colors.green,
                                             axisLineWidth: 0))),
                                 DefaultTabController(
                                     length: 6,
@@ -94,9 +96,13 @@ class DetailPage extends StatelessWidget {
   }
 
   Widget _buildTimeButton(String text) {
-    return Text(text,
-        style: const TextStyle(
-            color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.bold));
+    return Padding(
+        padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
+        child: Text(text,
+            style: const TextStyle(
+                color: Colors.white,
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold)));
   }
 }
 
@@ -119,5 +125,5 @@ const List<CoinData> coinsData = [
   CoinData(1637531399027, 59755.082063516296),
   CoinData(1637531600125, 59784.55987917839),
   CoinData(1637531962313, 59724.225446220335),
-  CoinData(1637532195996, 59745.319183421925)
+  CoinData(1637532195996, 59745.319183421925),
 ];
