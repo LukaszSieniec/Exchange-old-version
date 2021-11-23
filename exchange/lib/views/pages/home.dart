@@ -1,5 +1,5 @@
-import 'package:exchange/constants/colors.dart';
-import 'package:exchange/views/widgets/home/coin_item.dart';
+import 'package:exchange/constants/my_constants.dart';
+import 'package:exchange/views/widgets/home/cryptocurrency_item.dart';
 import 'package:exchange/views/widgets/home/trending_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -30,11 +30,13 @@ class HomePage extends StatelessWidget {
                     elevation: 8,
                     items: const <BottomNavigationBarItem>[
                       BottomNavigationBarItem(
-                          icon: Icon(Icons.home), label: 'Home'),
+                          icon: Icon(Icons.home), label: MyLabels.home),
                       BottomNavigationBarItem(
-                          icon: Icon(Icons.attach_money), label: 'Wallet'),
+                          icon: Icon(Icons.attach_money),
+                          label: MyLabels.wallet),
                       BottomNavigationBarItem(
-                          icon: Icon(Icons.history), label: 'Transactions'),
+                          icon: Icon(Icons.history),
+                          label: MyLabels.transactions),
                     ]))),
         body: SafeArea(
             top: true,
@@ -44,9 +46,9 @@ class HomePage extends StatelessWidget {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Trending',
+                      const Text(MyLabels.trending,
                           style: TextStyle(
-                              color: Color(MyColors.homeColorText),
+                              color: Color(MyColors.colorText),
                               fontWeight: FontWeight.bold,
                               fontSize: 20.0)),
                       Expanded(
@@ -57,9 +59,9 @@ class HomePage extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 return const TrendingItem();
                               })),
-                      const Text('Cryptocurrencies',
+                      const Text(MyLabels.cryptocurrencies,
                           style: TextStyle(
-                              color: Color(MyColors.homeColorText),
+                              color: Color(MyColors.colorText),
                               fontWeight: FontWeight.bold,
                               fontSize: 20.0)),
                       Expanded(
@@ -68,7 +70,7 @@ class HomePage extends StatelessWidget {
                               scrollDirection: Axis.vertical,
                               itemCount: 10,
                               itemBuilder: (context, index) {
-                                return const CoinItem();
+                                return const CryptocurrencyItem();
                               }))
                     ]))));
   }

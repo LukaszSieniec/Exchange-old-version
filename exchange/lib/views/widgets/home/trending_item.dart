@@ -1,4 +1,4 @@
-import 'package:exchange/constants/colors.dart';
+import 'package:exchange/constants/my_constants.dart';
 import 'package:exchange/utils/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
@@ -19,7 +19,7 @@ class TrendingItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(24.0),
             ),
             elevation: 2,
-            color: const Color(MyColors.trendingBackground),
+            color: const Color(MyColors.brighterBackground),
             child: Container(
                 margin: const EdgeInsets.all(8.0),
                 child: Column(
@@ -41,20 +41,18 @@ class TrendingItem extends StatelessWidget {
                                             fontSize: 20.0)),
                                     Text('Bitcoin',
                                         style: TextStyle(
-                                            color:
-                                                Color(MyColors.homeColorText),
+                                            color: Color(MyColors.colorText),
                                             fontSize: 16.0))
                                   ])
                             ]),
-                            getIcon()
+                            _getIcon()
                           ]),
                       Container(
-                        margin: const EdgeInsets.all(12.0),
-                        child: SfSparkLineChart(
-                            color: Colors.green,
-                            data: exampleData,
-                            axisLineWidth: 0),
-                      ),
+                          margin: const EdgeInsets.all(12.0),
+                          child: SfSparkLineChart(
+                              color: Colors.green,
+                              data: exampleData,
+                              axisLineWidth: 0)),
                       const Text('\$ 78,43',
                           style: TextStyle(
                               color: Colors.white,
@@ -64,7 +62,7 @@ class TrendingItem extends StatelessWidget {
   }
 }
 
-Icon getIcon() {
+Icon _getIcon() {
   return exampleData[exampleData.length - 1] >
           exampleData[exampleData.length - 2]
       ? const Icon(Icons.trending_up_outlined, color: Colors.green, size: 32)

@@ -1,5 +1,5 @@
-import 'package:exchange/constants/colors.dart';
-import 'package:exchange/views/widgets/detail/coin_summary.dart';
+import 'package:exchange/constants/my_constants.dart';
+import 'package:exchange/views/widgets/detail/cryptocurrency_summary.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
@@ -25,7 +25,7 @@ class DetailPage extends StatelessWidget {
                               children: const [
                                 Text('BTC',
                                     style: TextStyle(
-                                        color: Color(MyColors.homeColorText),
+                                        color: Color(MyColors.colorText),
                                         fontSize: 18.0)),
                                 Text('Bitcoin',
                                     style: TextStyle(
@@ -55,7 +55,7 @@ class DetailPage extends StatelessWidget {
                                       color: Colors.white10, width: 1),
                                   borderRadius: BorderRadius.circular(16.0)),
                               elevation: 2,
-                              color: const Color(MyColors.trendingBackground),
+                              color: const Color(MyColors.brighterBackground),
                               child: Column(children: [
                                 Expanded(
                                     child: Padding(
@@ -78,23 +78,23 @@ class DetailPage extends StatelessWidget {
                                         indicator: const UnderlineTabIndicator(
                                             borderSide: BorderSide(
                                                 width: 3.0,
-                                                color: Color(0xFFFF773D)),
+                                                color: Color(MyColors.orange)),
                                             insets: EdgeInsets.symmetric(
                                                 horizontal: 16.0)),
                                         onTap: (value) => debugPrint(
                                             'Selected value: $value'),
                                         tabs: [
-                                          _buildTimeButton('D'),
-                                          _buildTimeButton('W'),
-                                          _buildTimeButton('M'),
-                                          _buildTimeButton('3M'),
-                                          _buildTimeButton('Y'),
-                                          _buildTimeButton('All')
+                                          _buildTimeButton(MyLabels.day),
+                                          _buildTimeButton(MyLabels.week),
+                                          _buildTimeButton(MyLabels.month),
+                                          _buildTimeButton(MyLabels.threeMonths),
+                                          _buildTimeButton(MyLabels.year),
+                                          _buildTimeButton(MyLabels.all)
                                         ]))
                               ])))),
                   const Expanded(
                     flex: 2,
-                    child: CoinSummary(),
+                    child: CryptocurrencySummary(),
                   ),
                   const Expanded(
                     flex: 2,

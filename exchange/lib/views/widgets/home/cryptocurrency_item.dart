@@ -1,11 +1,11 @@
-import 'package:exchange/constants/colors.dart';
+import 'package:exchange/constants/my_constants.dart';
 import 'package:exchange/views/pages/detail.dart';
 import 'package:exchange/views/widgets/home/trending_item.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
-class CoinItem extends StatelessWidget {
-  const CoinItem({Key? key}) : super(key: key);
+class CryptocurrencyItem extends StatelessWidget {
+  const CryptocurrencyItem({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class CoinItem extends StatelessWidget {
                                 fontSize: 20.0)),
                         Text('Bitcoin',
                             style: TextStyle(
-                                color: Color(MyColors.homeColorText),
+                                color: Color(MyColors.colorText),
                                 fontSize: 16.0))
                       ])),
               Expanded(
@@ -51,7 +51,7 @@ class CoinItem extends StatelessWidget {
                         Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              getIcon(),
+                              _getIcon(),
                               const Text('8,02 %',
                                   style: TextStyle(
                                       color: Colors.red, fontSize: 16.0))
@@ -61,7 +61,7 @@ class CoinItem extends StatelessWidget {
   }
 }
 
-Icon getIcon() {
+Icon _getIcon() {
   return exampleData[exampleData.length - 1] >
           exampleData[exampleData.length - 2]
       ? const Icon(Icons.arrow_drop_up_outlined, color: Colors.green, size: 32)
