@@ -19,7 +19,7 @@ class MyLabels {
   static const String year = 'Y';
   static const String all = 'All';
 
-  static const String rank = 'rank';
+  static const String rank = 'Rank';
   static const String dayVolume = 'Day Volume';
   static const String marketCap = 'Market Cap';
   static const String maxSupply = 'Max Supply';

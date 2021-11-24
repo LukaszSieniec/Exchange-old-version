@@ -8,41 +8,64 @@ class CryptocurrencySummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
         color: const Color(MyColors.brighterBackground),
-        shape: RoundedRectangleBorder(
-            side: const BorderSide(color: Colors.white10, width: 1),
-            borderRadius: BorderRadius.circular(16.0)),
         child: Column(children: [
           Expanded(
             child: Row(
               children: [
-                _buildSingleInformation('e', 'e'),
-                _buildSingleInformation('e', 'e'),
-                _buildSingleInformation('e', 'e')
-              ],
-            ),
+                _buildSingleInformation(MyLabels.rank, '#1',
+                    isTopLeftRadius: true),
+                _buildSingleInformation(MyLabels.dayVolume, '\$36119910449',
+                    flex: 2),
+                _buildSingleInformation(MyLabels.marketCap, '1086291546505',
+                    flex: 2, isTopRightRadius: true)
+              ]
+            )
           ),
           Expanded(
-            child: Container(
-              color: Colors.grey,
-              child: Row(children: [
-                _buildSingleInformation('e', 'e'),
-                _buildSingleInformation('e', 'e')
-              ]),
-            ),
+            child: Row(children: [
+              _buildSingleInformation(MyLabels.maxSupply, '21000000',
+                  isBottomLeftRadius: true),
+              _buildSingleInformation(MyLabels.circulating, 'N/A',
+                  isbottomRightRadius: true)
+            ])
           )
         ]));
   }
 
-  Widget _buildSingleInformation(String firstText, String secondText) {
+  Widget _buildSingleInformation(String firstText, String secondText,
+      {int flex = 1,
+      isTopLeftRadius = false,
+      isTopRightRadius = false,
+      isBottomLeftRadius = false,
+      isbottomRightRadius = false}) {
     return Expanded(
-      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Text(firstText,
-            style: const TextStyle(
-                color: Color(MyColors.colorText), fontSize: 16.0)),
-        Text(secondText,
-            style: const TextStyle(color: Colors.white, fontSize: 20.0))
-      ]),
-    );
+        flex: flex,
+        child: Container(
+            decoration: BoxDecoration(
+                border: Border.all(width: 1, color: Colors.white10),
+                borderRadius: BorderRadius.only(
+                    topLeft: isTopLeftRadius
+                        ? const Radius.circular(16.0)
+                        : const Radius.circular(0),
+                    topRight: isTopRightRadius
+                        ? const Radius.circular(16.0)
+                        : const Radius.circular(0),
+                    bottomLeft: isBottomLeftRadius
+                        ? const Radius.circular(16.0)
+                        : const Radius.circular(0),
+                    bottomRight: isbottomRightRadius
+                        ? const Radius.circular(16.0)
+                        : const Radius.circular(0))),
+            child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Text(firstText,
+                  style: const TextStyle(
+                      color: Color(MyColors.colorText), fontSize: 16.0)),
+              Text(secondText,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Colors.white, fontSize: 20.0))
+            ])));
   }
 }
