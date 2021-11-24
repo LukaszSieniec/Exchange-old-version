@@ -46,7 +46,7 @@ class DetailPage extends StatelessWidget {
                         ])
                       ]),
                   Expanded(
-                      flex: 3,
+                      flex: 4,
                       child: Container(
                           margin: const EdgeInsets.only(top: 16.0),
                           child: Card(
@@ -87,7 +87,8 @@ class DetailPage extends StatelessWidget {
                                           _buildTimeButton(MyLabels.day),
                                           _buildTimeButton(MyLabels.week),
                                           _buildTimeButton(MyLabels.month),
-                                          _buildTimeButton(MyLabels.threeMonths),
+                                          _buildTimeButton(
+                                              MyLabels.threeMonths),
                                           _buildTimeButton(MyLabels.year),
                                           _buildTimeButton(MyLabels.all)
                                         ]))
@@ -96,19 +97,23 @@ class DetailPage extends StatelessWidget {
                     flex: 2,
                     child: CryptocurrencySummary(),
                   ),
-                  const Expanded(
-                    flex: 2,
-                    child: Text(
-                        'Bitcoin is the first successful internet money based on peer-to-peer technology; whereby no central bank or authority is '
-                        'involved in the transaction and production of the Bitcoin currency. It was created by an anonymous individual/group under '
-                        'the name, Satoshi Nakamoto. The source code is available publicly as an open source project, anybody can look at it and be '
-                        'part of the developmental process.\r\n\r\nBitcoin is changing the way we see money as we speak. The idea was to produce a '
-                        'means of exchange, independent of any central authority, that could be transferred electronically in a secure, verifiable '
-                        'and immutable way. It is a decentralized peer-to-peer internet currency making mobile payment easy, very low transaction fees, '
-                        'protects your identity, and it works anywhere all the time with no central authority and banks.\r\n\r\nBitcoin is designed to have only 21 million BTC ever created, thus making it a deflationary currency.',
-                        style: TextStyle(color: Colors.white)),
-                  )
+                  Column(children: [
+                    _buildOpenBrowserButton('Website', 'etherum.org',
+                        Icons.open_in_browser_outlined),
+                    _buildOpenBrowserButton(
+                        'Github', 'github.com/etherum', Icons.language_outlined)
+                  ])
                 ]))));
+  }
+
+  Widget _buildOpenBrowserButton(
+      String title, String website, IconData iconData) {
+    return OutlinedButton(
+        onPressed: () {},
+        style: OutlinedButton.styleFrom(
+            backgroundColor: const Color(MyColors.brighterBackground),
+            side: const BorderSide(color: Colors.white, width: 1)),
+        child: Center(child: Text(title)));
   }
 
   Widget _buildTimeButton(String text) {
