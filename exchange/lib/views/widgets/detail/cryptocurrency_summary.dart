@@ -13,23 +13,18 @@ class CryptocurrencySummary extends StatelessWidget {
         color: const Color(MyColors.brighterBackground),
         child: Column(children: [
           Expanded(
-            child: Row(
-              children: [
-                _buildSingleInformation(MyLabels.rank, '#1',
-                    isTopLeftRadius: true),
-                _buildSingleInformation(MyLabels.dayVolume, '\$36119910449',
-                    flex: 2),
-                _buildSingleInformation(MyLabels.marketCap, '1086291546505',
-                    flex: 2, isTopRightRadius: true)
-              ]
-            )
-          ),
+            child: Row(children: [
+            _buildSingleInformation(MyLabels.rank, '#1', isTopLeftRadius: true),
+            _buildSingleInformation(MyLabels.maxSupply, '21000000'),
+            _buildSingleInformation(MyLabels.circulating, 'N/A',
+                isTopRightRadius: true)
+          ])),
           Expanded(
             child: Row(children: [
-              _buildSingleInformation(MyLabels.maxSupply, '21000000',
-                  isBottomLeftRadius: true),
-              _buildSingleInformation(MyLabels.circulating, 'N/A',
-                  isbottomRightRadius: true)
+              _buildSingleInformation(MyLabels.dayVolume, '\$ 36119910449',
+                  flex: 2, isBottomLeftRadius: true),
+              _buildSingleInformation(MyLabels.marketCap, '\$ 1086291546505',
+                  flex: 2, isBottomRightRadius: true)
             ])
           )
         ]));
@@ -40,7 +35,7 @@ class CryptocurrencySummary extends StatelessWidget {
       isTopLeftRadius = false,
       isTopRightRadius = false,
       isBottomLeftRadius = false,
-      isbottomRightRadius = false}) {
+      isBottomRightRadius = false}) {
     return Expanded(
         flex: flex,
         child: Container(
@@ -56,7 +51,7 @@ class CryptocurrencySummary extends StatelessWidget {
                     bottomLeft: isBottomLeftRadius
                         ? const Radius.circular(16.0)
                         : const Radius.circular(0),
-                    bottomRight: isbottomRightRadius
+                    bottomRight: isBottomRightRadius
                         ? const Radius.circular(16.0)
                         : const Radius.circular(0))),
             child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
