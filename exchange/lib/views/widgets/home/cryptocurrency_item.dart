@@ -1,5 +1,5 @@
 import 'package:exchange/constants/my_constants.dart';
-import 'package:exchange/views/pages/detail.dart';
+import 'package:exchange/views/pages/detail_page.dart';
 import 'package:exchange/views/widgets/home/trending_item.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
