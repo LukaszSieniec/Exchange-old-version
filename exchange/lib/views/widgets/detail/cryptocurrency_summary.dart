@@ -15,15 +15,15 @@ class CryptocurrencySummary extends StatelessWidget {
           Expanded(
             child: Row(children: [
             _buildSingleInformation(MyLabels.rank, '#1', isTopLeftRadius: true),
-            _buildSingleInformation(MyLabels.maxSupply, '21000000'),
+            _buildSingleInformation(MyLabels.maxSupply, '21M'),
             _buildSingleInformation(MyLabels.circulating, 'N/A',
                 isTopRightRadius: true)
           ])),
           Expanded(
             child: Row(children: [
-              _buildSingleInformation(MyLabels.dayVolume, '\$ 36119910449',
+              _buildSingleInformation(MyLabels.dayVolume, '\$ 36,99B',
                   flex: 2, isBottomLeftRadius: true),
-              _buildSingleInformation(MyLabels.marketCap, '\$ 1086291546505',
+              _buildSingleInformation(MyLabels.marketCap, '\$ 1,03T',
                   flex: 2, isBottomRightRadius: true)
             ])
           )
