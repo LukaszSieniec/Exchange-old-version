@@ -32,7 +32,7 @@ class BasicPage extends StatelessWidget {
                       topLeft: Radius.circular(32.0),
                       topRight: Radius.circular(32.0)),
                   child: BottomNavigationBar(
-                      currentIndex: AppTab.values.indexOf(state),
+                      currentIndex: state.index,
                       onTap: (index) =>
                           BlocProvider.of<BottomNavigationBarBloc>(context).add(
                               BottomNavigationBarUpdated(AppTab.values[index])),

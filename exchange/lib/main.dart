@@ -1,6 +1,5 @@
 import 'package:exchange/blocs/bottom_navigation_bar/bottom_navigation_bar_bloc.dart';
 import 'package:exchange/views/pages/basic_page.dart';
-import 'package:exchange/views/pages/wallet_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

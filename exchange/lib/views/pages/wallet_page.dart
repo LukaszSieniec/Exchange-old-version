@@ -1,4 +1,6 @@
 import 'package:exchange/constants/my_constants.dart';
+import 'package:exchange/views/widgets/wallet/coins.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class WalletPage extends StatelessWidget {
@@ -11,28 +13,35 @@ class WalletPage extends StatelessWidget {
             backgroundColor: const Color(MyColors.background),
             body: Container(
                 margin: const EdgeInsets.only(
-                    top: 16.0, bottom: 8.0, left: 8.0, right: 8.0),
+                    top: 8.0, bottom: 8.0, left: 8.0, right: 8.0),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text(
-                        'Total balance',
-                        style: TextStyle(
-                            color: Color(MyColors.colorText), fontSize: 16.0),
-                      ),
-                      SizedBox(height: 4.0),
-                      Text('\$378.12',
-                          style:
-                              TextStyle(color: Colors.white, fontSize: 32.0)),
-                      SizedBox(height: 16.0),
-                      Divider(color: Colors.white, height: 2.0),
-                      SizedBox(height: 16.0),
-                      Text(
-                        'Your Coins',
-                        style: TextStyle(
-                            color: Color(MyColors.colorText), fontSize: 16.0),
-                      ),
-                      SizedBox(height: 16.0),
+                    children: [
+                      const Text('Total balance',
+                          style: TextStyle(
+                              color: Color(MyColors.colorText),
+                              fontSize: 16.0)),
+                      const SizedBox(height: 4.0),
+                      const Text('\$ 378.12',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 32.0,
+                              fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 16.0),
+                      Row(children: [
+                        const Expanded(
+                            child: Divider(height: 2, color: Colors.white)),
+                        Container(
+                            margin:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: const Text('Your Coins',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 16.0))),
+                        const Expanded(
+                            child: Divider(height: 2, color: Colors.white))
+                      ]),
+                      const SizedBox(height: 16.0),
+                      const Coins()
                     ]))));
   }
 }

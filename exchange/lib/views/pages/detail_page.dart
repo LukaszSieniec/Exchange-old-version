@@ -115,18 +115,18 @@ class DetailPage extends StatelessWidget {
         style: OutlinedButton.styleFrom(
             backgroundColor: const Color(MyColors.brighterBackground)),
         child: Padding(
-          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Row(children: [
-              Icon(iconData),
-              const SizedBox(width: 8.0),
-              Text(title)
-            ]),
-            Text(website,
-                style: const TextStyle(color: Color(MyColors.colorText)))
-          ]),
-        ));
+            padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(children: [
+                    Icon(iconData),
+                    const SizedBox(width: 8.0),
+                    Text(title)
+                  ]),
+                  Text(website,
+                      style: const TextStyle(color: Color(MyColors.colorText)))
+                ])));
   }
 
   Widget _buildTimeButton(String text) {
