@@ -13,27 +13,40 @@ class Coins extends StatelessWidget {
             itemCount: _myCoins.length,
             itemBuilder: (BuildContext context, int index) {
               return Card(
+                  elevation: 4,
                   color: const Color(MyColors.brighterBackground),
                   child: Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child: Row(children: [
-                        Row(children: [
-                          const Icon(CryptoFontIcons.BTC, color: Colors.white),
-                          Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Text('BTC',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20.0)),
-                                Text('Bitcoin',
-                                    style: TextStyle(
-                                        color: Color(MyColors.colorText),
-                                        fontSize: 16.0))
-                              ])
-                        ])
-                      ])));
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  const Icon(CryptoFontIcons.BTC,
+                                      color: Colors.white),
+                                  const SizedBox(width: 8.0),
+                                  Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: const [
+                                        Text('BTC',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20.0)),
+                                        Text('Bitcoin',
+                                            style: TextStyle(
+                                                color:
+                                                    Color(MyColors.colorText),
+                                                fontSize: 16.0))
+                                      ])
+                                ]),
+                            const Text('3,54870',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20.0))
+                          ])));
             }));
   }
 }

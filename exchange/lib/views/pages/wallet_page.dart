@@ -12,12 +12,11 @@ class WalletPage extends StatelessWidget {
         child: Scaffold(
             backgroundColor: const Color(MyColors.background),
             body: Container(
-                margin: const EdgeInsets.only(
-                    top: 8.0, bottom: 8.0, left: 8.0, right: 8.0),
+                margin: const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
                 child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Text('Total balance',
+                      const Text('Account balance',
                           style: TextStyle(
                               color: Color(MyColors.colorText),
                               fontSize: 16.0)),
@@ -27,7 +26,7 @@ class WalletPage extends StatelessWidget {
                               color: Colors.white,
                               fontSize: 32.0,
                               fontWeight: FontWeight.bold)),
-                      const SizedBox(height: 16.0),
+                      const SizedBox(height: 24.0),
                       Row(children: [
                         const Expanded(
                             child: Divider(height: 2, color: Colors.white)),
