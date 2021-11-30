@@ -3,10 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BottomNavigationBarBloc extends Bloc<BottomNavigationBarEvent, AppTab> {
   BottomNavigationBarBloc() : super(AppTab.home) {
-    on<BottomNavigationBarUpdated>(_updated);
+    on<BottomNavigationBarUpdated>(_update);
   }
 
-  void _updated(BottomNavigationBarUpdated event, Emitter<AppTab> emit) {
-    if (event is BottomNavigationBarUpdated) emit(event.tab);
-  }
+  void _update(BottomNavigationBarUpdated event, Emitter<AppTab> emit) =>
+      emit(event.tab);
 }
