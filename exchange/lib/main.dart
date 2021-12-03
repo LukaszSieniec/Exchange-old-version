@@ -1,4 +1,8 @@
 import 'package:exchange/blocs/bottom_navigation_bar/bottom_navigation_bar_bloc.dart';
+import 'package:exchange/blocs/cryptocurrencies/cryptocurrencies_bloc.dart';
+import 'package:exchange/blocs/cryptocurrencies/cryptocurrencies_event.dart';
+import 'package:exchange/repositories/cryptocurrency_repository.dart';
+import 'package:exchange/services/cryptocurrency_service.dart';
 import 'package:exchange/views/pages/basic_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +19,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => BottomNavigationBarBloc())
+          BlocProvider(create: (context) => BottomNavigationBarBloc()),
+          BlocProvider(
+              create: (context) => CryptocurrenciesBloc(
+                  CryptocurrencyRepository(CryptocurrencyService()))
+                ..add(CryptocurrenciesLoaded()))
         ],
         child: MaterialApp(
             debugShowCheckedModeBanner: false,
