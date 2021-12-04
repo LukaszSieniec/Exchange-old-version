@@ -1,10 +1,13 @@
 import 'package:exchange/constants/my_constants.dart';
+import 'package:exchange/models/cryptocurrency.dart';
 import 'package:exchange/utils/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 class TrendingItem extends StatelessWidget {
-  const TrendingItem({Key? key}) : super(key: key);
+  final Cryptocurrency cryptocurrency;
+
+  const TrendingItem(this.cryptocurrency, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,18 +32,18 @@ class TrendingItem extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(children: [
-                              const Icon(Icons.attach_money_outlined,
-                                  size: 40.0, color: Colors.white),
+                              Image.network(cryptocurrency.image, scale: 8.0),
+                              const SizedBox(width: 4.0),
                               Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const [
-                                    Text('BTC',
-                                        style: TextStyle(
+                                  children: [
+                                    Text(cryptocurrency.symbol.toUpperCase(),
+                                        style: const TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 20.0)),
-                                    Text('Bitcoin',
-                                        style: TextStyle(
+                                    Text(cryptocurrency.name,
+                                        style: const TextStyle(
                                             color: Color(MyColors.colorText),
                                             fontSize: 16.0))
                                   ])
@@ -53,8 +56,8 @@ class TrendingItem extends StatelessWidget {
                               color: Colors.green,
                               data: exampleData,
                               axisLineWidth: 0)),
-                      const Text('\$ 78,43',
-                          style: TextStyle(
+                      Text('\$ ${cryptocurrency.currentPrice}',
+                          style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 20.0))
