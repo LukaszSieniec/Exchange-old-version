@@ -1,21 +1,25 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:exchange/models/cryptocurrency.dart';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 class CryptocurrencyService {
-  final String _baseUrl = 'https://api.coingecko.com/api/v3/';
-  final http.Client _httpClient = http.Client();
+  final Dio _dio = Dio(BaseOptions(
+    baseUrl: 'https://api.coingecko.com/api/v3/',
+    connectTimeout: 5000,
+    receiveTimeout: 3000,
+  ));
 
-  /// Example endpoint: https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&sparkline=false
   Future<List<Cryptocurrency>> fetchCryptocurrencies() async {
-    final String requestUrl = _baseUrl;
-
-    final response = await _httpClient.get(Uri.parse(requestUrl));
+    final response = await _dio.get('coins/markets', queryParameters: {
+      'vs_currency': 'usd',
+      'order': 'market_cap_desc',
+      'per_page': 10,
+      'sparkline': false
+    });
 
     if (response.statusCode == 200) {
-      final Iterable json = jsonDecode(response.body);
+      final Iterable json = response.data;
       return json.map((element) => Cryptocurrency.fromJson(element)).toList();
     } else {
       throw Exception('Error!');
@@ -24,12 +28,10 @@ class CryptocurrencyService {
 
   /// Example endpoint: https://api.coingecko.com/api/v3/coins/bitcoin
   Future<Cryptocurrency> fetchCryptocurrency(String id) async {
-    final String requestUrl = '$_baseUrl/coins/$id';
-
-    final response = await _httpClient.get(Uri.parse(requestUrl));
+    final response = await _dio.get('coins/$id');
 
     if (response.statusCode == 200) {
-      return Cryptocurrency.fromJson(jsonDecode(response.body));
+      return Cryptocurrency.fromJson(jsonDecode(response.data));
     } else {
       throw Exception('Error!');
     }

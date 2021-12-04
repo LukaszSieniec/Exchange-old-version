@@ -1,11 +1,11 @@
 class Cryptocurrency {
   late final String id, symbol, name, image;
-  late final int currentPrice,
+  late final int marketCapRank;
+  late final dynamic currentPrice,
       marketCap,
-      marketCapRank,
       circulatingSupply,
-      totalSupply;
-  late final double priceChangePercentage24h;
+      totalSupply,
+      priceChangePercentage24h;
 
   Cryptocurrency(
       this.id,

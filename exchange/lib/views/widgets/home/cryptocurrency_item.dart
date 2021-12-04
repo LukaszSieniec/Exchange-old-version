@@ -1,20 +1,21 @@
 import 'package:exchange/constants/my_constants.dart';
+import 'package:exchange/models/cryptocurrency.dart';
 import 'package:exchange/views/pages/detail_page.dart';
 import 'package:exchange/views/widgets/home/trending_item.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 class CryptocurrencyItem extends StatelessWidget {
-  const CryptocurrencyItem({Key? key}) : super(key: key);
+  final Cryptocurrency cryptocurrency;
+
+  const CryptocurrencyItem(this.cryptocurrency, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const DetailPage())),
+        onTap: () => Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const DetailPage())),
         child: Container(
             margin: const EdgeInsets.only(
                 top: 12.0, bottom: 12.0, left: 8.0, right: 8.0),
@@ -23,14 +24,14 @@ class CryptocurrencyItem extends StatelessWidget {
                   flex: 2,
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text('BTC',
-                            style: TextStyle(
+                      children: [
+                        Text(cryptocurrency.symbol.toUpperCase(),
+                            style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20.0)),
-                        Text('Bitcoin',
-                            style: TextStyle(
+                        Text(cryptocurrency.name,
+                            style: const TextStyle(
                                 color: Color(MyColors.colorText),
                                 fontSize: 16.0))
                       ])),
@@ -45,25 +46,32 @@ class CryptocurrencyItem extends StatelessWidget {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        const Text('\$59,831,78',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 18.0)),
+                        Text('\$ ${cryptocurrency.currentPrice}',
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 18.0)),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              _getIcon(),
-                              const Text('8,02 %',
+                              _buildIcon(),
+                              Text('${cryptocurrency.priceChangePercentage24h}',
                                   style: TextStyle(
-                                      color: Colors.red, fontSize: 16.0))
+                                      color: _getColor(), fontSize: 16.0))
                             ])
                       ]))
             ])));
   }
-}
 
-Icon _getIcon() {
-  return exampleData[exampleData.length - 1] >
-          exampleData[exampleData.length - 2]
-      ? const Icon(Icons.arrow_drop_up_outlined, color: Colors.green, size: 32)
-      : const Icon(Icons.arrow_drop_down_outlined, color: Colors.red, size: 32);
+  Icon _buildIcon() {
+    return cryptocurrency.priceChangePercentage24h > 0
+        ? const Icon(Icons.arrow_drop_up_outlined,
+            color: Colors.green, size: 32)
+        : const Icon(Icons.arrow_drop_down_outlined,
+            color: Colors.red, size: 32);
+  }
+
+  Color _getColor() {
+    return cryptocurrency.priceChangePercentage24h > 0
+        ? Colors.green
+        : Colors.red;
+  }
 }

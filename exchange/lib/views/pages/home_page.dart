@@ -34,16 +34,14 @@ class HomePage extends StatelessWidget {
           flex: 4,
           child: BlocBuilder<CryptocurrenciesBloc, CryptocurrenciesState>(
               builder: (context, state) {
-            debugPrint('$state');
-
             if (state is CryptocurrenciesStateLoadInProgress) {
               return _buildLoading();
             } else if (state is CryptocurrenciesLoadSuccess) {
               return ListView.builder(
                   scrollDirection: Axis.vertical,
-                  itemCount: 10,
+                  itemCount: state.cryptocurrencies.length,
                   itemBuilder: (context, index) {
-                    return const CryptocurrencyItem();
+                    return CryptocurrencyItem(state.cryptocurrencies[index]);
                   });
             } else if (state is CryptocurrenciesLoadFailure) {
               return Container();
