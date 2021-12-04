@@ -14,7 +14,7 @@ class CryptocurrencyService {
       'vs_currency': 'usd',
       'order': 'market_cap_desc',
       'per_page': 10,
-      'sparkline': false
+      'sparkline': true
     });
 
     if (response.statusCode == 200) {
@@ -31,7 +31,7 @@ class CryptocurrencyService {
       'vs_currency': 'usd',
       'ids': '$ids',
       'order': 'market_cap_desc',
-      'sparkline': false
+      'sparkline': true
     });
 
     if (response.statusCode == 200) {

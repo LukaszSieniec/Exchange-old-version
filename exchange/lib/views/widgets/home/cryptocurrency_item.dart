@@ -1,7 +1,6 @@
 import 'package:exchange/constants/my_constants.dart';
 import 'package:exchange/models/cryptocurrency.dart';
 import 'package:exchange/views/pages/detail_page.dart';
-import 'package:exchange/views/widgets/home/trending_item.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
@@ -39,7 +38,9 @@ class CryptocurrencyItem extends StatelessWidget {
                   flex: 1,
                   child: SfSparkLineChart(
                       color: Colors.green,
-                      data: exampleData,
+                      data: cryptocurrency.price
+                          .map((number) => number as num)
+                          .toList(),
                       axisLineWidth: 0)),
               Expanded(
                   flex: 2,

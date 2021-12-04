@@ -11,10 +11,10 @@ class CryptocurrenciesBloc
 
   CryptocurrenciesBloc(this._cryptocurrencyRepository)
       : super(CryptocurrenciesStateLoadInProgress()) {
-    on<CryptocurrenciesLoaded>(_onCryptocurrenciesRequested);
+    on<CryptocurrenciesLoaded>(_onCryptocurrenciesLoaded);
   }
 
-  void _onCryptocurrenciesRequested(
+  void _onCryptocurrenciesLoaded(
       CryptocurrenciesLoaded event, Emitter<CryptocurrenciesState> emit) async {
     try {
       final List<PopularCryptocurrency> trendingBasicInformations =

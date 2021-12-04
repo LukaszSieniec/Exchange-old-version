@@ -48,13 +48,15 @@ class TrendingItem extends StatelessWidget {
                                             fontSize: 16.0))
                                   ])
                             ]),
-                            _getIcon()
+                            _getIcon(cryptocurrency)
                           ]),
                       Container(
                           margin: const EdgeInsets.all(12.0),
                           child: SfSparkLineChart(
                               color: Colors.green,
-                              data: exampleData,
+                              data: cryptocurrency.price
+                                  .map((number) => number as num)
+                                  .toList(),
                               axisLineWidth: 0)),
                       Text('\$ ${cryptocurrency.currentPrice}',
                           style: const TextStyle(
@@ -65,36 +67,9 @@ class TrendingItem extends StatelessWidget {
   }
 }
 
-Icon _getIcon() {
-  return exampleData[exampleData.length - 1] >
-          exampleData[exampleData.length - 2]
+Icon _getIcon(Cryptocurrency cryptocurrency) {
+  return cryptocurrency.price[cryptocurrency.price.length - 1] >
+          cryptocurrency.price[cryptocurrency.price.length - 2]
       ? const Icon(Icons.trending_up_outlined, color: Colors.green, size: 32)
       : const Icon(Icons.trending_down_outlined, color: Colors.red, size: 32);
 }
-
-const List<int> exampleData = [
-  10,
-  6,
-  8,
-  5,
-  11,
-  5,
-  2,
-  7,
-  3,
-  6,
-  8,
-  10,
-  10,
-  6,
-  8,
-  5,
-  11,
-  5,
-  2,
-  7,
-  3,
-  6,
-  8,
-  7
-];

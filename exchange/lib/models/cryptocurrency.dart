@@ -6,9 +6,9 @@ class Cryptocurrency {
       circulatingSupply,
       totalSupply,
       priceChangePercentage24h;
+  late final List<dynamic> price;
 
-  Cryptocurrency(
-      this.id,
+  Cryptocurrency(this.id,
       this.symbol,
       this.name,
       this.image,
@@ -17,7 +17,8 @@ class Cryptocurrency {
       this.marketCapRank,
       this.circulatingSupply,
       this.totalSupply,
-      this.priceChangePercentage24h);
+      this.priceChangePercentage24h,
+      this.price);
 
   Cryptocurrency.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -30,5 +31,10 @@ class Cryptocurrency {
     circulatingSupply = json['circulating_supply'];
     totalSupply = json['total_supply'];
     priceChangePercentage24h = json['price_change_percentage_24h'];
+
+    if (json['sparkline_in_7d'] != null) {
+      Map<String, dynamic> sparkline = json['sparkline_in_7d'];
+      price = sparkline['price']!;
+    }
   }
 }
