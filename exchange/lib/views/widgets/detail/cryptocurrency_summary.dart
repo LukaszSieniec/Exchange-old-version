@@ -1,5 +1,6 @@
 import 'package:exchange/constants/my_constants.dart';
 import 'package:exchange/models/cryptocurrency.dart';
+import 'package:exchange/utils/format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -17,15 +18,15 @@ class CryptocurrencySummary extends StatelessWidget {
           Expanded(
             child: Row(children: [
             _buildSingleInformation(MyLabels.rank, '#${cryptocurrency.marketCapRank}', isTopLeftRadius: true),
-            _buildSingleInformation(MyLabels.maxSupply, '${cryptocurrency.totalSupply ?? 'N/A'}'),
-            _buildSingleInformation(MyLabels.circulating, '${cryptocurrency.circulatingSupply ?? 'N/A'}',
+            _buildSingleInformation(MyLabels.maxSupply, getShortNumber(cryptocurrency.totalSupply)),
+            _buildSingleInformation(MyLabels.circulating, getShortNumber(cryptocurrency.circulatingSupply),
                 isTopRightRadius: true)
           ])),
           Expanded(
             child: Row(children: [
               _buildSingleInformation(MyLabels.dayVolume, '\$ 36,99B',
                   flex: 2, isBottomLeftRadius: true),
-              _buildSingleInformation(MyLabels.marketCap, '\$ ${cryptocurrency.marketCap}',
+              _buildSingleInformation(MyLabels.marketCap, '\$ ${getShortNumber(cryptocurrency.marketCap)}',
                   flex: 2, isBottomRightRadius: true)
             ])
           )

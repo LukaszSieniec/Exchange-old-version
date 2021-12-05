@@ -102,7 +102,8 @@ class DetailPage extends StatelessWidget {
                         margin: const EdgeInsets.only(top: 16.0, bottom: 16.0),
                         child: CryptocurrencySummary(cryptocurrency),
                       )),
-                  _buildBuyButton()
+                  _buildBuyButton(),
+                  const SizedBox(height: 8.0)
                 ]))));
   }
 
@@ -117,10 +118,10 @@ class DetailPage extends StatelessWidget {
             padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
             child: SizedBox(
               width: double.infinity,
-              child: Text('Buy ${cryptocurrency.symbol.toUpperCase()}',
+              child: Text('BUY ${cryptocurrency.name.toUpperCase()}',
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                      color: Color(MyColors.colorText),
+                      color: Colors.white,
                       fontSize: 20,
                       fontWeight: FontWeight.bold)),
             )));
