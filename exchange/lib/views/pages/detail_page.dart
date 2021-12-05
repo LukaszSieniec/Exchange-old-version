@@ -38,7 +38,7 @@ class DetailPage extends StatelessWidget {
                               ])
                         ]),
                         Column(children: [
-                          Text('${cryptocurrency.priceChangePercentage24h}%',
+                          Text('${cryptocurrency.priceChangePercentage24h}',
                               style: const TextStyle(
                                   color: Colors.green, fontSize: 18.0)),
                           Text('\$${cryptocurrency.currentPrice}',
@@ -102,16 +102,28 @@ class DetailPage extends StatelessWidget {
                         margin: const EdgeInsets.only(top: 16.0, bottom: 16.0),
                         child: CryptocurrencySummary(cryptocurrency),
                       )),
-                  FloatingActionButton.extended(
-                      backgroundColor: const Color(MyColors.colorText),
-                      foregroundColor: Colors.white,
-                      elevation: 6,
-                      onPressed: () {},
-                      icon: const Icon(Icons.arrow_right_alt_outlined),
-                      label: Text('Buy ${cryptocurrency.symbol.toUpperCase()}',
-                          style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold))),
+                  _buildBuyButton()
                 ]))));
+  }
+
+  Widget _buildBuyButton() {
+    return OutlinedButton(
+        onPressed: () {},
+        style: OutlinedButton.styleFrom(
+            side: const BorderSide(width: 2.0, color: Colors.green),
+            shape: const StadiumBorder(),
+            backgroundColor: const Color(MyColors.brighterBackground)),
+        child: Padding(
+            padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
+            child: SizedBox(
+              width: double.infinity,
+              child: Text('Buy ${cryptocurrency.symbol.toUpperCase()}',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      color: Color(MyColors.colorText),
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold)),
+            )));
   }
 
   Widget _buildTimeButton(String text) {
