@@ -40,7 +40,7 @@ class CryptocurrencyItem extends StatelessWidget {
                   flex: 1,
                   child: SfSparkLineChart(
                       color: Colors.green,
-                      data: cryptocurrency.price
+                      data: cryptocurrency.sparkline.price
                           .map((number) => number as num)
                           .toList(),
                       axisLineWidth: 0)),

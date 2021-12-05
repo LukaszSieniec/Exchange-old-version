@@ -1,15 +1,16 @@
 class PopularCryptocurrency {
-  late final dynamic id, name, symbol;
+  final String id, name, symbol;
 
-  PopularCryptocurrency(this.id, this.name, this.symbol);
+  PopularCryptocurrency(
+      {required this.id, required this.name, required this.symbol});
 
-  PopularCryptocurrency.fromJson(Map<String, dynamic> json) {
-    if (json['item'] != null) {
-      Map<String, dynamic> cryptocurrency = json['item'];
+  factory PopularCryptocurrency.fromJson(Map<String, dynamic> json) {
+    late final Map<String, dynamic> cryptocurrency;
+    if (json['item'] != null) cryptocurrency = json['item'];
 
-      id = cryptocurrency['id'];
-      name = cryptocurrency['name'];
-      symbol = cryptocurrency['symbol'];
-    }
+    return PopularCryptocurrency(
+        id: cryptocurrency['id'],
+        name: cryptocurrency['name'],
+        symbol: cryptocurrency['symbol']);
   }
 }

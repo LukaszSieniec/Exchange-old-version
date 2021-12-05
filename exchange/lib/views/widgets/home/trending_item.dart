@@ -54,7 +54,7 @@ class TrendingItem extends StatelessWidget {
                           margin: const EdgeInsets.all(12.0),
                           child: SfSparkLineChart(
                               color: Colors.green,
-                              data: cryptocurrency.price
+                              data: cryptocurrency.sparkline.price
                                   .map((number) => number as num)
                                   .toList(),
                               axisLineWidth: 0)),
@@ -68,8 +68,10 @@ class TrendingItem extends StatelessWidget {
 }
 
 Icon _getIcon(Cryptocurrency cryptocurrency) {
-  return cryptocurrency.price[cryptocurrency.price.length - 1] >
-          cryptocurrency.price[cryptocurrency.price.length - 2]
+  return cryptocurrency
+              .sparkline.price[cryptocurrency.sparkline.price.length - 1] >
+          cryptocurrency
+              .sparkline.price[cryptocurrency.sparkline.price.length - 2]
       ? const Icon(Icons.trending_up_outlined, color: Colors.green, size: 32)
       : const Icon(Icons.trending_down_outlined, color: Colors.red, size: 32);
 }
