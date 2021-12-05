@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:exchange/models/cryptocurrency.dart';
-import 'package:exchange/models/popular_cryptocurrency.dart';
 
 abstract class CryptocurrenciesState extends Equatable {
   const CryptocurrenciesState();

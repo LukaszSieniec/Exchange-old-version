@@ -13,8 +13,10 @@ class CryptocurrencyItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTap: () => Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const DetailPage())),
+        onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => DetailPage(cryptocurrency))),
         child: Container(
             margin: const EdgeInsets.only(
                 top: 12.0, bottom: 12.0, left: 8.0, right: 8.0),

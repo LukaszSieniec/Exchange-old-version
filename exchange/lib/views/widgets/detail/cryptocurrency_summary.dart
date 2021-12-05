@@ -1,9 +1,11 @@
 import 'package:exchange/constants/my_constants.dart';
+import 'package:exchange/models/cryptocurrency.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CryptocurrencySummary extends StatelessWidget {
-  const CryptocurrencySummary({Key? key}) : super(key: key);
+  final Cryptocurrency cryptocurrency;
+  const CryptocurrencySummary(this.cryptocurrency, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,16 +16,16 @@ class CryptocurrencySummary extends StatelessWidget {
         child: Column(children: [
           Expanded(
             child: Row(children: [
-            _buildSingleInformation(MyLabels.rank, '#1', isTopLeftRadius: true),
-            _buildSingleInformation(MyLabels.maxSupply, '21M'),
-            _buildSingleInformation(MyLabels.circulating, 'N/A',
+            _buildSingleInformation(MyLabels.rank, '#${cryptocurrency.marketCapRank}', isTopLeftRadius: true),
+            _buildSingleInformation(MyLabels.maxSupply, '${cryptocurrency.totalSupply ?? 'N/A'}'),
+            _buildSingleInformation(MyLabels.circulating, '${cryptocurrency.circulatingSupply ?? 'N/A'}',
                 isTopRightRadius: true)
           ])),
           Expanded(
             child: Row(children: [
               _buildSingleInformation(MyLabels.dayVolume, '\$ 36,99B',
                   flex: 2, isBottomLeftRadius: true),
-              _buildSingleInformation(MyLabels.marketCap, '\$ 1,03T',
+              _buildSingleInformation(MyLabels.marketCap, '\$ ${cryptocurrency.marketCap}',
                   flex: 2, isBottomRightRadius: true)
             ])
           )

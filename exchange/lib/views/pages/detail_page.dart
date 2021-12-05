@@ -1,10 +1,13 @@
 import 'package:exchange/constants/my_constants.dart';
+import 'package:exchange/models/cryptocurrency.dart';
 import 'package:exchange/views/widgets/detail/cryptocurrency_summary.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 class DetailPage extends StatelessWidget {
-  const DetailPage({Key? key}) : super(key: key);
+  final Cryptocurrency cryptocurrency;
+
+  const DetailPage(this.cryptocurrency, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,28 +21,28 @@ class DetailPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(children: [
-                          const Icon(Icons.attach_money_outlined,
-                              size: 40, color: Colors.white),
+                          Image.network(cryptocurrency.image, height: 40.0),
+                          const SizedBox(width: 6.0),
                           Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Text('BTC',
-                                    style: TextStyle(
+                              children: [
+                                Text(cryptocurrency.symbol.toUpperCase(),
+                                    style: const TextStyle(
                                         color: Color(MyColors.colorText),
                                         fontSize: 18.0)),
-                                Text('Bitcoin',
-                                    style: TextStyle(
+                                Text(cryptocurrency.name,
+                                    style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 28.0,
                                         fontWeight: FontWeight.bold))
                               ])
                         ]),
-                        Column(children: const [
-                          Text('+1,47%',
-                              style: TextStyle(
+                        Column(children: [
+                          Text('${cryptocurrency.priceChangePercentage24h}%',
+                              style: const TextStyle(
                                   color: Colors.green, fontSize: 18.0)),
-                          Text('\$60,359',
-                              style: TextStyle(
+                          Text('\$${cryptocurrency.currentPrice}',
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 28.0,
                                   fontWeight: FontWeight.bold))
@@ -97,36 +100,18 @@ class DetailPage extends StatelessWidget {
                       flex: 2,
                       child: Container(
                         margin: const EdgeInsets.only(top: 16.0, bottom: 16.0),
-                        child: const CryptocurrencySummary(),
+                        child: CryptocurrencySummary(cryptocurrency),
                       )),
-                  Column(children: [
-                    _buildOpenBrowserButton('Website', 'etherum.org',
-                        Icons.open_in_browser_outlined),
-                    _buildOpenBrowserButton(
-                        'Github', 'github.com/etherum', Icons.language_outlined)
-                  ])
+                  FloatingActionButton.extended(
+                      backgroundColor: const Color(MyColors.colorText),
+                      foregroundColor: Colors.white,
+                      elevation: 6,
+                      onPressed: () {},
+                      icon: const Icon(Icons.arrow_right_alt_outlined),
+                      label: Text('Buy ${cryptocurrency.symbol.toUpperCase()}',
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold))),
                 ]))));
-  }
-
-  Widget _buildOpenBrowserButton(
-      String title, String website, IconData iconData) {
-    return OutlinedButton(
-        onPressed: () {},
-        style: OutlinedButton.styleFrom(
-            backgroundColor: const Color(MyColors.brighterBackground)),
-        child: Padding(
-            padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(children: [
-                    Icon(iconData),
-                    const SizedBox(width: 8.0),
-                    Text(title)
-                  ]),
-                  Text(website,
-                      style: const TextStyle(color: Color(MyColors.colorText)))
-                ])));
   }
 
   Widget _buildTimeButton(String text) {
