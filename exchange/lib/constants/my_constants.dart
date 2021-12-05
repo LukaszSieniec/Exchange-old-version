@@ -16,8 +16,8 @@ class MyLabels {
   static const String week = 'W';
   static const String month = 'M';
   static const String threeMonths = '3M';
+  static const String sixMonths = '6M';
   static const String year = 'Y';
-  static const String all = 'All';
 
   static const String rank = 'Rank';
   static const String dayVolume = 'Day Volume';

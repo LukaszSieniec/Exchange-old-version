@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:exchange/models/cryptocurrency.dart';
+import 'package:exchange/models/market_chart_data.dart';
 import 'package:exchange/models/popular_cryptocurrency.dart';
 
 class CryptocurrencyService {
@@ -60,6 +61,17 @@ class CryptocurrencyService {
 
     if (response.statusCode == 200) {
       return Cryptocurrency.fromJson(response.data);
+    } else {
+      throw Exception('Error!');
+    }
+  }
+
+  Future<MarketChartData> fetchMarketChart(String id, int days) async {
+    final response = await _dio.get('coins/$id/market_chart',
+        queryParameters: {'vs_currency': 'usd', 'days': days});
+
+    if (response.statusCode == 200) {
+      return MarketChartData.fromJson(response.data);
     } else {
       throw Exception('Error!');
     }

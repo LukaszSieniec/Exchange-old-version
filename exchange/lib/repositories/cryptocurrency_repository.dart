@@ -1,4 +1,5 @@
 import 'package:exchange/models/cryptocurrency.dart';
+import 'package:exchange/models/market_chart_data.dart';
 import 'package:exchange/models/popular_cryptocurrency.dart';
 import 'package:exchange/services/cryptocurrency_service.dart';
 
@@ -30,5 +31,11 @@ class CryptocurrencyRepository {
     final Cryptocurrency cryptocurrency =
         await _cryptocurrencyService.fetchCryptocurrency(id);
     return cryptocurrency;
+  }
+
+  Future<MarketChartData> fetchMarketChart(String id, {int days = 1}) async {
+    final MarketChartData marketChartData =
+        await _cryptocurrencyService.fetchMarketChart(id, days);
+    return marketChartData;
   }
 }

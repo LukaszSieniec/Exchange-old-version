@@ -1,7 +1,11 @@
+import 'package:exchange/blocs/market_chart/market_chart_bloc.dart';
+import 'package:exchange/blocs/market_chart/market_chart_event.dart';
+import 'package:exchange/blocs/market_chart/market_chart_state.dart';
 import 'package:exchange/constants/my_constants.dart';
 import 'package:exchange/models/cryptocurrency.dart';
 import 'package:exchange/views/widgets/detail/cryptocurrency_summary.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 class DetailPage extends StatelessWidget {
@@ -11,6 +15,9 @@ class DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<MarketChartBloc>(context)
+        .add(MarketChartLoaded(cryptocurrency.id));
+
     return Scaffold(
         backgroundColor: const Color(MyColors.background),
         body: SafeArea(
@@ -64,16 +71,31 @@ class DetailPage extends StatelessWidget {
                                     child: Padding(
                                         padding:
                                             const EdgeInsets.only(top: 8.0),
-                                        child: SfSparkAreaChart.custom(
-                                            borderColor: Colors.green,
-                                            color: const Color(
-                                                MyColors.background),
-                                            xValueMapper: (index) =>
-                                                coinsData[index].time,
-                                            yValueMapper: (index) =>
-                                                coinsData[index].price,
-                                            dataCount: coinsData.length,
-                                            axisLineWidth: 0))),
+                                        child: BlocBuilder<MarketChartBloc,
+                                                MarketChartState>(
+                                            builder: (context, state) {
+                                          if (state
+                                              is MarketChartStateLoadInProgress) {
+                                            return _buildLoading();
+                                          } else if (state
+                                              is MarketChartLoadSuccess) {
+                                            return SfSparkAreaChart.custom(
+                                                borderColor: Colors.green,
+                                                color: const Color(
+                                                    MyColors.background),
+                                                dataCount: state.marketChartData
+                                                    .prices.length,
+                                                xValueMapper: (index) => state
+                                                    .marketChartData
+                                                    .prices[index][0],
+                                                yValueMapper: (index) => state
+                                                    .marketChartData
+                                                    .prices[index][1],
+                                                axisLineWidth: 0);
+                                          } else if (state
+                                              is MarketChartLoadFailure) {}
+                                          return Container();
+                                        }))),
                                 DefaultTabController(
                                     length: 6,
                                     initialIndex: 0,
@@ -84,16 +106,19 @@ class DetailPage extends StatelessWidget {
                                                 color: Color(MyColors.orange)),
                                             insets: EdgeInsets.symmetric(
                                                 horizontal: 16.0)),
-                                        onTap: (value) => debugPrint(
-                                            'Selected value: $value'),
+                                        onTap: (index) =>
+                                            BlocProvider.of<MarketChartBloc>(
+                                                    context)
+                                                .add(MarketChartUpdated(
+                                                    cryptocurrency.id, index)),
                                         tabs: [
                                           _buildTimeButton(MyLabels.day),
                                           _buildTimeButton(MyLabels.week),
                                           _buildTimeButton(MyLabels.month),
                                           _buildTimeButton(
                                               MyLabels.threeMonths),
-                                          _buildTimeButton(MyLabels.year),
-                                          _buildTimeButton(MyLabels.all)
+                                          _buildTimeButton(MyLabels.sixMonths),
+                                          _buildTimeButton(MyLabels.year)
                                         ]))
                               ])))),
                   Expanded(
@@ -136,26 +161,6 @@ class DetailPage extends StatelessWidget {
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold)));
   }
+
+  Widget _buildLoading() => const Center(child: CircularProgressIndicator());
 }
-
-class CoinData {
-  const CoinData(this.time, this.price);
-
-  final int time;
-  final double price;
-}
-
-const List<CoinData> coinsData = [
-  CoinData(1637529443830, 59785.88707927606),
-  CoinData(1637529443830, 59785.88707927606),
-  CoinData(1637529843709, 59755.79522398186),
-  CoinData(1637530067007, 59763.253314338814),
-  CoinData(1637530067007, 59763.253314338814),
-  CoinData(1637530472420, 59780.79902053801),
-  CoinData(1637530664017, 59884.16762029886),
-  CoinData(1637531018318, 59868.582469010966),
-  CoinData(1637531399027, 59755.082063516296),
-  CoinData(1637531600125, 59784.55987917839),
-  CoinData(1637531962313, 59724.225446220335),
-  CoinData(1637532195996, 59745.319183421925),
-];
