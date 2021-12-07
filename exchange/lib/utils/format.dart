@@ -1,6 +1,10 @@
 import 'package:intl/intl.dart';
 
-String getShortNumber(num number) {
-  NumberFormat shortFormat = NumberFormat.compact(locale: "en_US");
-  return shortFormat.format(number);
+String getShortNumber(num? number) {
+  if (number != null) {
+    NumberFormat shortFormat = NumberFormat.compact(locale: "en_US");
+    return shortFormat.format(number);
+  } else {
+    return 'N/A';
+  }
 }
