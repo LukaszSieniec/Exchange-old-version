@@ -32,11 +32,17 @@ class TrendingItem extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(children: [
-                              Image.network(cryptocurrency.image, scale: 8.0),
-                              const SizedBox(width: 4.0),
+                              CircleAvatar(
+                                radius: 16.0,
+                                backgroundImage:
+                                    NetworkImage(cryptocurrency.image),
+                                backgroundColor: Colors.transparent,
+                              ),
+                              const SizedBox(width: 6.0),
                               Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+
                                     Text(cryptocurrency.symbol.toUpperCase(),
                                         style: const TextStyle(
                                             color: Colors.white,
