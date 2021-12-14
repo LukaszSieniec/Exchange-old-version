@@ -2,19 +2,19 @@ import 'package:exchange/constants/my_constants.dart';
 import 'package:flutter/material.dart';
 
 class KeyboardButton extends StatelessWidget {
-  const KeyboardButton(this.label, this.isCircularLeft, this.isCircularRight,
-      this.onTap, this.iconData,
-      {Key? key})
-      : super(key: key);
-
-  final String label;
+  final String? label;
 
   final bool isCircularLeft;
   final bool isCircularRight;
 
   final VoidCallback onTap;
 
-  final IconData iconData;
+  const KeyboardButton(this.onTap,
+      {this.label,
+      this.isCircularLeft = false,
+      this.isCircularRight = false,
+      Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +33,8 @@ class KeyboardButton extends StatelessWidget {
                         : const Radius.circular(0)))),
         child: Center(
             child: label != null
-                ? Text(label,
+                ? Text(label!,
                     style: const TextStyle(fontSize: 24, color: Colors.black))
-                : Icon(iconData, color: Colors.black)));
+                : const Icon(Icons.backspace_outlined, color: Colors.black)));
   }
 }
