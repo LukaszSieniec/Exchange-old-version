@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
+import 'buy_cryptocurrency.dart';
+
 class DetailPage extends StatelessWidget {
   final Cryptocurrency cryptocurrency;
 
@@ -127,14 +129,17 @@ class DetailPage extends StatelessWidget {
                         margin: const EdgeInsets.only(top: 16.0, bottom: 16.0),
                         child: CryptocurrencySummary(cryptocurrency),
                       )),
-                  _buildBuyButton(),
+                  _buildBuyButton(context),
                   const SizedBox(height: 8.0)
                 ]))));
   }
 
-  Widget _buildBuyButton() {
+  Widget _buildBuyButton(BuildContext context) {
     return OutlinedButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => BuyCryptocurrency()));
+        },
         style: OutlinedButton.styleFrom(
             side: const BorderSide(width: 2.0, color: Colors.green),
             shape: const StadiumBorder(),
