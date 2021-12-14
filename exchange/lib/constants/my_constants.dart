@@ -6,6 +6,21 @@ class MyColors {
 }
 
 class MyLabels {
+  static const List<String> buttonLabels = [
+    one,
+    two,
+    three,
+    four,
+    five,
+    six,
+    seven,
+    eight,
+    nine,
+    dot,
+    zero,
+    backspace
+  ];
+
   static const String cryptocurrencies = 'Cryptocurrencies';
   static const String trending = 'Trending';
   static const String home = 'Home';
@@ -24,4 +39,17 @@ class MyLabels {
   static const String marketCap = 'Market Cap';
   static const String maxSupply = 'Max Supply';
   static const String circulating = 'Circulating';
+
+  static const String one = '1';
+  static const String two = '2';
+  static const String three = '3';
+  static const String four = '4';
+  static const String five = '5';
+  static const String six = '6';
+  static const String seven = '7';
+  static const String eight = '8';
+  static const String nine = '9';
+  static const String dot = '.';
+  static const String zero = '0';
+  static const String backspace = 'Backspace';
 }

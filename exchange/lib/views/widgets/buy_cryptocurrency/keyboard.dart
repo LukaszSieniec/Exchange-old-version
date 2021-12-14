@@ -1,4 +1,5 @@
 import 'package:exchange/constants/my_constants.dart';
+import 'package:exchange/views/widgets/buy_cryptocurrency/keyboard_button.dart';
 import 'package:flutter/material.dart';
 
 class Keyboard extends StatelessWidget {
@@ -8,17 +9,13 @@ class Keyboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.builder(
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: 12,
+        itemCount: MyLabels.buttonLabels.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 4, crossAxisSpacing: 4.0, mainAxisSpacing: 4.0),
-        itemBuilder: (context, index) => Card(
-            elevation: 4.0,
-            color: const Color(MyColors.brighterBackground),
-            child: Center(
-                child: Text('$index',
-                    style: const TextStyle(
-                        fontSize: 32.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white)))));
+            childAspectRatio: 2.0,
+            crossAxisCount: 3,
+            crossAxisSpacing: 12.0,
+            mainAxisSpacing: 12.0),
+        itemBuilder: (context, index) =>
+            KeyboardButton(label: MyLabels.buttonLabels[index]));
   }
 }

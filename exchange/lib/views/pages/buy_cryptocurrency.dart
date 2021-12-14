@@ -47,7 +47,6 @@ class BuyCryptocurrency extends StatelessWidget {
 
   Widget _buildKeyboard() {
     return const Padding(
-        padding: EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
-        child: Keyboard());
+        padding: EdgeInsets.only(left: 8.0, right: 8.0), child: Keyboard());
   }
 }

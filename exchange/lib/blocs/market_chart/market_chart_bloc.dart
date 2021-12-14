@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MarketChartBloc extends Bloc<MarketChartEvent, MarketChartState> {
   final CryptocurrencyRepository _cryptocurrencyRepository;
-  final List<int> _days = [1, 7, 30, 90, 180, 360];
+  final List<int> _days = const [1, 7, 30, 90, 180, 360];
 
   MarketChartBloc(this._cryptocurrencyRepository)
       : super(MarketChartStateLoadInProgress()) {
@@ -16,20 +16,21 @@ class MarketChartBloc extends Bloc<MarketChartEvent, MarketChartState> {
 
   void _onMarketChart(
       MarketChartEvent event, Emitter<MarketChartState> emit) async {
+    final MarketChartData marketChart;
+
     emit(MarketChartStateLoadInProgress());
     if (event is MarketChartLoaded) {
       try {
-        final MarketChartData marketChart =
+        marketChart =
             await _cryptocurrencyRepository.fetchMarketChart(event.id);
-
         emit(MarketChartLoadSuccess(marketChart));
       } on Exception {
         emit(MarketChartLoadFailure());
       }
     } else if (event is MarketChartUpdated) {
       try {
-        final MarketChartData marketChart = await _cryptocurrencyRepository
-            .fetchMarketChart(event.id, days: _days[event.index]);
+        marketChart = await _cryptocurrencyRepository.fetchMarketChart(event.id,
+            days: _days[event.index]);
         emit(MarketChartLoadSuccess(marketChart));
       } on Exception {
         emit(MarketChartLoadFailure());

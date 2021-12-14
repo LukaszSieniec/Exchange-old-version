@@ -2,39 +2,25 @@ import 'package:exchange/constants/my_constants.dart';
 import 'package:flutter/material.dart';
 
 class KeyboardButton extends StatelessWidget {
-  final String? label;
+  final String label;
 
-  final bool isCircularLeft;
-  final bool isCircularRight;
-
-  final VoidCallback onTap;
-
-  const KeyboardButton(this.onTap,
-      {this.label,
-      this.isCircularLeft = false,
-      this.isCircularRight = false,
-      Key? key})
-      : super(key: key);
+  const KeyboardButton({required this.label, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-        onPressed: () => onTap(),
+        onPressed: () => debugPrint('Clicked $label'),
         style: OutlinedButton.styleFrom(
+            elevation: 4.0,
             backgroundColor: const Color(MyColors.brighterBackground),
-            side: const BorderSide(color: Colors.white, width: 1),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    bottomLeft: isCircularLeft
-                        ? const Radius.circular(12)
-                        : const Radius.circular(0),
-                    bottomRight: isCircularRight
-                        ? const Radius.circular(12)
-                        : const Radius.circular(0)))),
+            side: BorderSide(color: Colors.grey[800]!, width: 1.0),
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(16.0)))),
         child: Center(
-            child: label != null
-                ? Text(label!,
-                    style: const TextStyle(fontSize: 24, color: Colors.black))
-                : const Icon(Icons.backspace_outlined, color: Colors.black)));
+            child: label != MyLabels.backspace
+                ? Text(label,
+                    style: const TextStyle(fontSize: 32.0, color: Colors.white))
+                : const Icon(Icons.backspace_outlined,
+                    color: Colors.white, size: 32.0)));
   }
 }
