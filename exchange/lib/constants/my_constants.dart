@@ -6,21 +6,6 @@ class MyColors {
 }
 
 class MyLabels {
-  static const List<String> buttonLabels = [
-    one,
-    two,
-    three,
-    four,
-    five,
-    six,
-    seven,
-    eight,
-    nine,
-    dot,
-    zero,
-    backspace
-  ];
-
   static const String cryptocurrencies = 'Cryptocurrencies';
   static const String trending = 'Trending';
   static const String home = 'Home';
@@ -52,4 +37,19 @@ class MyLabels {
   static const String dot = '.';
   static const String zero = '0';
   static const String backspace = 'Backspace';
+
+  static const List<String> keyboardLabels = [
+    one,
+    two,
+    three,
+    four,
+    five,
+    six,
+    seven,
+    eight,
+    nine,
+    dot,
+    zero,
+    backspace
+  ];
 }

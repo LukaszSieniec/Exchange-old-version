@@ -9,13 +9,13 @@ class Keyboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.builder(
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: MyLabels.buttonLabels.length,
+        itemCount: MyLabels.keyboardLabels.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             childAspectRatio: 2.0,
             crossAxisCount: 3,
             crossAxisSpacing: 12.0,
             mainAxisSpacing: 12.0),
         itemBuilder: (context, index) =>
-            KeyboardButton(label: MyLabels.buttonLabels[index]));
+            KeyboardButton(MyLabels.keyboardLabels[index]));
   }
 }

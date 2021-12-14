@@ -137,8 +137,10 @@ class DetailPage extends StatelessWidget {
   Widget _buildBuyButton(BuildContext context) {
     return OutlinedButton(
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => BuyCryptocurrency()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const BuyCryptocurrency()));
         },
         style: OutlinedButton.styleFrom(
             side: const BorderSide(width: 2.0, color: Colors.green),
@@ -147,14 +149,13 @@ class DetailPage extends StatelessWidget {
         child: Padding(
             padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
             child: SizedBox(
-              width: double.infinity,
-              child: Text('BUY ${cryptocurrency.name.toUpperCase()}',
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold)),
-            )));
+                width: double.infinity,
+                child: Text('BUY ${cryptocurrency.name.toUpperCase()}',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold)))));
   }
 
   Widget _buildTimeButton(String text) {

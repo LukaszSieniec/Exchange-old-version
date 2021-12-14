@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class KeyboardButton extends StatelessWidget {
   final String label;
 
-  const KeyboardButton({required this.label, Key? key}) : super(key: key);
+  const KeyboardButton(this.label, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
