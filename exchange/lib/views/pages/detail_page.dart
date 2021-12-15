@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
-import 'buy_cryptocurrency.dart';
+import 'buy_cryptocurrency_page.dart';
 
 class DetailPage extends StatelessWidget {
   final Cryptocurrency cryptocurrency;
@@ -140,7 +140,7 @@ class DetailPage extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const BuyCryptocurrency()));
+                  builder: (context) => const BuyCryptocurrencyPage()));
         },
         style: OutlinedButton.styleFrom(
             side: const BorderSide(width: 2.0, color: Colors.green),
