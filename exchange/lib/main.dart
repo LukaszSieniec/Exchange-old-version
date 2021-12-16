@@ -8,12 +8,12 @@ import 'package:exchange/views/pages/basic_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'blocs/buy_cryptocurrency/buy_cryptocurrency_bloc.dart';
 import 'database/account_balance.dart';
 
 void main() async {
   runApp(const MyApp());
   await AccountBalance.init();
-  debugPrint('${await AccountBalance.readAccountBalance()}');
 }
 
 class MyApp extends StatelessWidget {
@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => BottomNavigationBarBloc()),
+          BlocProvider(create: (context) => BuyCryptocurrenciesBloc()),
           BlocProvider(
               create: (context) => CryptocurrenciesBloc(
                   CryptocurrencyRepository(CryptocurrencyService()))

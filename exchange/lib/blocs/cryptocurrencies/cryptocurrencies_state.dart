@@ -18,7 +18,7 @@ class CryptocurrenciesLoadSuccess extends CryptocurrenciesState {
       [this.cryptocurrencies = const [], this.trending = const []]);
 
   @override
-  List<Object> get props => [cryptocurrencies];
+  List<Object> get props => [cryptocurrencies, trending];
 }
 
 class CryptocurrenciesLoadFailure extends CryptocurrenciesState {}
