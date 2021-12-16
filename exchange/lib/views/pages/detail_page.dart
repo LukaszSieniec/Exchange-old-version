@@ -140,7 +140,7 @@ class DetailPage extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const BuyCryptocurrencyPage()));
+                  builder: (context) => BuyCryptocurrencyPage(cryptocurrency)));
         },
         style: OutlinedButton.styleFrom(
             side: const BorderSide(width: 2.0, color: Colors.green),

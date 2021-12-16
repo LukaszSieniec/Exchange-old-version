@@ -1,11 +1,15 @@
 import 'package:exchange/constants/my_constants.dart';
+import 'package:exchange/models/cryptocurrency.dart';
 import 'package:exchange/views/widgets/buy_cryptocurrency/confirm_button.dart';
 import 'package:exchange/views/widgets/buy_cryptocurrency/keyboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BuyCryptocurrencyPage extends StatelessWidget {
-  const BuyCryptocurrencyPage({Key? key}) : super(key: key);
+  final Cryptocurrency cryptocurrency;
+
+  const BuyCryptocurrencyPage(this.cryptocurrency, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +35,7 @@ class BuyCryptocurrencyPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Divider(height: 2.0, color: Colors.white),
-                  const Text('250 \$',
+                  const Text('0 \$',
                       style: TextStyle(fontSize: 48.0, color: Colors.white)),
                   Container(
                       margin: const EdgeInsets.only(
@@ -39,12 +43,12 @@ class BuyCryptocurrencyPage extends StatelessWidget {
                       child: Column(children: [
                         Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Text('Estimated BTC: ',
-                                  style: TextStyle(
+                            children: [
+                              Text('Estimated ${cryptocurrency.symbol.toUpperCase()}: ',
+                                  style: const TextStyle(
                                       fontSize: 16.0,
                                       color: Color(MyColors.colorText))),
-                              Text('0,0871',
+                              const Text('0.0',
                                   style: TextStyle(
                                       fontSize: 20.0,
                                       color: Colors.white,
