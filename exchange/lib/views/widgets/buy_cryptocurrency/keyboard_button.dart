@@ -1,5 +1,8 @@
+import 'package:exchange/blocs/buy_cryptocurrency/buy_cryptocurrency_bloc.dart';
+import 'package:exchange/blocs/buy_cryptocurrency/buy_cryptocurrency_event.dart';
 import 'package:exchange/constants/my_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class KeyboardButton extends StatelessWidget {
   final String label;
@@ -9,7 +12,8 @@ class KeyboardButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-        onPressed: () => debugPrint('Clicked $label'),
+        onPressed: () => BlocProvider.of<BuyCryptocurrenciesBloc>(context)
+            .add(AmountCryptocurrencyUpdated(label)),
         style: OutlinedButton.styleFrom(
             elevation: 4.0,
             backgroundColor: const Color(MyColors.brighterBackground),

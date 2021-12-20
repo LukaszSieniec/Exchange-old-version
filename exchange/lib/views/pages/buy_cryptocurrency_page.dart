@@ -1,9 +1,12 @@
+import 'package:exchange/blocs/buy_cryptocurrency/buy_cryptocurrency_bloc.dart';
+import 'package:exchange/blocs/buy_cryptocurrency/buy_cryptocurrency_state.dart';
 import 'package:exchange/constants/my_constants.dart';
 import 'package:exchange/models/cryptocurrency.dart';
 import 'package:exchange/views/widgets/buy_cryptocurrency/confirm_button.dart';
 import 'package:exchange/views/widgets/buy_cryptocurrency/keyboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BuyCryptocurrencyPage extends StatelessWidget {
   final Cryptocurrency cryptocurrency;
@@ -13,21 +16,26 @@ class BuyCryptocurrencyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
+    return BlocBuilder<BuyCryptocurrenciesBloc, BuyCryptocurrenciesState>(
+        builder: (context, state) {
+      if (state is BuyCryptocurrenciesLoadInProgress) {
+        return _buildLoading();
+      } else if (state is BuyCryptocurrenciesInitial) {
+        return Scaffold(
             backgroundColor: const Color(MyColors.background),
             appBar: AppBar(
                 backgroundColor: Colors.transparent,
                 elevation: 0,
-                flexibleSpace: Align(
-                    alignment: AlignmentDirectional.centerEnd,
-                    child: Container(
-                        margin: const EdgeInsets.only(right: 8.0),
-                        child: const Text('Balance: 378.12',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 24.0,
-                                fontWeight: FontWeight.bold)))),
+                flexibleSpace: SafeArea(
+                    child: Align(
+                        alignment: AlignmentDirectional.centerEnd,
+                        child: Container(
+                            margin: const EdgeInsets.only(right: 8.0),
+                            child: Text('Balance: ${state.accountBalance}',
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 24.0,
+                                    fontWeight: FontWeight.bold))))),
                 leading: IconButton(
                     icon: const Icon(Icons.arrow_back),
                     onPressed: () => Navigator.of(context).pop())),
@@ -35,8 +43,9 @@ class BuyCryptocurrencyPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Divider(height: 2.0, color: Colors.white),
-                  const Text('0 \$',
-                      style: TextStyle(fontSize: 48.0, color: Colors.white)),
+                  Text('${state.amount} \$',
+                      style:
+                          const TextStyle(fontSize: 48.0, color: Colors.white)),
                   Container(
                       margin: const EdgeInsets.only(
                           bottom: 16.0, left: 8.0, right: 8.0),
@@ -44,7 +53,8 @@ class BuyCryptocurrencyPage extends StatelessWidget {
                         Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('Estimated ${cryptocurrency.symbol.toUpperCase()}: ',
+                              Text(
+                                  'Estimated ${cryptocurrency.symbol.toUpperCase()}: ',
                                   style: const TextStyle(
                                       fontSize: 16.0,
                                       color: Color(MyColors.colorText))),
@@ -59,6 +69,11 @@ class BuyCryptocurrencyPage extends StatelessWidget {
                         const SizedBox(height: 32.0),
                         const ConfirmButton()
                       ]))
-                ])));
+                ]));
+      }
+      return Container();
+    });
   }
+
+  Widget _buildLoading() => const Center(child: CircularProgressIndicator());
 }

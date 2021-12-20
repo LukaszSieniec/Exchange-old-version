@@ -1,25 +1,35 @@
 import 'package:equatable/equatable.dart';
 
 abstract class BuyCryptocurrenciesState extends Equatable {
-  final String amount;
-  final String estimatedQuantity;
-
-  const BuyCryptocurrenciesState(this.amount, this.estimatedQuantity);
+  const BuyCryptocurrenciesState();
 }
 
 class BuyCryptocurrenciesInitial extends BuyCryptocurrenciesState {
-  const BuyCryptocurrenciesInitial(
-      final String amount, final String estimatedQuantity)
-      : super(amount, estimatedQuantity);
+  final double accountBalance, estimatedQuantity;
+  final String amount;
+
+  const BuyCryptocurrenciesInitial(this.accountBalance, this.amount, this.estimatedQuantity);
 
   @override
-  List<Object> get props => throw UnimplementedError();
+  List<Object> get props => [accountBalance, amount, estimatedQuantity];
 }
 
-class BuyCryptocurrenciesError extends BuyCryptocurrenciesState {
-  const BuyCryptocurrenciesError(String amount, String estimatedQuantity)
-      : super(amount, estimatedQuantity);
+class BuyCryptocurrenciesLoadInProgress extends BuyCryptocurrenciesState {
+  @override
+  List<Object> get props => [];
+}
+
+class BuyCryptocurrenciesLoadSuccess extends BuyCryptocurrenciesState {
+  final String amount;
+  final String estimatedQuantity;
+
+  const BuyCryptocurrenciesLoadSuccess(this.amount, this.estimatedQuantity);
 
   @override
-  List<Object> get props => throw UnimplementedError();
+  List<Object> get props => [amount, estimatedQuantity];
+}
+
+class BuyCryptocurrenciesLoadFailure extends BuyCryptocurrenciesState {
+  @override
+  List<Object> get props => [];
 }
