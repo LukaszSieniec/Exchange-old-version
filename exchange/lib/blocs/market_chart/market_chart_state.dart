@@ -8,7 +8,7 @@ abstract class MarketChartState extends Equatable {
   List<Object> get props => [];
 }
 
-class MarketChartStateLoadInProgress extends MarketChartState {}
+class MarketChartLoadInProgress extends MarketChartState {}
 
 class MarketChartLoadSuccess extends MarketChartState {
   final MarketChartData marketChartData;

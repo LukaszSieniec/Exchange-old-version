@@ -10,7 +10,7 @@ class CryptocurrenciesBloc
   final CryptocurrencyRepository _cryptocurrencyRepository;
 
   CryptocurrenciesBloc(this._cryptocurrencyRepository)
-      : super(CryptocurrenciesStateLoadInProgress()) {
+      : super(CryptocurrenciesLoadInProgress()) {
     on<CryptocurrenciesLoaded>(_onCryptocurrenciesLoaded);
   }
 

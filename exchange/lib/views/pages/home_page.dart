@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CryptocurrenciesBloc, CryptocurrenciesState>(
         builder: (context, state) {
-      if (state is CryptocurrenciesStateLoadInProgress) {
+      if (state is CryptocurrenciesLoadInProgress) {
         return _buildLoading();
       } else if (state is CryptocurrenciesLoadSuccess) {
         return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

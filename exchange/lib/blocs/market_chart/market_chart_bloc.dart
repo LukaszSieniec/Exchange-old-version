@@ -9,7 +9,7 @@ class MarketChartBloc extends Bloc<MarketChartEvent, MarketChartState> {
   final List<int> _days = const [1, 7, 30, 90, 180, 360];
 
   MarketChartBloc(this._cryptocurrencyRepository)
-      : super(MarketChartStateLoadInProgress()) {
+      : super(MarketChartLoadInProgress()) {
     on<MarketChartLoaded>(_onMarketChart);
     on<MarketChartUpdated>(_onMarketChart);
   }
@@ -18,7 +18,7 @@ class MarketChartBloc extends Bloc<MarketChartEvent, MarketChartState> {
       MarketChartEvent event, Emitter<MarketChartState> emit) async {
     final MarketChartData marketChart;
 
-    emit(MarketChartStateLoadInProgress());
+    emit(MarketChartLoadInProgress());
     if (event is MarketChartLoaded) {
       try {
         marketChart =

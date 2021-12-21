@@ -77,7 +77,7 @@ class DetailPage extends StatelessWidget {
                                                 MarketChartState>(
                                             builder: (context, state) {
                                           if (state
-                                              is MarketChartStateLoadInProgress) {
+                                              is MarketChartLoadInProgress) {
                                             return _buildLoading();
                                           } else if (state
                                               is MarketChartLoadSuccess) {

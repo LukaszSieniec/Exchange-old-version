@@ -8,7 +8,7 @@ abstract class CryptocurrenciesState extends Equatable {
   List<Object> get props => [];
 }
 
-class CryptocurrenciesStateLoadInProgress extends CryptocurrenciesState {}
+class CryptocurrenciesLoadInProgress extends CryptocurrenciesState {}
 
 class CryptocurrenciesLoadSuccess extends CryptocurrenciesState {
   final List<Cryptocurrency> cryptocurrencies;
