@@ -53,3 +53,7 @@ class MyLabels {
     backspace
   ];
 }
+
+class Messages {
+  static const String notEnoughFunds = 'Not enough funds on the account!';
+}

@@ -20,19 +20,32 @@ class BuyCryptocurrenciesBloc
 
   void _onAmountCryptocurrencyUpdated(AmountCryptocurrencyUpdated event,
       Emitter<BuyCryptocurrenciesState> emit) async {
-    final String currentNumber =
+    final String currentAmount =
         (state as BuyCryptocurrenciesInitial).amount.appendNumber(event.number);
 
-    final double estimatedQuantity = double.parse((double.parse(currentNumber) /
+    final double estimatedQuantity = double.parse((double.parse(currentAmount) /
             (marketChartBloc.state as MarketChartLoadSuccess)
                 .cryptocurrency
                 .currentPrice)
         .toStringAsFixed(5));
 
     emit(BuyCryptocurrenciesInitial(
-        AccountBalance.readAccountBalance(), currentNumber, estimatedQuantity));
+        AccountBalance.readAccountBalance(), currentAmount, estimatedQuantity));
   }
 
   void _onConfirmedCryptocurrency(ConfirmedBuyCryptocurrency event,
-      Emitter<BuyCryptocurrenciesState> emit) async {}
+      Emitter<BuyCryptocurrenciesState> emit) async {
+    final String currentAmount = (state as BuyCryptocurrenciesInitial).amount;
+    final double accountBalance =
+        (state as BuyCryptocurrenciesInitial).accountBalance;
+    final double estimatedQuantity =
+        (state as BuyCryptocurrenciesInitial).estimatedQuantity;
+
+    if (double.parse(currentAmount) > accountBalance) {
+      emit(BuyCryptocurrenciesLoadFailure());
+    } else {}
+
+    emit(BuyCryptocurrenciesInitial(
+        accountBalance, currentAmount.toString(), estimatedQuantity));
+  }
 }
