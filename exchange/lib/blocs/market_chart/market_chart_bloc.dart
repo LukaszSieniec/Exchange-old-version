@@ -21,17 +21,18 @@ class MarketChartBloc extends Bloc<MarketChartEvent, MarketChartState> {
     emit(MarketChartLoadInProgress());
     if (event is MarketChartLoaded) {
       try {
-        marketChart =
-            await _cryptocurrencyRepository.fetchMarketChart(event.id);
-        emit(MarketChartLoadSuccess(marketChart));
+        marketChart = await _cryptocurrencyRepository
+            .fetchMarketChart(event.cryptocurrency.id);
+        emit(MarketChartLoadSuccess(event.cryptocurrency, marketChart));
       } on Exception {
         emit(MarketChartLoadFailure());
       }
     } else if (event is MarketChartUpdated) {
       try {
-        marketChart = await _cryptocurrencyRepository.fetchMarketChart(event.id,
+        marketChart = await _cryptocurrencyRepository.fetchMarketChart(
+            event.cryptocurrency.id,
             days: _days[event.index]);
-        emit(MarketChartLoadSuccess(marketChart));
+        emit(MarketChartLoadSuccess(event.cryptocurrency, marketChart));
       } on Exception {
         emit(MarketChartLoadFailure());
       }

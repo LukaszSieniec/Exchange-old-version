@@ -18,7 +18,7 @@ class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<MarketChartBloc>(context)
-        .add(MarketChartLoaded(cryptocurrency.id));
+        .add(MarketChartLoaded(cryptocurrency));
 
     return Scaffold(
         backgroundColor: const Color(MyColors.background),
@@ -112,7 +112,7 @@ class DetailPage extends StatelessWidget {
                                             BlocProvider.of<MarketChartBloc>(
                                                     context)
                                                 .add(MarketChartUpdated(
-                                                    cryptocurrency.id, index)),
+                                                    cryptocurrency, index)),
                                         tabs: [
                                           _buildTimeButton(MyLabels.day),
                                           _buildTimeButton(MyLabels.week),

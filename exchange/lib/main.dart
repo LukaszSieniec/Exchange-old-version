@@ -25,14 +25,16 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => BottomNavigationBarBloc()),
-          BlocProvider(create: (context) => BuyCryptocurrenciesBloc()),
           BlocProvider(
               create: (context) => CryptocurrenciesBloc(
                   CryptocurrencyRepository(CryptocurrencyService()))
                 ..add(CryptocurrenciesLoaded())),
           BlocProvider(
               create: (context) => MarketChartBloc(
-                  CryptocurrencyRepository(CryptocurrencyService())))
+                  CryptocurrencyRepository(CryptocurrencyService()))),
+          BlocProvider(
+              create: (context) => BuyCryptocurrenciesBloc(
+                  BlocProvider.of<MarketChartBloc>(context)))
         ],
         child: MaterialApp(
             debugShowCheckedModeBanner: false,

@@ -58,8 +58,8 @@ class BuyCryptocurrencyPage extends StatelessWidget {
                                   style: const TextStyle(
                                       fontSize: 16.0,
                                       color: Color(MyColors.colorText))),
-                              const Text('0.0',
-                                  style: TextStyle(
+                              Text('${state.estimatedQuantity}',
+                                  style: const TextStyle(
                                       fontSize: 20.0,
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold))

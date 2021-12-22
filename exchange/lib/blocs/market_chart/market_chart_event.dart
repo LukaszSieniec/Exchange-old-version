@@ -1,23 +1,24 @@
 import 'package:equatable/equatable.dart';
+import 'package:exchange/models/cryptocurrency.dart';
 
 abstract class MarketChartEvent extends Equatable {
-  final String id;
+  final Cryptocurrency cryptocurrency;
 
-  const MarketChartEvent(this.id);
+  const MarketChartEvent(this.cryptocurrency);
 }
 
 class MarketChartLoaded extends MarketChartEvent {
-  const MarketChartLoaded(final String id) : super(id);
+  const MarketChartLoaded(final Cryptocurrency cryptocurrency) : super(cryptocurrency);
 
   @override
-  List<Object> get props => [id];
+  List<Object> get props => [cryptocurrency];
 }
 
 class MarketChartUpdated extends MarketChartEvent {
   final int index;
 
-  const MarketChartUpdated(final String id, this.index) : super(id);
+  const MarketChartUpdated(final Cryptocurrency cryptocurrency, this.index) : super(cryptocurrency);
 
   @override
-  List<Object> get props => [id, index];
+  List<Object> get props => [cryptocurrency, index];
 }
