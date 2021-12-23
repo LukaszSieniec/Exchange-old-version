@@ -33,6 +33,7 @@ dependencies:
   flutter_bloc: ^8.0.0
   syncfusion_flutter_charts: ^19.3.54
   shared_preferences: ^2.0.6
+  sqflite: ^2.0.1
   flutter:
     sdk: flutter
 

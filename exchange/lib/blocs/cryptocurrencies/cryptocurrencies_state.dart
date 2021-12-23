@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:exchange/models/cryptocurrency.dart';
+import 'package:exchange/models/cryptocurrency_response.dart';
 
 abstract class CryptocurrenciesState extends Equatable {
   const CryptocurrenciesState();
@@ -11,8 +11,8 @@ abstract class CryptocurrenciesState extends Equatable {
 class CryptocurrenciesLoadInProgress extends CryptocurrenciesState {}
 
 class CryptocurrenciesLoadSuccess extends CryptocurrenciesState {
-  final List<Cryptocurrency> cryptocurrencies;
-  final List<Cryptocurrency> trending;
+  final List<CryptocurrencyResponse> cryptocurrencies;
+  final List<CryptocurrencyResponse> trending;
 
   const CryptocurrenciesLoadSuccess(
       [this.cryptocurrencies = const [], this.trending = const []]);

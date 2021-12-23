@@ -2,7 +2,7 @@ import 'package:exchange/blocs/market_chart/market_chart_bloc.dart';
 import 'package:exchange/blocs/market_chart/market_chart_event.dart';
 import 'package:exchange/blocs/market_chart/market_chart_state.dart';
 import 'package:exchange/constants/my_constants.dart';
-import 'package:exchange/models/cryptocurrency.dart';
+import 'package:exchange/models/cryptocurrency_response.dart';
 import 'package:exchange/views/widgets/detail/cryptocurrency_summary.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +11,7 @@ import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'buy_cryptocurrency_page.dart';
 
 class DetailPage extends StatelessWidget {
-  final Cryptocurrency cryptocurrency;
+  final CryptocurrencyResponse cryptocurrency;
 
   const DetailPage(this.cryptocurrency, {Key? key}) : super(key: key);
 

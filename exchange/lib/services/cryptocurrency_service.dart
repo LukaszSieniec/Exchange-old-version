@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:exchange/models/cryptocurrency.dart';
+import 'package:exchange/models/cryptocurrency_response.dart';
 import 'package:exchange/models/market_chart_data.dart';
 import 'package:exchange/models/popular_cryptocurrency.dart';
 
@@ -10,7 +10,7 @@ class CryptocurrencyService {
     receiveTimeout: 3000,
   ));
 
-  Future<List<Cryptocurrency>> fetchCryptocurrencies() async {
+  Future<List<CryptocurrencyResponse>> fetchCryptocurrencies() async {
     final response = await _dio.get('coins/markets', queryParameters: {
       'vs_currency': 'usd',
       'order': 'market_cap_desc',
@@ -20,13 +20,13 @@ class CryptocurrencyService {
 
     if (response.statusCode == 200) {
       final Iterable json = response.data;
-      return json.map((element) => Cryptocurrency.fromJson(element)).toList();
+      return json.map((element) => CryptocurrencyResponse.fromJson(element)).toList();
     } else {
       throw Exception('Error!');
     }
   }
 
-  Future<List<Cryptocurrency>> fetchCryptocurrenciesByIds(
+  Future<List<CryptocurrencyResponse>> fetchCryptocurrenciesByIds(
       List<String> ids) async {
     final response = await _dio.get('coins/markets', queryParameters: {
       'vs_currency': 'usd',
@@ -37,7 +37,7 @@ class CryptocurrencyService {
 
     if (response.statusCode == 200) {
       final Iterable json = response.data;
-      return json.map((element) => Cryptocurrency.fromJson(element)).toList();
+      return json.map((element) => CryptocurrencyResponse.fromJson(element)).toList();
     } else {
       throw Exception('Error!');
     }
@@ -56,11 +56,11 @@ class CryptocurrencyService {
     }
   }
 
-  Future<Cryptocurrency> fetchCryptocurrency(String id) async {
+  Future<CryptocurrencyResponse> fetchCryptocurrency(String id) async {
     final response = await _dio.get('coins/$id');
 
     if (response.statusCode == 200) {
-      return Cryptocurrency.fromJson(response.data);
+      return CryptocurrencyResponse.fromJson(response.data);
     } else {
       throw Exception('Error!');
     }

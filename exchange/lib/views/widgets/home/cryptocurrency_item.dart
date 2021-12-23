@@ -1,11 +1,11 @@
 import 'package:exchange/constants/my_constants.dart';
-import 'package:exchange/models/cryptocurrency.dart';
+import 'package:exchange/models/cryptocurrency_response.dart';
 import 'package:exchange/views/pages/detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 class CryptocurrencyItem extends StatelessWidget {
-  final Cryptocurrency cryptocurrency;
+  final CryptocurrencyResponse cryptocurrency;
 
   const CryptocurrencyItem(this.cryptocurrency, {Key? key}) : super(key: key);
 

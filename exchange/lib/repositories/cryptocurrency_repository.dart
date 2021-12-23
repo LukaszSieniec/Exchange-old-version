@@ -1,4 +1,4 @@
-import 'package:exchange/models/cryptocurrency.dart';
+import 'package:exchange/models/cryptocurrency_response.dart';
 import 'package:exchange/models/market_chart_data.dart';
 import 'package:exchange/models/popular_cryptocurrency.dart';
 import 'package:exchange/services/cryptocurrency_service.dart';
@@ -8,15 +8,15 @@ class CryptocurrencyRepository {
 
   CryptocurrencyRepository(this._cryptocurrencyService);
 
-  Future<List<Cryptocurrency>> fetchCryptocurrencies() async {
-    final List<Cryptocurrency> cryptocurrencies =
+  Future<List<CryptocurrencyResponse>> fetchCryptocurrencies() async {
+    final List<CryptocurrencyResponse> cryptocurrencies =
         await _cryptocurrencyService.fetchCryptocurrencies();
     return cryptocurrencies;
   }
 
-  Future<List<Cryptocurrency>> fetchCryptocurrenciesByIds(
+  Future<List<CryptocurrencyResponse>> fetchCryptocurrenciesByIds(
       List<String> ids) async {
-    final List<Cryptocurrency> cryptocurrencies =
+    final List<CryptocurrencyResponse> cryptocurrencies =
         await _cryptocurrencyService.fetchCryptocurrenciesByIds(ids);
     return cryptocurrencies;
   }
@@ -27,8 +27,8 @@ class CryptocurrencyRepository {
     return cryptocurrencies;
   }
 
-  Future<Cryptocurrency> fetchCryptocurrency(String id) async {
-    final Cryptocurrency cryptocurrency =
+  Future<CryptocurrencyResponse> fetchCryptocurrency(String id) async {
+    final CryptocurrencyResponse cryptocurrency =
         await _cryptocurrencyService.fetchCryptocurrency(id);
     return cryptocurrency;
   }

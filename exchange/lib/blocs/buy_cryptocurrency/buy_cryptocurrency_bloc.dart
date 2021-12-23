@@ -43,9 +43,9 @@ class BuyCryptocurrenciesBloc
 
     if (double.parse(currentAmount) > accountBalance) {
       emit(BuyCryptocurrenciesLoadFailure());
-    } else {}
-
-    emit(BuyCryptocurrenciesInitial(
-        accountBalance, currentAmount.toString(), estimatedQuantity));
+      emit(BuyCryptocurrenciesInitial(
+          accountBalance, currentAmount.toString(), estimatedQuantity));
+    } else {
+    }
   }
 }

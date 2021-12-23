@@ -1,6 +1,6 @@
 import 'package:exchange/blocs/cryptocurrencies/cryptocurrencies_event.dart';
 import 'package:exchange/blocs/cryptocurrencies/cryptocurrencies_state.dart';
-import 'package:exchange/models/cryptocurrency.dart';
+import 'package:exchange/models/cryptocurrency_response.dart';
 import 'package:exchange/models/popular_cryptocurrency.dart';
 import 'package:exchange/repositories/cryptocurrency_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,7 +26,7 @@ class CryptocurrenciesBloc
         ids.add(singleBasicInformation.id);
       }
 
-      final List<List<Cryptocurrency>> cryptocurrencies = await Future.wait([
+      final List<List<CryptocurrencyResponse>> cryptocurrencies = await Future.wait([
         _cryptocurrencyRepository.fetchCryptocurrencies(),
         _cryptocurrencyRepository.fetchCryptocurrenciesByIds(ids)
       ]);

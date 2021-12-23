@@ -1,11 +1,11 @@
 import 'package:exchange/constants/my_constants.dart';
-import 'package:exchange/models/cryptocurrency.dart';
+import 'package:exchange/models/cryptocurrency_response.dart';
 import 'package:exchange/utils/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 class TrendingItem extends StatelessWidget {
-  final Cryptocurrency cryptocurrency;
+  final CryptocurrencyResponse cryptocurrency;
 
   const TrendingItem(this.cryptocurrency, {Key? key}) : super(key: key);
 
@@ -73,7 +73,7 @@ class TrendingItem extends StatelessWidget {
   }
 }
 
-Icon _getIcon(Cryptocurrency cryptocurrency) {
+Icon _getIcon(CryptocurrencyResponse cryptocurrency) {
   return cryptocurrency
               .sparkline.price[cryptocurrency.sparkline.price.length - 1] >
           cryptocurrency
