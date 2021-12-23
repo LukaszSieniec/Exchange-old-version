@@ -14,7 +14,7 @@ class MarketChartBloc extends Bloc<MarketChartEvent, MarketChartState> {
     on<MarketChartUpdated>(_onMarketChart);
   }
 
-  void _onMarketChart(
+  Future<void> _onMarketChart(
       MarketChartEvent event, Emitter<MarketChartState> emit) async {
     final MarketChartData marketChart;
 

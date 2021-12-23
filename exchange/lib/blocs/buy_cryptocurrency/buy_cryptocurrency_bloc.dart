@@ -18,7 +18,7 @@ class BuyCryptocurrenciesBloc
     on<ConfirmedBuyCryptocurrency>(_onConfirmedCryptocurrency);
   }
 
-  void _onAmountCryptocurrencyUpdated(AmountCryptocurrencyUpdated event,
+  Future<void> _onAmountCryptocurrencyUpdated(AmountCryptocurrencyUpdated event,
       Emitter<BuyCryptocurrenciesState> emit) async {
     final String currentAmount =
         (state as BuyCryptocurrenciesInitial).amount.appendNumber(event.number);
@@ -33,7 +33,7 @@ class BuyCryptocurrenciesBloc
         AccountBalance.readAccountBalance(), currentAmount, estimatedQuantity));
   }
 
-  void _onConfirmedCryptocurrency(ConfirmedBuyCryptocurrency event,
+  Future<void> _onConfirmedCryptocurrency(ConfirmedBuyCryptocurrency event,
       Emitter<BuyCryptocurrenciesState> emit) async {
     final String currentAmount = (state as BuyCryptocurrenciesInitial).amount;
     final double accountBalance =
@@ -45,7 +45,6 @@ class BuyCryptocurrenciesBloc
       emit(BuyCryptocurrenciesLoadFailure());
       emit(BuyCryptocurrenciesInitial(
           accountBalance, currentAmount.toString(), estimatedQuantity));
-    } else {
-    }
+    } else {}
   }
 }
