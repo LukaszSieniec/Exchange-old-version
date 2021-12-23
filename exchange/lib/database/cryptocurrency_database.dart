@@ -12,6 +12,8 @@ class CryptocurrencyDatabase {
 
   CryptocurrencyDatabase._internal();
 
+  static CryptocurrencyDatabase get = _instance;
+
   Future<Database> get database async {
     if (_database != null) return _database!;
 
@@ -89,15 +91,14 @@ class CryptocurrencyDatabase {
   }
 
   //Transactions
-  Future<void> createTransactions(
-      cryptocurrency.Transaction transaction) async {
+  Future<void> createTransaction(cryptocurrency.Transaction transaction) async {
     final database = await _instance.database;
 
     database.insert(
         CryptocurrenciesDao.transactionsTableName, transaction.toJson());
   }
 
-  Future<cryptocurrency.Transaction> readTransactions(int id) async {
+  Future<cryptocurrency.Transaction> readTransaction(int id) async {
     final database = await _instance.database;
 
     final List<Map<String, dynamic>> maps = await database.query(
@@ -111,8 +112,7 @@ class CryptocurrencyDatabase {
     }
   }
 
-  Future<void> updateTransactions(
-      cryptocurrency.Transaction transaction) async {
+  Future<void> updateTransaction(cryptocurrency.Transaction transaction) async {
     final database = await _instance.database;
 
     database.update(
@@ -123,7 +123,7 @@ class CryptocurrencyDatabase {
     );
   }
 
-  Future<void> deleteTransactions(String id) async {
+  Future<void> deleteTransaction(String id) async {
     final database = await _instance.database;
 
     database.delete(
