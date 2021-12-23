@@ -23,18 +23,17 @@ class CryptocurrencyResponse {
       required this.priceChangePercentage24h,
       required this.sparkline});
 
-  factory CryptocurrencyResponse.fromJson(Map<String, dynamic> json) {
-    return CryptocurrencyResponse(
-        id: json['id'],
-        symbol: json['symbol'],
-        name: json['name'],
-        image: json['image'],
-        currentPrice: json['current_price'],
-        marketCap: json['market_cap'],
-        marketCapRank: json['market_cap_rank'],
-        circulatingSupply: json['circulating_supply'],
-        totalSupply: json['total_supply'],
-        priceChangePercentage24h: json['price_change_percentage_24h'],
-        sparkline: Sparkline.fromJson(json['sparkline_in_7d']));
-  }
+  factory CryptocurrencyResponse.fromJson(Map<String, dynamic> json) =>
+      CryptocurrencyResponse(
+          id: json['id'],
+          symbol: json['symbol'],
+          name: json['name'],
+          image: json['image'],
+          currentPrice: json['current_price'],
+          marketCap: json['market_cap'],
+          marketCapRank: json['market_cap_rank'],
+          circulatingSupply: json['circulating_supply'],
+          totalSupply: json['total_supply'],
+          priceChangePercentage24h: json['price_change_percentage_24h'],
+          sparkline: Sparkline.fromJson(json['sparkline_in_7d']));
 }

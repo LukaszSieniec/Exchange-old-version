@@ -1,12 +1,12 @@
 import 'package:exchange/database/cryptocurrency_dao.dart';
+import 'package:exchange/models/cryptocurrency.dart';
+import 'package:exchange/models/transaction.dart' as cryptocurrency;
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 class CryptocurrencyDatabase {
   static final CryptocurrencyDatabase _instance =
       CryptocurrencyDatabase._internal();
-
-  final CryptocurrenciesDao _cryptocurrenciesDao = CryptocurrenciesDao();
 
   static Database? _database;
 
@@ -28,8 +28,8 @@ class CryptocurrencyDatabase {
 
   Future<void> _createDatabase(Database database, int version) async {
     await database
-        .execute(_cryptocurrenciesDao.createCryptocurrenciesTableQuery);
-    await database.execute(_cryptocurrenciesDao.createTransactionsTableQuery);
+        .execute(CryptocurrenciesDao.createCryptocurrenciesTableQuery);
+    await database.execute(CryptocurrenciesDao.createTransactionsTableQuery);
   }
 
   Future<void> close() async {
@@ -38,25 +38,109 @@ class CryptocurrencyDatabase {
     database.close();
   }
 
-  //Cryptocurrencies
-  Future<void> createCryptocurrency() async {}
+  Future<void> createCryptocurrency(Cryptocurrency cryptocurrency) async {
+    final database = await _instance.database;
+    database.insert(
+        CryptocurrenciesDao.cryptocurrenciesTableName, cryptocurrency.toJson());
+  }
 
-  Future<void> readCryptocurrency() async {}
+  Future<Cryptocurrency> readCryptocurrency(String id) async {
+    final database = await _instance.database;
 
-  Future<void> updateCryptocurrency() async {}
+    final List<Map<String, dynamic>> maps = await database.query(
+        CryptocurrenciesDao.cryptocurrenciesTableName,
+        where: '${CryptocurrenciesDao.cryptocurrencyId} = ?',
+        whereArgs: [id]);
+    if (maps.isNotEmpty) {
+      return Cryptocurrency.fromJson(maps.first);
+    } else {
+      throw Exception('Id $id not found');
+    }
+  }
 
-  Future<void> deleteCryptocurrency() async {}
+  Future<void> updateCryptocurrency(Cryptocurrency cryptocurrency) async {
+    final database = await _instance.database;
 
-  Future<void> readAllCryptocurrencies() async {}
+    database.update(
+      CryptocurrenciesDao.cryptocurrenciesTableName,
+      cryptocurrency.toJson(),
+      where: '${CryptocurrenciesDao.cryptocurrencyId} = ?',
+      whereArgs: [cryptocurrency.id],
+    );
+  }
+
+  Future<void> deleteCryptocurrency(String id) async {
+    final database = await _instance.database;
+
+    database.delete(
+      CryptocurrenciesDao.cryptocurrenciesTableName,
+      where: '${CryptocurrenciesDao.cryptocurrencyId} = ?',
+      whereArgs: [id],
+    );
+  }
+
+  Future<List<Cryptocurrency>> readAllCryptocurrencies() async {
+    final database = await _instance.database;
+
+    final List<Map<String, dynamic>> maps =
+        await database.query(CryptocurrenciesDao.cryptocurrenciesTableName);
+
+    return maps.map((json) => Cryptocurrency.fromJson(json)).toList();
+  }
 
   //Transactions
-  Future<void> createTransactions() async {}
+  Future<void> createTransactions(
+      cryptocurrency.Transaction transaction) async {
+    final database = await _instance.database;
 
-  Future<void> readTransactions() async {}
+    database.insert(
+        CryptocurrenciesDao.transactionsTableName, transaction.toJson());
+  }
 
-  Future<void> updateTransactions() async {}
+  Future<cryptocurrency.Transaction> readTransactions(int id) async {
+    final database = await _instance.database;
 
-  Future<void> deleteTransactions() async {}
+    final List<Map<String, dynamic>> maps = await database.query(
+        CryptocurrenciesDao.transactionsTableName,
+        where: '${CryptocurrenciesDao.transactionId} = ?',
+        whereArgs: [id]);
+    if (maps.isNotEmpty) {
+      return cryptocurrency.Transaction.fromJson(maps.first);
+    } else {
+      throw Exception('Id $id not found');
+    }
+  }
 
-  Future<void> readAllTransactions() async {}
+  Future<void> updateTransactions(
+      cryptocurrency.Transaction transaction) async {
+    final database = await _instance.database;
+
+    database.update(
+      CryptocurrenciesDao.transactionsTableName,
+      transaction.toJson(),
+      where: '${CryptocurrenciesDao.transactionId} = ?',
+      whereArgs: [transaction.id],
+    );
+  }
+
+  Future<void> deleteTransactions(String id) async {
+    final database = await _instance.database;
+
+    database.delete(
+      CryptocurrenciesDao.transactionsTableName,
+      where: '${CryptocurrenciesDao.transactionId} = ?',
+      whereArgs: [id],
+    );
+  }
+
+  Future<List<cryptocurrency.Transaction>> readAllTransactions() async {
+    final database = await _instance.database;
+
+    final List<Map<String, dynamic>> maps =
+        await database.query(CryptocurrenciesDao.transactionsTableName);
+
+    return maps
+        .map((json) => cryptocurrency.Transaction.fromJson(json))
+        .toList();
+  }
 }

@@ -3,7 +3,6 @@ class Sparkline {
 
   Sparkline({required this.price});
 
-  factory Sparkline.fromJson(Map<String, dynamic> json) {
-    return Sparkline(price: json['price']);
-  }
+  factory Sparkline.fromJson(Map<String, dynamic> json) =>
+      Sparkline(price: json['price']);
 }

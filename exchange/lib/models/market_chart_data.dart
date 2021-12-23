@@ -3,7 +3,6 @@ class MarketChartData {
 
   MarketChartData({required this.prices});
 
-  factory MarketChartData.fromJson(Map<String, dynamic> json) {
-    return MarketChartData(prices: json['prices']);
-  }
+  factory MarketChartData.fromJson(Map<String, dynamic> json) =>
+      MarketChartData(prices: json['prices']);
 }
