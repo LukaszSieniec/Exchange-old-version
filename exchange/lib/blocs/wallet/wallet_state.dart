@@ -11,9 +11,11 @@ abstract class WalletState extends Equatable {
 class WalletLoadInProgress extends WalletState {}
 
 class WalletLoadSuccess extends WalletState {
+  final double accountBalance;
   final List<Cryptocurrency> cryptocurrencies;
 
-  const WalletLoadSuccess([this.cryptocurrencies = const []]);
+  const WalletLoadSuccess(this.accountBalance,
+      [this.cryptocurrencies = const []]);
 
   @override
   List<Object> get props => [cryptocurrencies];

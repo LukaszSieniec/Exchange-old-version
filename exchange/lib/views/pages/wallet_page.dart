@@ -19,13 +19,14 @@ class WalletPage extends StatelessWidget {
       if (state is WalletLoadInProgress) {
         return _buildLoading();
       } else if (state is WalletLoadSuccess) {
-        return _buildBody(state.cryptocurrencies);
+        return _buildBody(state.cryptocurrencies, state.accountBalance);
       } else if (state is WalletLoadFailure) {}
       return Container();
     });
   }
 
-  Widget _buildBody(List<Cryptocurrency> cryptocurrencies) {
+  Widget _buildBody(final List<Cryptocurrency> cryptocurrencies,
+      final double accountBalance) {
     return Container(
         margin: const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
@@ -33,8 +34,8 @@ class WalletPage extends StatelessWidget {
               style:
                   TextStyle(color: Color(MyColors.colorText), fontSize: 16.0)),
           const SizedBox(height: 4.0),
-          const Text('\$ 378.12',
-              style: TextStyle(
+          Text('\$ $accountBalance',
+              style: const TextStyle(
                   color: Colors.white,
                   fontSize: 32.0,
                   fontWeight: FontWeight.bold)),

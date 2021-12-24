@@ -15,7 +15,7 @@ class TrendingItem extends StatelessWidget {
     return Container(
         margin:
             const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 4.0, right: 4.0),
-        width: SizeConfig.blockSizeHorizontal * 45.0,
+        width: SizeConfig.blockSizeHorizontal * 50.0,
         child: Card(
             shape: RoundedRectangleBorder(
               side: const BorderSide(color: Colors.white10, width: 1),

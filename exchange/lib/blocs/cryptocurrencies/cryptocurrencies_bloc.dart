@@ -26,7 +26,8 @@ class CryptocurrenciesBloc
         ids.add(singleBasicInformation.id);
       }
 
-      final List<List<CryptocurrencyResponse>> cryptocurrencies = await Future.wait([
+      final List<List<CryptocurrencyResponse>> cryptocurrencies =
+          await Future.wait([
         _cryptocurrencyRepository.fetchCryptocurrencies(),
         _cryptocurrencyRepository.fetchCryptocurrenciesByIds(ids)
       ]);
