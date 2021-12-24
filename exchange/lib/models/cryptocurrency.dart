@@ -1,3 +1,5 @@
+import 'cryptocurrency_response.dart';
+
 class Cryptocurrency {
   final String id, symbol, name;
   final double amount;
@@ -16,4 +18,12 @@ class Cryptocurrency {
 
   Map<String, dynamic> toJson() =>
       {'id': id, 'symbol': symbol, 'name': name, 'amount': amount};
+
+  factory Cryptocurrency.fromCryptocurrencyResponse(
+          CryptocurrencyResponse cryptocurrencyResponse, double amount) =>
+      Cryptocurrency(
+          id: cryptocurrencyResponse.id,
+          symbol: cryptocurrencyResponse.symbol,
+          name: cryptocurrencyResponse.name,
+          amount: amount);
 }
