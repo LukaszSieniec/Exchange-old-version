@@ -8,14 +8,19 @@ import 'package:exchange/repositories/cryptocurrency_repository.dart';
 import 'package:exchange/services/cryptocurrency_service.dart';
 import 'package:exchange/views/pages/basic_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'blocs/buy_cryptocurrency/buy_cryptocurrency_bloc.dart';
 import 'database/account_balance.dart';
 
 void main() async {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await AccountBalance.init();
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
