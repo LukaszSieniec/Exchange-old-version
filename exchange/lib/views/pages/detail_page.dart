@@ -1,3 +1,5 @@
+import 'package:exchange/blocs/cryptocurrencies/cryptocurrencies_bloc.dart';
+import 'package:exchange/blocs/cryptocurrencies/cryptocurrencies_state.dart';
 import 'package:exchange/blocs/market_chart/market_chart_bloc.dart';
 import 'package:exchange/blocs/market_chart/market_chart_event.dart';
 import 'package:exchange/blocs/market_chart/market_chart_state.dart';
@@ -11,130 +13,146 @@ import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'buy_cryptocurrency_page.dart';
 
 class DetailPage extends StatelessWidget {
-  final CryptocurrencyResponse cryptocurrency;
+  final String id;
 
-  const DetailPage(this.cryptocurrency, {Key? key}) : super(key: key);
+  const DetailPage(this.id, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<MarketChartBloc>(context)
-        .add(MarketChartLoaded(cryptocurrency));
-
     return Scaffold(
         backgroundColor: const Color(MyColors.background),
         body: SafeArea(
             child: Container(
                 margin: const EdgeInsets.all(8.0),
-                child: Column(children: [
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(children: [
-                          Image.network(cryptocurrency.image, height: 40.0),
-                          const SizedBox(width: 6.0),
-                          Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(cryptocurrency.symbol.toUpperCase(),
+                child: BlocBuilder<CryptocurrenciesBloc, CryptocurrenciesState>(
+                    builder: (context, state) {
+                      final CryptocurrencyResponse cryptocurrency =
+                      (state as CryptocurrenciesLoadSuccess)
+                          .cryptocurrencies
+                          .firstWhere((element) => element.id == id);
+
+                      BlocProvider.of<MarketChartBloc>(context)
+                          .add(MarketChartLoaded(cryptocurrency));
+
+                      return Column(children: [
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(children: [
+                                Image.network(cryptocurrency.image, height: 40.0),
+                                const SizedBox(width: 6.0),
+                                Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(cryptocurrency.symbol.toUpperCase(),
+                                          style: const TextStyle(
+                                              color: Color(MyColors.colorText),
+                                              fontSize: 18.0)),
+                                      Text(cryptocurrency.name,
+                                          style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 28.0,
+                                              fontWeight: FontWeight.bold))
+                                    ])
+                              ]),
+                              Column(children: [
+                                Text('${cryptocurrency.priceChangePercentage24h}',
                                     style: const TextStyle(
-                                        color: Color(MyColors.colorText),
-                                        fontSize: 18.0)),
-                                Text(cryptocurrency.name,
+                                        color: Colors.green, fontSize: 18.0)),
+                                Text('\$${cryptocurrency.currentPrice}',
                                     style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 28.0,
                                         fontWeight: FontWeight.bold))
                               ])
-                        ]),
-                        Column(children: [
-                          Text('${cryptocurrency.priceChangePercentage24h}',
-                              style: const TextStyle(
-                                  color: Colors.green, fontSize: 18.0)),
-                          Text('\$${cryptocurrency.currentPrice}',
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 28.0,
-                                  fontWeight: FontWeight.bold))
-                        ])
-                      ]),
-                  Expanded(
-                      flex: 3,
-                      child: Container(
-                          margin: const EdgeInsets.only(top: 16.0),
-                          child: Card(
-                              shape: RoundedRectangleBorder(
-                                  side: const BorderSide(
-                                      color: Colors.white10, width: 1),
-                                  borderRadius: BorderRadius.circular(16.0)),
-                              elevation: 2,
-                              color: const Color(MyColors.brighterBackground),
-                              child: Column(children: [
-                                Expanded(
-                                    child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(top: 8.0),
-                                        child: BlocBuilder<MarketChartBloc,
-                                                MarketChartState>(
-                                            builder: (context, state) {
-                                          if (state
-                                              is MarketChartLoadInProgress) {
-                                            return _buildLoading();
-                                          } else if (state
-                                              is MarketChartLoadSuccess) {
-                                            return SfSparkAreaChart.custom(
-                                                borderColor: Colors.green,
-                                                color: const Color(
-                                                    MyColors.background),
-                                                dataCount: state.marketChartData
-                                                    .prices.length,
-                                                xValueMapper: (index) => state
-                                                    .marketChartData
-                                                    .prices[index][0],
-                                                yValueMapper: (index) => state
-                                                    .marketChartData
-                                                    .prices[index][1],
-                                                axisLineWidth: 0);
-                                          } else if (state
-                                              is MarketChartLoadFailure) {}
-                                          return Container();
-                                        }))),
-                                DefaultTabController(
-                                    length: 6,
-                                    initialIndex: 0,
-                                    child: TabBar(
-                                        indicator: const UnderlineTabIndicator(
-                                            borderSide: BorderSide(
-                                                width: 3.0,
-                                                color: Color(MyColors.orange)),
-                                            insets: EdgeInsets.symmetric(
-                                                horizontal: 16.0)),
-                                        onTap: (index) =>
-                                            BlocProvider.of<MarketChartBloc>(
-                                                    context)
-                                                .add(MarketChartUpdated(
-                                                    cryptocurrency, index)),
-                                        tabs: [
-                                          _buildTimeButton(MyLabels.day),
-                                          _buildTimeButton(MyLabels.week),
-                                          _buildTimeButton(MyLabels.month),
-                                          _buildTimeButton(
-                                              MyLabels.threeMonths),
-                                          _buildTimeButton(MyLabels.sixMonths),
-                                          _buildTimeButton(MyLabels.year)
-                                        ]))
-                              ])))),
-                  Expanded(
-                      flex: 2,
-                      child: Container(
-                        margin: const EdgeInsets.only(top: 16.0, bottom: 16.0),
-                        child: CryptocurrencySummary(cryptocurrency),
-                      )),
-                  _buildBuyButton(context),
-                  const SizedBox(height: 8.0)
-                ]))));
+                            ]),
+                        Expanded(
+                            flex: 3,
+                            child: Container(
+                                margin: const EdgeInsets.only(top: 16.0),
+                                child: Card(
+                                    shape: RoundedRectangleBorder(
+                                        side: const BorderSide(
+                                            color: Colors.white10, width: 1),
+                                        borderRadius: BorderRadius.circular(16.0)),
+                                    elevation: 2,
+                                    color: const Color(MyColors.brighterBackground),
+                                    child: Column(children: [
+                                      Expanded(
+                                          child: Padding(
+                                              padding:
+                                              const EdgeInsets.only(top: 8.0),
+                                              child: BlocBuilder<MarketChartBloc,
+                                                  MarketChartState>(
+                                                  builder: (context, state) {
+                                                    if (state
+                                                    is MarketChartLoadInProgress) {
+                                                      debugPrint('Loading in progress');
+                                                      return _buildLoading();
+                                                    } else if (state
+                                                    is MarketChartLoadSuccess) {
+                                                      return SfSparkAreaChart.custom(
+                                                          borderColor: Colors.green,
+                                                          color: const Color(
+                                                              MyColors.background),
+                                                          dataCount: state
+                                                              .marketChartData
+                                                              .prices
+                                                              .length,
+                                                          xValueMapper: (index) => state
+                                                              .marketChartData
+                                                              .prices[index][0],
+                                                          yValueMapper: (index) => state
+                                                              .marketChartData
+                                                              .prices[index][1],
+                                                          axisLineWidth: 0);
+                                                    } else if (state
+                                                    is MarketChartLoadFailure) {}
+                                                    return Container();
+                                                  }))),
+                                      DefaultTabController(
+                                          length: 6,
+                                          initialIndex: 0,
+                                          child: TabBar(
+                                              indicator:
+                                              const UnderlineTabIndicator(
+                                                  borderSide: BorderSide(
+                                                      width: 3.0,
+                                                      color: Color(
+                                                          MyColors.orange)),
+                                                  insets: EdgeInsets.symmetric(
+                                                      horizontal: 16.0)),
+                                              onTap: (index) =>
+                                                  BlocProvider.of<MarketChartBloc>(
+                                                      context)
+                                                      .add(MarketChartUpdated(
+                                                      cryptocurrency, index)),
+                                              tabs: [
+                                                _buildTimeButton(MyLabels.day),
+                                                _buildTimeButton(MyLabels.week),
+                                                _buildTimeButton(MyLabels.month),
+                                                _buildTimeButton(
+                                                    MyLabels.threeMonths),
+                                                _buildTimeButton(
+                                                    MyLabels.sixMonths),
+                                                _buildTimeButton(MyLabels.year)
+                                              ]))
+                                    ])))),
+                        Expanded(
+                            flex: 2,
+                            child: Container(
+                              margin:
+                              const EdgeInsets.only(top: 16.0, bottom: 16.0),
+                              child: CryptocurrencySummary(cryptocurrency),
+                            )),
+                        _buildBuyButton(context, cryptocurrency),
+                        const SizedBox(height: 8.0)
+                      ]);
+                    }))));
   }
 
-  Widget _buildBuyButton(BuildContext context) {
+  Widget _buildBuyButton(
+      BuildContext context, CryptocurrencyResponse cryptocurrency) {
     return OutlinedButton(
         onPressed: () {
           Navigator.push(

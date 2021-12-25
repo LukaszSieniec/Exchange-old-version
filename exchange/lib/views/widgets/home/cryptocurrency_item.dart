@@ -16,7 +16,7 @@ class CryptocurrencyItem extends StatelessWidget {
         onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => DetailPage(cryptocurrency))),
+                builder: (context) => DetailPage(cryptocurrency.id))),
         child: Container(
             margin: const EdgeInsets.only(
                 top: 12.0, bottom: 12.0, left: 8.0, right: 8.0),
