@@ -5,6 +5,7 @@ class CryptocurrenciesDao {
   static const String cryptocurrencySymbol = 'symbol';
   static const String cryptocurrencyName = 'name';
   static const String cryptocurrencyAmount = 'amount';
+  static const String cryptocurrencyImage = 'image';
 
   //Transactions Table
   static const String transactionsTableName = 'transactions';
@@ -18,7 +19,8 @@ class CryptocurrenciesDao {
       "CREATE TABLE IF NOT EXISTS $cryptocurrenciesTableName($cryptocurrencyId TEXT PRIMARY KEY,"
       " $cryptocurrencySymbol TEXT,"
       " $cryptocurrencyName TEXT,"
-      " $cryptocurrencyAmount REAL)";
+      " $cryptocurrencyAmount REAL,"
+      " $cryptocurrencyImage TEXT)";
 
   static String get createTransactionsTableQuery =>
       "CREATE TABLE IF NOT EXISTS $transactionsTableName($transactionId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"

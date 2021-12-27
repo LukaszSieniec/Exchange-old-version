@@ -27,14 +27,21 @@ class Coins extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  const Icon(CryptoFontIcons.BTC,
-                                      color: Colors.white),
+                                  CircleAvatar(
+                                    radius: 16.0,
+                                    backgroundImage: NetworkImage(
+                                        cryptocurrencies[index].image),
+                                    backgroundColor: Colors.transparent,
+                                  ),
                                   const SizedBox(width: 8.0),
                                   Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(cryptocurrencies[index].symbol,
+                                        Text(
+                                            cryptocurrencies[index]
+                                                .symbol
+                                                .toUpperCase(),
                                             style: const TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.bold,
