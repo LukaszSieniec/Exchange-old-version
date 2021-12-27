@@ -11,11 +11,11 @@ class CryptocurrenciesBloc
 
   CryptocurrenciesBloc(this._cryptocurrencyRepository)
       : super(CryptocurrenciesLoadInProgress()) {
-    on<CryptocurrenciesLoaded>(_onCryptocurrenciesLoaded);
+    on<CryptocurrenciesFetched>(_onCryptocurrenciesFetched);
   }
 
-  void _onCryptocurrenciesLoaded(
-      CryptocurrenciesLoaded event, Emitter<CryptocurrenciesState> emit) async {
+  void _onCryptocurrenciesFetched(
+      CryptocurrenciesFetched event, Emitter<CryptocurrenciesState> emit) async {
     try {
       final List<PopularCryptocurrency> trendingBasicInformations =
           await _cryptocurrencyRepository.fetchTrending();

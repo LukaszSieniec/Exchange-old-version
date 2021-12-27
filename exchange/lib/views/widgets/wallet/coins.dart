@@ -1,4 +1,3 @@
-import 'package:crypto_font_icons/crypto_font_icons.dart';
 import 'package:exchange/constants/my_constants.dart';
 import 'package:exchange/models/cryptocurrency.dart';
 import 'package:flutter/material.dart';

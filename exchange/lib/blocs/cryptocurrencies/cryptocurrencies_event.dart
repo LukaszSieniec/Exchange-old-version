@@ -7,4 +7,4 @@ abstract class CryptocurrenciesEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class CryptocurrenciesLoaded extends CryptocurrenciesEvent {}
+class CryptocurrenciesFetched extends CryptocurrenciesEvent {}

@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
               create: (context) => CryptocurrenciesBloc(
                   CryptocurrencyRepository(
                       CryptocurrencyService(), CryptocurrencyDatabase.get))
-                ..add(CryptocurrenciesLoaded())),
+                ..add(CryptocurrenciesFetched())),
           BlocProvider(
               create: (context) => MarketChartBloc(CryptocurrencyRepository(
                   CryptocurrencyService(), CryptocurrencyDatabase.get))),
