@@ -68,7 +68,7 @@ class BuyCryptocurrenciesBloc
     } else {
       emit(BuyCryptocurrenciesLoadInProgress());
       try {
-        createCryptocurrency(cryptocurrency, estimatedAmount);
+        createOrUpdateCryptocurrency(cryptocurrency, estimatedAmount);
         saveAccountBalance(accountBalance, currentAmount);
 
         emit(BuyCryptocurrencySuccess(cryptocurrency.name));
@@ -80,9 +80,9 @@ class BuyCryptocurrenciesBloc
     }
   }
 
-  Future<void> createCryptocurrency(
+  Future<void> createOrUpdateCryptocurrency(
           CryptocurrencyResponse cryptocurrency, double estimatedAmount) =>
-      cryptocurrencyRepository.createCryptocurrency(
+      cryptocurrencyRepository.createOrUpdateCryptocurrency(
           Cryptocurrency.fromCryptocurrencyResponse(
               cryptocurrency, estimatedAmount));
 

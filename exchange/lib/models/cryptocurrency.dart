@@ -34,4 +34,18 @@ class Cryptocurrency {
           name: cryptocurrencyResponse.name,
           amount: amount,
           image: cryptocurrencyResponse.image);
+
+  Cryptocurrency copyWith(
+      {String? id,
+      String? symbol,
+      String? name,
+      double? amount,
+      String? image}) {
+    return Cryptocurrency(
+        id: id ?? this.id,
+        symbol: symbol ?? this.symbol,
+        name: name ?? this.name,
+        amount: amount ?? this.amount,
+        image: image ?? this.image);
+  }
 }

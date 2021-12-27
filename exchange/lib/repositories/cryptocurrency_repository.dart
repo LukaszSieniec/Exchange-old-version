@@ -44,6 +44,25 @@ class CryptocurrencyRepository {
     return marketChartData;
   }
 
+  Future<void> createOrUpdateCryptocurrency(
+      Cryptocurrency cryptocurrency) async {
+    final bool isExist =
+        await _cryptocurrencyDatabase.isExistCryptocurrency(cryptocurrency);
+
+    if (isExist) {
+      final Cryptocurrency existingCryptocurrency =
+          await _cryptocurrencyDatabase.readCryptocurrency(cryptocurrency.id);
+
+      final double amount =
+          cryptocurrency.amount + existingCryptocurrency.amount;
+
+      _cryptocurrencyDatabase.updateCryptocurrency(
+          existingCryptocurrency.copyWith(amount: amount));
+    } else {
+      _cryptocurrencyDatabase.createCryptocurrency(cryptocurrency);
+    }
+  }
+
   Future<void> createCryptocurrency(Cryptocurrency cryptocurrency) async =>
       _cryptocurrencyDatabase.createCryptocurrency(cryptocurrency);
 

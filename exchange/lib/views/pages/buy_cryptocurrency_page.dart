@@ -1,10 +1,7 @@
 import 'package:exchange/blocs/buy_cryptocurrency/buy_cryptocurrency_bloc.dart';
 import 'package:exchange/blocs/buy_cryptocurrency/buy_cryptocurrency_event.dart';
 import 'package:exchange/blocs/buy_cryptocurrency/buy_cryptocurrency_state.dart';
-import 'package:exchange/blocs/cryptocurrencies/cryptocurrencies_bloc.dart';
-import 'package:exchange/blocs/cryptocurrencies/cryptocurrencies_state.dart';
 import 'package:exchange/constants/my_constants.dart';
-import 'package:exchange/models/cryptocurrency_response.dart';
 import 'package:exchange/views/widgets/buy_cryptocurrency/confirm_button.dart';
 import 'package:exchange/views/widgets/buy_cryptocurrency/keyboard.dart';
 import 'package:exchange/views/widgets/snackbar.dart';

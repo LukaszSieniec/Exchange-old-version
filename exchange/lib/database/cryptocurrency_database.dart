@@ -40,6 +40,19 @@ class CryptocurrencyDatabase {
     database.close();
   }
 
+  Future<bool> isExistCryptocurrency(Cryptocurrency cryptocurrency) async {
+    final database = await _instance.database;
+
+    List<Map> maps = await database.query(
+        CryptocurrenciesDao.cryptocurrenciesTableName,
+        where: '${CryptocurrenciesDao.cryptocurrencyId} = ?',
+        whereArgs: [cryptocurrency.id]);
+    if (maps.isNotEmpty) {
+      return true;
+    }
+    return false;
+  }
+
   Future<void> createCryptocurrency(Cryptocurrency cryptocurrency) async {
     final database = await _instance.database;
     database.insert(
