@@ -31,8 +31,6 @@ class BuyCryptocurrenciesBloc
             .cryptocurrencies
             .firstWhere((element) => element.id == event.id);
 
-    debugPrint('_onLoaded: ' + event.id);
-
     emit(BuyCryptocurrenciesInitial(
         cryptocurrency, AccountBalance.readAccountBalance(), '0', 0));
   }
@@ -65,7 +63,11 @@ class BuyCryptocurrenciesBloc
         buyCryptocurrenciesInitial.cryptocurrencyResponse;
 
     if (double.parse(currentAmount) > accountBalance) {
-      emit(BuyCryptocurrenciesLoadFailure());
+      emit(const BuyCryptocurrenciesNotEnoughFunds());
+      emit(BuyCryptocurrenciesInitial(cryptocurrency, accountBalance,
+          currentAmount.toString(), estimatedAmount));
+    } else if (currentAmount == '0') {
+      emit(const BuyCryptocurrenciesInvalidAmount());
       emit(BuyCryptocurrenciesInitial(cryptocurrency, accountBalance,
           currentAmount.toString(), estimatedAmount));
     } else {

@@ -43,3 +43,11 @@ class BuyCryptocurrencySuccess extends BuyCryptocurrenciesState {
   @override
   List<Object> get props => [name];
 }
+
+class BuyCryptocurrenciesNotEnoughFunds extends BuyCryptocurrenciesState {
+  const BuyCryptocurrenciesNotEnoughFunds();
+}
+
+class BuyCryptocurrenciesInvalidAmount extends BuyCryptocurrenciesState {
+  const BuyCryptocurrenciesInvalidAmount();
+}

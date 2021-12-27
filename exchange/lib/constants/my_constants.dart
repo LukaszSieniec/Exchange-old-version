@@ -56,4 +56,6 @@ class MyLabels {
 
 class Messages {
   static const String notEnoughFunds = 'Not enough funds on the account!';
+  static const String invalidAmount = 'You entered an incorrect amount!';
+  static const String bought = 'You bought';
 }
