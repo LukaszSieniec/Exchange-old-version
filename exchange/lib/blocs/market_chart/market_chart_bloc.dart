@@ -10,32 +10,36 @@ class MarketChartBloc extends Bloc<MarketChartEvent, MarketChartState> {
 
   MarketChartBloc(this._cryptocurrencyRepository)
       : super(MarketChartLoadInProgress()) {
-    on<MarketChartLoaded>(_onMarketChart);
-    on<MarketChartUpdated>(_onMarketChart);
+    on<MarketChartFetched>(_onMarketChartFetched);
+    on<MarketChartUpdated>(_onMarketChartUpdated);
   }
 
-  Future<void> _onMarketChart(
-      MarketChartEvent event, Emitter<MarketChartState> emit) async {
+  Future<void> _onMarketChartFetched(
+      MarketChartFetched event, Emitter<MarketChartState> emit) async {
+    emit(MarketChartLoadInProgress());
+
     final MarketChartData marketChart;
 
+    try {
+      marketChart = await _cryptocurrencyRepository.fetchMarketChart(event.id);
+      emit(MarketChartLoadSuccess(marketChart));
+    } on Exception {
+      emit(MarketChartLoadFailure());
+    }
+  }
+
+  Future<void> _onMarketChartUpdated(
+      MarketChartUpdated event, Emitter<MarketChartState> emit) async {
     emit(MarketChartLoadInProgress());
-    if (event is MarketChartLoaded) {
-      try {
-        marketChart = await _cryptocurrencyRepository
-            .fetchMarketChart(event.id);
-        emit(MarketChartLoadSuccess(marketChart));
-      } on Exception {
-        emit(MarketChartLoadFailure());
-      }
-    } else if (event is MarketChartUpdated) {
-      try {
-        marketChart = await _cryptocurrencyRepository.fetchMarketChart(
-            event.id,
-            days: _days[event.index]);
-        emit(MarketChartLoadSuccess(marketChart));
-      } on Exception {
-        emit(MarketChartLoadFailure());
-      }
+
+    final MarketChartData marketChart;
+
+    try {
+      marketChart = await _cryptocurrencyRepository.fetchMarketChart(event.id,
+          days: _days[event.index]);
+      emit(MarketChartLoadSuccess(marketChart));
+    } on Exception {
+      emit(MarketChartLoadFailure());
     }
   }
 }

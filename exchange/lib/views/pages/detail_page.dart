@@ -32,7 +32,7 @@ class DetailPage extends StatelessWidget {
                           .firstWhere((element) => element.id == id);
 
                       BlocProvider.of<MarketChartBloc>(context)
-                          .add(MarketChartLoaded(cryptocurrency.id));
+                          .add(MarketChartFetched(cryptocurrency.id));
 
                       return Column(children: [
                         Row(
