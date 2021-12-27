@@ -1,5 +1,8 @@
 import 'package:exchange/blocs/buy_cryptocurrency/buy_cryptocurrency_bloc.dart';
+import 'package:exchange/blocs/buy_cryptocurrency/buy_cryptocurrency_event.dart';
 import 'package:exchange/blocs/buy_cryptocurrency/buy_cryptocurrency_state.dart';
+import 'package:exchange/blocs/cryptocurrencies/cryptocurrencies_bloc.dart';
+import 'package:exchange/blocs/cryptocurrencies/cryptocurrencies_state.dart';
 import 'package:exchange/constants/my_constants.dart';
 import 'package:exchange/models/cryptocurrency_response.dart';
 import 'package:exchange/views/widgets/buy_cryptocurrency/confirm_button.dart';
@@ -10,19 +13,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BuyCryptocurrencyPage extends StatelessWidget {
-  final CryptocurrencyResponse cryptocurrency;
+  final String id;
 
-  const BuyCryptocurrencyPage(this.cryptocurrency, {Key? key})
-      : super(key: key);
+  const BuyCryptocurrencyPage(this.id, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<BuyCryptocurrenciesBloc>(context)
+        .add(BuyCryptocurrenciesLoaded(id));
+
     return BlocConsumer(
         bloc: BlocProvider.of<BuyCryptocurrenciesBloc>(context),
         listener: (context, state) {
           if (state is BuyCryptocurrenciesLoadFailure) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(PrimarySnackBar(title: Messages.notEnoughFunds));
+          } else if (state is BuyCryptocurrencySuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(
+                PrimarySnackBar(title: 'You bought ${state.name}'));
           }
         },
         builder: (context, state) {
@@ -65,11 +73,11 @@ class BuyCryptocurrencyPage extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                        'Estimated ${cryptocurrency.symbol.toUpperCase()}: ',
+                                        'Estimated ${state.cryptocurrencyResponse.symbol.toUpperCase()}: ',
                                         style: const TextStyle(
                                             fontSize: 16.0,
                                             color: Color(MyColors.colorText))),
-                                    Text('${state.estimatedQuantity}',
+                                    Text('${state.estimatedAmount}',
                                         style: const TextStyle(
                                             fontSize: 20.0,
                                             color: Colors.white,

@@ -32,7 +32,7 @@ class DetailPage extends StatelessWidget {
                           .firstWhere((element) => element.id == id);
 
                       BlocProvider.of<MarketChartBloc>(context)
-                          .add(MarketChartLoaded(cryptocurrency));
+                          .add(MarketChartLoaded(cryptocurrency.id));
 
                       return Column(children: [
                         Row(
@@ -126,7 +126,7 @@ class DetailPage extends StatelessWidget {
                                                   BlocProvider.of<MarketChartBloc>(
                                                       context)
                                                       .add(MarketChartUpdated(
-                                                      cryptocurrency, index)),
+                                                      cryptocurrency.id, index)),
                                               tabs: [
                                                 _buildTimeButton(MyLabels.day),
                                                 _buildTimeButton(MyLabels.week),
@@ -158,7 +158,7 @@ class DetailPage extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => BuyCryptocurrencyPage(cryptocurrency)));
+                  builder: (context) => BuyCryptocurrencyPage(cryptocurrency.id)));
         },
         style: OutlinedButton.styleFrom(
             side: const BorderSide(width: 2.0, color: Colors.green),
