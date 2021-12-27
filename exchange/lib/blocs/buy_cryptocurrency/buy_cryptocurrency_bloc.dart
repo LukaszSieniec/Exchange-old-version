@@ -5,6 +5,7 @@ import 'package:exchange/models/cryptocurrency.dart';
 import 'package:exchange/models/cryptocurrency_response.dart';
 import 'package:exchange/repositories/cryptocurrency_repository.dart';
 import 'package:exchange/utils/extensions.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'buy_cryptocurrency_event.dart';
@@ -29,6 +30,8 @@ class BuyCryptocurrenciesBloc
         (cryptocurrenciesBloc.state as CryptocurrenciesLoadSuccess)
             .cryptocurrencies
             .firstWhere((element) => element.id == event.id);
+
+    debugPrint('_onLoaded: ' + event.id);
 
     emit(BuyCryptocurrenciesInitial(
         cryptocurrency, AccountBalance.readAccountBalance(), '0', 0));

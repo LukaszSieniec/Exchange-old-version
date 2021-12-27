@@ -36,6 +36,7 @@ class BuyCryptocurrencyPage extends StatelessWidget {
             if (state is BuyCryptocurrenciesLoadInProgress) {
               return _buildLoading();
             } else if (state is BuyCryptocurrenciesInitial) {
+              debugPrint('Value: ${state.cryptocurrencyResponse.id}');
               return Scaffold(
                   backgroundColor: const Color(MyColors.background),
                   appBar: AppBar(

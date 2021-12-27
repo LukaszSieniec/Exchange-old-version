@@ -3,6 +3,9 @@ import 'package:exchange/models/cryptocurrency_response.dart';
 
 abstract class BuyCryptocurrenciesState extends Equatable {
   const BuyCryptocurrenciesState();
+
+  @override
+  List<Object> get props => [];
 }
 
 class BuyCryptocurrenciesInitial extends BuyCryptocurrenciesState {
@@ -14,13 +17,11 @@ class BuyCryptocurrenciesInitial extends BuyCryptocurrenciesState {
       this.accountBalance, this.amount, this.estimatedAmount);
 
   @override
-  List<Object> get props => [accountBalance, amount, estimatedAmount];
+  List<Object> get props =>
+      [cryptocurrencyResponse, accountBalance, amount, estimatedAmount];
 }
 
-class BuyCryptocurrenciesLoadInProgress extends BuyCryptocurrenciesState {
-  @override
-  List<Object> get props => [];
-}
+class BuyCryptocurrenciesLoadInProgress extends BuyCryptocurrenciesState {}
 
 class BuyCryptocurrenciesLoadSuccess extends BuyCryptocurrenciesState {
   final String amount;
@@ -32,10 +33,7 @@ class BuyCryptocurrenciesLoadSuccess extends BuyCryptocurrenciesState {
   List<Object> get props => [amount, estimatedQuantity];
 }
 
-class BuyCryptocurrenciesLoadFailure extends BuyCryptocurrenciesState {
-  @override
-  List<Object> get props => [];
-}
+class BuyCryptocurrenciesLoadFailure extends BuyCryptocurrenciesState {}
 
 class BuyCryptocurrencySuccess extends BuyCryptocurrenciesState {
   final String name;
