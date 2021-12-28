@@ -52,6 +52,9 @@ class MyLabels {
     zero,
     backspace
   ];
+
+  static const String sold = 'Sold';
+  static const String bought = 'Bought';
 }
 
 class Messages {

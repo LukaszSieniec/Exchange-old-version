@@ -12,6 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'blocs/buy_cryptocurrency/buy_cryptocurrency_bloc.dart';
+import 'blocs/transactions/transactions_bloc.dart';
 import 'database/account_balance.dart';
 
 void main() async {
@@ -47,6 +48,9 @@ class MyApp extends StatelessWidget {
                       CryptocurrencyService(), CryptocurrencyDatabase.get))),
           BlocProvider(
               create: (context) => WalletBloc(CryptocurrencyRepository(
+                  CryptocurrencyService(), CryptocurrencyDatabase.get))),
+          BlocProvider(
+              create: (context) => TransactionsBloc(CryptocurrencyRepository(
                   CryptocurrencyService(), CryptocurrencyDatabase.get)))
         ],
         child: MaterialApp(

@@ -60,10 +60,10 @@ class WalletPage extends StatelessWidget {
   Widget _buildMessage() {
     return const Expanded(
         child: Center(
-            child: Text('You don\'t have cryptocurrencies',
+            child: Text('No Cryptocurrencies',
                 style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 20.0))));
+                    fontSize: 18.0))));
   }
 }

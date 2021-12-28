@@ -10,9 +10,11 @@ class CryptocurrenciesDao {
   //Transactions Table
   static const String transactionsTableName = 'transactions';
   static const String transactionId = 'id';
+  static const String transactionCryptocurrencyId = 'cryptocurrency_id';
   static const String transactionCryptocurrencySymbol = 'cryptocurrency_symbol';
   static const String transactionCryptocurrencyName = 'cryptocurrency_name';
   static const String transactionType = 'type';
+  static const String transactionCryptocurrencyImage = 'image';
   static const String transactionAmount = 'amount';
 
   static String get createCryptocurrenciesTableQuery =>
@@ -24,8 +26,10 @@ class CryptocurrenciesDao {
 
   static String get createTransactionsTableQuery =>
       "CREATE TABLE IF NOT EXISTS $transactionsTableName($transactionId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
+      " $transactionCryptocurrencyId TEXT,"
       " $transactionCryptocurrencySymbol TEXT,"
       " $transactionCryptocurrencyName TEXT,"
       " $transactionType TEXT,"
+      " $transactionCryptocurrencyImage TEXT,"
       " $transactionAmount REAL)";
 }
