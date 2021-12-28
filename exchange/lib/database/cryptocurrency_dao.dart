@@ -14,8 +14,10 @@ class CryptocurrenciesDao {
   static const String transactionCryptocurrencySymbol = 'cryptocurrency_symbol';
   static const String transactionCryptocurrencyName = 'cryptocurrency_name';
   static const String transactionType = 'type';
+  static const String transactionDate = 'date';
   static const String transactionCryptocurrencyImage = 'image';
   static const String transactionAmount = 'amount';
+  static const String transactionCryptocurrencyPrice = 'cryptocurrency_price';
 
   static String get createCryptocurrenciesTableQuery =>
       "CREATE TABLE IF NOT EXISTS $cryptocurrenciesTableName($cryptocurrencyId TEXT PRIMARY KEY,"
@@ -30,6 +32,8 @@ class CryptocurrenciesDao {
       " $transactionCryptocurrencySymbol TEXT,"
       " $transactionCryptocurrencyName TEXT,"
       " $transactionType TEXT,"
+      " $transactionDate TEXT,"
       " $transactionCryptocurrencyImage TEXT,"
-      " $transactionAmount REAL)";
+      " $transactionAmount REAL,"
+      " $transactionCryptocurrencyPrice REAL)";
 }

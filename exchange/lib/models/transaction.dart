@@ -6,8 +6,9 @@ class Transaction {
       cryptocurrencySymbol,
       cryptocurrencyName,
       type,
+      date,
       image;
-  final double amount;
+  final double amount, cryptocurrencyPrice;
 
   Transaction(
       {this.id,
@@ -15,19 +16,22 @@ class Transaction {
       required this.cryptocurrencySymbol,
       required this.cryptocurrencyName,
       required this.type,
+      required this.date,
       required this.image,
-      required this.amount});
+      required this.amount,
+      required this.cryptocurrencyPrice});
 
   factory Transaction.fromCryptocurrencyResponse(
-          CryptocurrencyResponse cryptocurrencyResponse,
-          double amount) =>
+          CryptocurrencyResponse cryptocurrencyResponse, double amount) =>
       Transaction(
           cryptocurrencyId: cryptocurrencyResponse.id,
           cryptocurrencySymbol: cryptocurrencyResponse.symbol,
           cryptocurrencyName: cryptocurrencyResponse.name,
           type: 'Bought',
+          date: DateTime.now().toIso8601String(),
           image: cryptocurrencyResponse.image,
-          amount: amount);
+          amount: amount,
+          cryptocurrencyPrice: cryptocurrencyResponse.currentPrice);
 
   factory Transaction.fromJson(Map<String, dynamic> json) => Transaction(
       id: json['id'],
@@ -35,15 +39,19 @@ class Transaction {
       cryptocurrencySymbol: json['cryptocurrency_symbol'],
       cryptocurrencyName: json['cryptocurrency_name'],
       type: json['type'],
+      date: json['date'],
       image: json['image'],
-      amount: json['amount']);
+      amount: json['amount'],
+      cryptocurrencyPrice: json['cryptocurrency_price']);
 
   Map<String, dynamic> toJson() => {
         'cryptocurrency_id': cryptocurrencyId,
         'cryptocurrency_symbol': cryptocurrencySymbol,
         'cryptocurrency_name': cryptocurrencyName,
         'type': type,
+        'date': date,
         'image': image,
-        'amount': amount
+        'amount': amount,
+        'cryptocurrency_price': cryptocurrencyPrice
       };
 }
