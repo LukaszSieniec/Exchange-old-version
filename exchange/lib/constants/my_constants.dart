@@ -55,6 +55,9 @@ class MyLabels {
 
   static const String sold = 'Sold';
   static const String bought = 'Bought';
+
+  static const String buyMode = 'Buy';
+  static const String sellMode = 'Sell';
 }
 
 class Messages {

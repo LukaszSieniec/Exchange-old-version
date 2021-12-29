@@ -1,10 +1,14 @@
+import 'package:exchange/blocs/buy_cryptocurrency/buy_cryptocurrency_bloc.dart';
+import 'package:exchange/blocs/buy_cryptocurrency/buy_cryptocurrency_event.dart';
 import 'package:exchange/constants/my_constants.dart';
 import 'package:exchange/views/widgets/buy_cryptocurrency/keyboard_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Keyboard extends StatelessWidget {
+  final String mode;
 
-  const Keyboard({Key? key}) : super(key: key);
+  const Keyboard(this.mode, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +21,11 @@ class Keyboard extends StatelessWidget {
             crossAxisCount: 3,
             crossAxisSpacing: 12.0,
             mainAxisSpacing: 12.0),
-        itemBuilder: (context, index) =>
-            KeyboardButton(MyLabels.keyboardLabels[index]));
+        itemBuilder: (context, index) => KeyboardButton(
+            MyLabels.keyboardLabels[index],
+            onPressed: (label) => mode == MyLabels.buyMode
+                ? BlocProvider.of<BuyCryptocurrenciesBloc>(context)
+                    .add(AmountCryptocurrencyUpdated(label))
+                : debugPrint('Clicked!')));
   }
 }

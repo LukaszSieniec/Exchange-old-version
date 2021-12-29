@@ -6,14 +6,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class KeyboardButton extends StatelessWidget {
   final String label;
+  final Function(String) onPressed;
 
-  const KeyboardButton(this.label, {Key? key}) : super(key: key);
+  const KeyboardButton(this.label, {required this.onPressed, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-        onPressed: () => BlocProvider.of<BuyCryptocurrenciesBloc>(context)
-            .add(AmountCryptocurrencyUpdated(label)),
+        onPressed: () => onPressed(label),
         style: OutlinedButton.styleFrom(
             elevation: 4.0,
             backgroundColor: const Color(MyColors.brighterBackground),

@@ -50,7 +50,7 @@ class SellCryptocurrencyPage extends StatelessWidget {
                                   fontWeight: FontWeight.bold))
                         ]),
                     const SizedBox(height: 16.0),
-                    const Keyboard(),
+                    //const Keyboard(),
                     const SizedBox(height: 32.0),
                     const ConfirmButton()
                   ]))
