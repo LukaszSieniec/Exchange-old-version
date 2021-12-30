@@ -16,11 +16,11 @@ class BuyCryptocurrencyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<BuyCryptocurrenciesBloc>(context)
+    BlocProvider.of<BuyCryptocurrencyBloc>(context)
         .add(BuyCryptocurrencyLoaded(id));
 
     return BlocConsumer(
-        bloc: BlocProvider.of<BuyCryptocurrenciesBloc>(context),
+        bloc: BlocProvider.of<BuyCryptocurrencyBloc>(context),
         listener: (context, state) {
           if (state is BuyCryptocurrencyNotEnoughFunds) {
             ScaffoldMessenger.of(context)
@@ -34,7 +34,7 @@ class BuyCryptocurrencyPage extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          return BlocBuilder<BuyCryptocurrenciesBloc, BuyCryptocurrencyState>(
+          return BlocBuilder<BuyCryptocurrencyBloc, BuyCryptocurrencyState>(
               builder: (context, state) {
             if (state is BuyCryptocurrencyLoadInProgress) {
               return _buildLoading();

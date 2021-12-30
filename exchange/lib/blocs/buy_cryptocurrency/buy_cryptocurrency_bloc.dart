@@ -11,12 +11,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'buy_cryptocurrency_event.dart';
 import 'buy_cryptocurrency_state.dart';
 
-class BuyCryptocurrenciesBloc
+class BuyCryptocurrencyBloc
     extends Bloc<BuyCryptocurrencyEvent, BuyCryptocurrencyState> {
   CryptocurrenciesBloc cryptocurrenciesBloc;
   CryptocurrencyRepository cryptocurrencyRepository;
 
-  BuyCryptocurrenciesBloc(
+  BuyCryptocurrencyBloc(
       this.cryptocurrenciesBloc, this.cryptocurrencyRepository)
       : super(BuyCryptocurrencyLoadInProgress()) {
     on<BuyCryptocurrencyLoaded>(_onLoaded);
