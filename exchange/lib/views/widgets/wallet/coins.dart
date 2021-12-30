@@ -17,7 +17,8 @@ class Coins extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               return GestureDetector(
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const SellCryptocurrencyPage())),
+                      builder: (context) =>
+                          SellCryptocurrencyPage(cryptocurrencies[index].id))),
                   child: Card(
                       elevation: 4,
                       color: const Color(MyColors.brighterBackground),

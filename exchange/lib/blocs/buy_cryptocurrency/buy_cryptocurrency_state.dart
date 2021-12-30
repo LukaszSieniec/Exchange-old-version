@@ -1,19 +1,19 @@
 import 'package:equatable/equatable.dart';
 import 'package:exchange/models/cryptocurrency_response.dart';
 
-abstract class BuyCryptocurrenciesState extends Equatable {
-  const BuyCryptocurrenciesState();
+abstract class BuyCryptocurrencyState extends Equatable {
+  const BuyCryptocurrencyState();
 
   @override
   List<Object> get props => [];
 }
 
-class BuyCryptocurrenciesInitial extends BuyCryptocurrenciesState {
+class BuyCryptocurrencyInitial extends BuyCryptocurrencyState {
   final CryptocurrencyResponse cryptocurrencyResponse;
   final double accountBalance, estimatedAmountCryptocurrency;
   final String amountMoney;
 
-  const BuyCryptocurrenciesInitial(
+  const BuyCryptocurrencyInitial(
       this.cryptocurrencyResponse,
       this.accountBalance,
       this.amountMoney,
@@ -28,22 +28,22 @@ class BuyCryptocurrenciesInitial extends BuyCryptocurrenciesState {
       ];
 }
 
-class BuyCryptocurrenciesLoadInProgress extends BuyCryptocurrenciesState {}
+class BuyCryptocurrencyLoadInProgress extends BuyCryptocurrencyState {}
 
-class BuyCryptocurrenciesLoadSuccess extends BuyCryptocurrenciesState {
+class BuyCryptocurrencyLoadSuccess extends BuyCryptocurrencyState {
   final String amountMoney;
   final String estimatedAmountCryptocurrency;
 
-  const BuyCryptocurrenciesLoadSuccess(
+  const BuyCryptocurrencyLoadSuccess(
       this.amountMoney, this.estimatedAmountCryptocurrency);
 
   @override
   List<Object> get props => [amountMoney, estimatedAmountCryptocurrency];
 }
 
-class BuyCryptocurrenciesLoadFailure extends BuyCryptocurrenciesState {}
+class BuyCryptocurrencyLoadFailure extends BuyCryptocurrencyState {}
 
-class BuyCryptocurrencySuccess extends BuyCryptocurrenciesState {
+class BuyCryptocurrencySuccess extends BuyCryptocurrencyState {
   final String name;
 
   const BuyCryptocurrencySuccess(this.name);
@@ -52,10 +52,10 @@ class BuyCryptocurrencySuccess extends BuyCryptocurrenciesState {
   List<Object> get props => [name];
 }
 
-class BuyCryptocurrenciesNotEnoughFunds extends BuyCryptocurrenciesState {
-  const BuyCryptocurrenciesNotEnoughFunds();
+class BuyCryptocurrencyNotEnoughFunds extends BuyCryptocurrencyState {
+  const BuyCryptocurrencyNotEnoughFunds();
 }
 
-class BuyCryptocurrenciesInvalidAmount extends BuyCryptocurrenciesState {
-  const BuyCryptocurrenciesInvalidAmount();
+class BuyCryptocurrencyInvalidAmount extends BuyCryptocurrencyState {
+  const BuyCryptocurrencyInvalidAmount();
 }

@@ -22,10 +22,10 @@ class BuyCryptocurrencyPage extends StatelessWidget {
     return BlocConsumer(
         bloc: BlocProvider.of<BuyCryptocurrenciesBloc>(context),
         listener: (context, state) {
-          if (state is BuyCryptocurrenciesNotEnoughFunds) {
+          if (state is BuyCryptocurrencyNotEnoughFunds) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(PrimarySnackBar(title: Messages.notEnoughFunds));
-          } else if (state is BuyCryptocurrenciesInvalidAmount) {
+          } else if (state is BuyCryptocurrencyInvalidAmount) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(PrimarySnackBar(title: Messages.invalidAmount));
           } else if (state is BuyCryptocurrencySuccess) {
@@ -34,11 +34,11 @@ class BuyCryptocurrencyPage extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          return BlocBuilder<BuyCryptocurrenciesBloc, BuyCryptocurrenciesState>(
+          return BlocBuilder<BuyCryptocurrenciesBloc, BuyCryptocurrencyState>(
               builder: (context, state) {
-            if (state is BuyCryptocurrenciesLoadInProgress) {
+            if (state is BuyCryptocurrencyLoadInProgress) {
               return _buildLoading();
-            } else if (state is BuyCryptocurrenciesInitial) {
+            } else if (state is BuyCryptocurrencyInitial) {
               return Scaffold(
                   backgroundColor: const Color(MyColors.background),
                   appBar: AppBar(
@@ -77,7 +77,8 @@ class BuyCryptocurrencyPage extends StatelessWidget {
                                         style: const TextStyle(
                                             fontSize: 16.0,
                                             color: Color(MyColors.colorText))),
-                                    Text('${state.estimatedAmountCryptocurrency}',
+                                    Text(
+                                        '${state.estimatedAmountCryptocurrency}',
                                         style: const TextStyle(
                                             fontSize: 20.0,
                                             color: Colors.white,
@@ -86,7 +87,7 @@ class BuyCryptocurrencyPage extends StatelessWidget {
                               const SizedBox(height: 16.0),
                               const Keyboard(MyLabels.buyMode),
                               const SizedBox(height: 32.0),
-                              const ConfirmButton()
+                              const ConfirmButton(MyLabels.buyMode)
                             ]))
                       ]));
             }
