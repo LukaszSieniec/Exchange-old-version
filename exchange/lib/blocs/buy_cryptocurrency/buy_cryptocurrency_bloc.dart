@@ -19,12 +19,12 @@ class BuyCryptocurrencyBloc
   BuyCryptocurrencyBloc(
       this.cryptocurrenciesBloc, this.cryptocurrencyRepository)
       : super(BuyCryptocurrencyLoadInProgress()) {
-    on<BuyCryptocurrencyLoaded>(_onLoaded);
-    on<BuyCryptocurrencyAmountUpdated>(_onAmountCryptocurrencyUpdated);
-    on<BuyCryptocurrencyConfirmed>(_onConfirmedCryptocurrency);
+    on<BuyCryptocurrencyLoaded>(_onBuyCryptocurrencyLoaded);
+    on<BuyCryptocurrencyAmountUpdated>(_onBuyCryptocurrencyAmountUpdated);
+    on<BuyCryptocurrencyConfirmed>(_onBuyCryptocurrencyConfirmed);
   }
 
-  Future<void> _onLoaded(BuyCryptocurrencyLoaded event,
+  Future<void> _onBuyCryptocurrencyLoaded(BuyCryptocurrencyLoaded event,
       Emitter<BuyCryptocurrencyState> emit) async {
     final CryptocurrencyResponse cryptocurrency =
         (cryptocurrenciesBloc.state as CryptocurrenciesLoadSuccess)
@@ -35,7 +35,7 @@ class BuyCryptocurrencyBloc
         cryptocurrency, AccountBalance.readAccountBalance(), '0', 0));
   }
 
-  Future<void> _onAmountCryptocurrencyUpdated(
+  Future<void> _onBuyCryptocurrencyAmountUpdated(
       BuyCryptocurrencyAmountUpdated event,
       Emitter<BuyCryptocurrencyState> emit) async {
     final String currentAmount = (state as BuyCryptocurrencyInitial)
@@ -53,7 +53,7 @@ class BuyCryptocurrencyBloc
         AccountBalance.readAccountBalance(), currentAmount, estimatedAmount));
   }
 
-  Future<void> _onConfirmedCryptocurrency(BuyCryptocurrencyConfirmed event,
+  Future<void> _onBuyCryptocurrencyConfirmed(BuyCryptocurrencyConfirmed event,
       Emitter<BuyCryptocurrencyState> emit) async {
     final BuyCryptocurrencyInitial buyCryptocurrenciesInitial =
         (state as BuyCryptocurrencyInitial);
