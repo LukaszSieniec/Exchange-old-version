@@ -7,10 +7,10 @@ abstract class SellCryptocurrencyEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class AmountCryptocurrencyUpdated extends SellCryptocurrencyEvent {
+class AmountSellCryptocurrencyUpdated extends SellCryptocurrencyEvent {
   final String number;
 
-  const AmountCryptocurrencyUpdated(this.number);
+  const AmountSellCryptocurrencyUpdated(this.number);
 
   @override
   List<Object> get props => [number];

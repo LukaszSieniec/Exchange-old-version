@@ -1,5 +1,7 @@
 import 'package:exchange/blocs/buy_cryptocurrency/buy_cryptocurrency_bloc.dart';
 import 'package:exchange/blocs/buy_cryptocurrency/buy_cryptocurrency_event.dart';
+import 'package:exchange/blocs/sell_cryptocurrency/sell_cryptocurrency_bloc.dart';
+import 'package:exchange/blocs/sell_cryptocurrency/sell_cryptocurrency_event.dart';
 import 'package:exchange/constants/my_constants.dart';
 import 'package:exchange/views/widgets/buy_cryptocurrency/keyboard_button.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +28,7 @@ class Keyboard extends StatelessWidget {
             onPressed: (label) => mode == MyLabels.buyMode
                 ? BlocProvider.of<BuyCryptocurrenciesBloc>(context)
                     .add(AmountCryptocurrencyUpdated(label))
-                : debugPrint('Clicked!')));
+                : BlocProvider.of<SellCryptocurrencyBloc>(context)
+                    .add(AmountSellCryptocurrencyUpdated(label))));
   }
 }
