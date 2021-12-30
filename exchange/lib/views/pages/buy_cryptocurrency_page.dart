@@ -62,7 +62,7 @@ class BuyCryptocurrencyPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Divider(height: 2.0, color: Colors.white),
-                        Text('${state.amount} \$',
+                        Text('${state.amountMoney} \$',
                             style: const TextStyle(
                                 fontSize: 48.0, color: Colors.white)),
                         Container(
@@ -77,7 +77,7 @@ class BuyCryptocurrencyPage extends StatelessWidget {
                                         style: const TextStyle(
                                             fontSize: 16.0,
                                             color: Color(MyColors.colorText))),
-                                    Text('${state.estimatedAmount}',
+                                    Text('${state.estimatedAmountCryptocurrency}',
                                         style: const TextStyle(
                                             fontSize: 20.0,
                                             color: Colors.white,

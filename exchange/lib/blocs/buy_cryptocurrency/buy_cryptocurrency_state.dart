@@ -10,27 +10,35 @@ abstract class BuyCryptocurrenciesState extends Equatable {
 
 class BuyCryptocurrenciesInitial extends BuyCryptocurrenciesState {
   final CryptocurrencyResponse cryptocurrencyResponse;
-  final double accountBalance, estimatedAmount;
-  final String amount;
+  final double accountBalance, estimatedAmountCryptocurrency;
+  final String amountMoney;
 
-  const BuyCryptocurrenciesInitial(this.cryptocurrencyResponse,
-      this.accountBalance, this.amount, this.estimatedAmount);
+  const BuyCryptocurrenciesInitial(
+      this.cryptocurrencyResponse,
+      this.accountBalance,
+      this.amountMoney,
+      this.estimatedAmountCryptocurrency);
 
   @override
-  List<Object> get props =>
-      [cryptocurrencyResponse, accountBalance, amount, estimatedAmount];
+  List<Object> get props => [
+        cryptocurrencyResponse,
+        accountBalance,
+        amountMoney,
+        estimatedAmountCryptocurrency
+      ];
 }
 
 class BuyCryptocurrenciesLoadInProgress extends BuyCryptocurrenciesState {}
 
 class BuyCryptocurrenciesLoadSuccess extends BuyCryptocurrenciesState {
-  final String amount;
-  final String estimatedQuantity;
+  final String amountMoney;
+  final String estimatedAmountCryptocurrency;
 
-  const BuyCryptocurrenciesLoadSuccess(this.amount, this.estimatedQuantity);
+  const BuyCryptocurrenciesLoadSuccess(
+      this.amountMoney, this.estimatedAmountCryptocurrency);
 
   @override
-  List<Object> get props => [amount, estimatedQuantity];
+  List<Object> get props => [amountMoney, estimatedAmountCryptocurrency];
 }
 
 class BuyCryptocurrenciesLoadFailure extends BuyCryptocurrenciesState {}
