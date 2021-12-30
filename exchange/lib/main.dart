@@ -2,6 +2,7 @@ import 'package:exchange/blocs/bottom_navigation_bar/bottom_navigation_bar_bloc.
 import 'package:exchange/blocs/cryptocurrencies/cryptocurrencies_bloc.dart';
 import 'package:exchange/blocs/cryptocurrencies/cryptocurrencies_event.dart';
 import 'package:exchange/blocs/market_chart/market_chart_bloc.dart';
+import 'package:exchange/blocs/sell_cryptocurrency/sell_cryptocurrency_bloc.dart';
 import 'package:exchange/blocs/wallet/wallet_bloc.dart';
 import 'package:exchange/database/cryptocurrency_database.dart';
 import 'package:exchange/repositories/cryptocurrency_repository.dart';
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
                   BlocProvider.of<CryptocurrenciesBloc>(context),
                   CryptocurrencyRepository(
                       CryptocurrencyService(), CryptocurrencyDatabase.get))),
+          BlocProvider(create: (context) => SellCryptocurrencyBloc()),
           BlocProvider(
               create: (context) => WalletBloc(CryptocurrencyRepository(
                   CryptocurrencyService(), CryptocurrencyDatabase.get))),

@@ -7,17 +7,26 @@ abstract class SellCryptocurrencyEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class AmountSellCryptocurrencyUpdated extends SellCryptocurrencyEvent {
-  final String number;
+class SellCryptocurrencyLoaded extends SellCryptocurrencyEvent {
+  final String id;
 
-  const AmountSellCryptocurrencyUpdated(this.number);
+  const SellCryptocurrencyLoaded(this.id);
 
   @override
-  List<Object> get props => [number];
+  List<Object> get props => [id];
 }
 
-class ConfirmedSellCryptocurrency extends SellCryptocurrencyEvent {
-  const ConfirmedSellCryptocurrency();
+class SellCryptocurrencyAmountUpdated extends SellCryptocurrencyEvent {
+  final String amountCryptocurrency;
+
+  const SellCryptocurrencyAmountUpdated(this.amountCryptocurrency);
+
+  @override
+  List<Object> get props => [amountCryptocurrency];
+}
+
+class SellCryptocurrencyConfirmed extends SellCryptocurrencyEvent {
+  const SellCryptocurrencyConfirmed();
 
   @override
   List<Object> get props => [];

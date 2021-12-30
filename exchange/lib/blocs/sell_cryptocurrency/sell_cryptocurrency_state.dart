@@ -17,3 +17,5 @@ class SellCryptocurrencyInitial extends SellCryptocurrencyState {
   @override
   List<Object> get props => [accountBalance, amount, estimatedAmount];
 }
+
+class SellCryptocurrencyLoadInProgress extends SellCryptocurrencyState {}

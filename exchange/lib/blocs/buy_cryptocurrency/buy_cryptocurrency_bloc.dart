@@ -20,8 +20,8 @@ class BuyCryptocurrenciesBloc
       this.cryptocurrenciesBloc, this.cryptocurrencyRepository)
       : super(BuyCryptocurrenciesLoadInProgress()) {
     on<BuyCryptocurrencyLoaded>(_onLoaded);
-    on<AmountBuyCryptocurrencyUpdated>(_onAmountCryptocurrencyUpdated);
-    on<ConfirmedBuyCryptocurrency>(_onConfirmedCryptocurrency);
+    on<BuyCryptocurrencyAmountUpdated>(_onAmountCryptocurrencyUpdated);
+    on<BuyCryptocurrencyConfirmed>(_onConfirmedCryptocurrency);
   }
 
   Future<void> _onLoaded(BuyCryptocurrencyLoaded event,
@@ -36,10 +36,11 @@ class BuyCryptocurrenciesBloc
   }
 
   Future<void> _onAmountCryptocurrencyUpdated(
-      AmountBuyCryptocurrencyUpdated event,
+      BuyCryptocurrencyAmountUpdated event,
       Emitter<BuyCryptocurrenciesState> emit) async {
-    final String currentAmount =
-        (state as BuyCryptocurrenciesInitial).amountMoney.appendNumber(event.amountMoney);
+    final String currentAmount = (state as BuyCryptocurrenciesInitial)
+        .amountMoney
+        .appendNumber(event.amountMoney);
 
     final CryptocurrencyResponse cryptocurrencyResponse =
         (state as BuyCryptocurrenciesInitial).cryptocurrencyResponse;
@@ -52,14 +53,15 @@ class BuyCryptocurrenciesBloc
         AccountBalance.readAccountBalance(), currentAmount, estimatedAmount));
   }
 
-  Future<void> _onConfirmedCryptocurrency(ConfirmedBuyCryptocurrency event,
+  Future<void> _onConfirmedCryptocurrency(BuyCryptocurrencyConfirmed event,
       Emitter<BuyCryptocurrenciesState> emit) async {
     final BuyCryptocurrenciesInitial buyCryptocurrenciesInitial =
         (state as BuyCryptocurrenciesInitial);
 
     final String currentAmount = buyCryptocurrenciesInitial.amountMoney;
     final double accountBalance = buyCryptocurrenciesInitial.accountBalance;
-    final double estimatedAmount = buyCryptocurrenciesInitial.estimatedAmountCryptocurrency;
+    final double estimatedAmount =
+        buyCryptocurrenciesInitial.estimatedAmountCryptocurrency;
     final CryptocurrencyResponse cryptocurrency =
         buyCryptocurrenciesInitial.cryptocurrencyResponse;
 
