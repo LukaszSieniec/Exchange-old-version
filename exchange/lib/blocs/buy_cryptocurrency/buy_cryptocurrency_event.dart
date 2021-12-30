@@ -1,28 +1,31 @@
 import 'package:equatable/equatable.dart';
 
-abstract class BuyCryptocurrenciesEvent extends Equatable {
-  const BuyCryptocurrenciesEvent();
+abstract class BuyCryptocurrencyEvent extends Equatable {
+  const BuyCryptocurrencyEvent();
+
+  @override
+  List<Object> get props => [];
 }
 
-class BuyCryptocurrenciesLoaded extends BuyCryptocurrenciesEvent {
+class BuyCryptocurrencyLoaded extends BuyCryptocurrencyEvent {
   final String id;
 
-  const BuyCryptocurrenciesLoaded(this.id);
+  const BuyCryptocurrencyLoaded(this.id);
 
   @override
   List<Object> get props => [id];
 }
 
-class AmountCryptocurrencyUpdated extends BuyCryptocurrenciesEvent {
+class AmountBuyCryptocurrencyUpdated extends BuyCryptocurrencyEvent {
   final String number;
 
-  const AmountCryptocurrencyUpdated(this.number);
+  const AmountBuyCryptocurrencyUpdated(this.number);
 
   @override
   List<Object> get props => [number];
 }
 
-class ConfirmedBuyCryptocurrency extends BuyCryptocurrenciesEvent {
+class ConfirmedBuyCryptocurrency extends BuyCryptocurrencyEvent {
   const ConfirmedBuyCryptocurrency();
 
   @override

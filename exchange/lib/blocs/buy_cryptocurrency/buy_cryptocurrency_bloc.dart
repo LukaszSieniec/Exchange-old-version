@@ -12,19 +12,19 @@ import 'buy_cryptocurrency_event.dart';
 import 'buy_cryptocurrency_state.dart';
 
 class BuyCryptocurrenciesBloc
-    extends Bloc<BuyCryptocurrenciesEvent, BuyCryptocurrenciesState> {
+    extends Bloc<BuyCryptocurrencyEvent, BuyCryptocurrenciesState> {
   CryptocurrenciesBloc cryptocurrenciesBloc;
   CryptocurrencyRepository cryptocurrencyRepository;
 
   BuyCryptocurrenciesBloc(
       this.cryptocurrenciesBloc, this.cryptocurrencyRepository)
       : super(BuyCryptocurrenciesLoadInProgress()) {
-    on<BuyCryptocurrenciesLoaded>(_onLoaded);
-    on<AmountCryptocurrencyUpdated>(_onAmountCryptocurrencyUpdated);
+    on<BuyCryptocurrencyLoaded>(_onLoaded);
+    on<AmountBuyCryptocurrencyUpdated>(_onAmountCryptocurrencyUpdated);
     on<ConfirmedBuyCryptocurrency>(_onConfirmedCryptocurrency);
   }
 
-  Future<void> _onLoaded(BuyCryptocurrenciesLoaded event,
+  Future<void> _onLoaded(BuyCryptocurrencyLoaded event,
       Emitter<BuyCryptocurrenciesState> emit) async {
     final CryptocurrencyResponse cryptocurrency =
         (cryptocurrenciesBloc.state as CryptocurrenciesLoadSuccess)
@@ -35,7 +35,8 @@ class BuyCryptocurrenciesBloc
         cryptocurrency, AccountBalance.readAccountBalance(), '0', 0));
   }
 
-  Future<void> _onAmountCryptocurrencyUpdated(AmountCryptocurrencyUpdated event,
+  Future<void> _onAmountCryptocurrencyUpdated(
+      AmountBuyCryptocurrencyUpdated event,
       Emitter<BuyCryptocurrenciesState> emit) async {
     final String currentAmount =
         (state as BuyCryptocurrenciesInitial).amount.appendNumber(event.number);
