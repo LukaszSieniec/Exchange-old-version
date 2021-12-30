@@ -21,7 +21,9 @@ class CryptocurrencyService {
 
     if (response.statusCode == 200) {
       final Iterable json = response.data;
-      return json.map((element) => CryptocurrencyResponse.fromJson(element)).toList();
+      return json
+          .map((element) => CryptocurrencyResponse.fromJson(element))
+          .toList();
     } else {
       debugPrint('fetchCryptocurrencies');
       debugPrint('${response.statusCode}');
@@ -41,7 +43,9 @@ class CryptocurrencyService {
 
     if (response.statusCode == 200) {
       final Iterable json = response.data;
-      return json.map((element) => CryptocurrencyResponse.fromJson(element)).toList();
+      return json
+          .map((element) => CryptocurrencyResponse.fromJson(element))
+          .toList();
     } else {
       debugPrint('fetchCryptocurrenciesByIds');
       debugPrint('${response.statusCode}');
@@ -66,7 +70,7 @@ class CryptocurrencyService {
     }
   }
 
-  Future<CryptocurrencyResponse> fetchCryptocurrency(String id) async {
+  Future<CryptocurrencyResponse> fetchCryptocurrency(final String id) async {
     final response = await _dio.get('coins/$id');
 
     if (response.statusCode == 200) {
@@ -76,12 +80,25 @@ class CryptocurrencyService {
     }
   }
 
-  Future<MarketChartData> fetchMarketChart(String id, int days) async {
+  Future<MarketChartData> fetchMarketChart(
+      final String id, final int days) async {
     final response = await _dio.get('coins/$id/market_chart',
         queryParameters: {'vs_currency': 'usd', 'days': days});
 
     if (response.statusCode == 200) {
       return MarketChartData.fromJson(response.data);
+    } else {
+      throw Exception('Error!');
+    }
+  }
+
+  Future<dynamic> fetchPrice(final String id) async {
+    final response = await _dio.get('simple/price',
+        queryParameters: {'vs_currencies': 'usd', 'ids': id});
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> price = response.data[id];
+      return price['usd'];
     } else {
       throw Exception('Error!');
     }
