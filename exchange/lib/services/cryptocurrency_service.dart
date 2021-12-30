@@ -92,7 +92,7 @@ class CryptocurrencyService {
     }
   }
 
-  Future<dynamic> fetchPrice(final String id) async {
+  Future<double> fetchPrice(final String id) async {
     final response = await _dio.get('simple/price',
         queryParameters: {'vs_currencies': 'usd', 'ids': id});
 

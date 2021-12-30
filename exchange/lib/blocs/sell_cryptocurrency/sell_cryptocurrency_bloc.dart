@@ -24,8 +24,7 @@ class SellCryptocurrencyBloc
 
   void _onSellCryptocurrencyLoaded(SellCryptocurrencyLoaded event,
       Emitter<SellCryptocurrencyState> emit) async {
-    final dynamic price = await cryptocurrencyRepository.fetchPrice(event.id);
-    debugPrint(price.toString());
+    final double price = await cryptocurrencyRepository.fetchPrice(event.id);
 
     final Cryptocurrency cryptocurrency =
         (walletBloc.state as WalletLoadSuccess)
@@ -33,20 +32,32 @@ class SellCryptocurrencyBloc
             .firstWhere((element) => element.id == event.id);
 
     emit(SellCryptocurrencyInitial(
-        cryptocurrency, AccountBalance.readAccountBalance(), '0', 0));
+        cryptocurrency, AccountBalance.readAccountBalance(), '0', 0, price));
   }
 
   void _onSellCryptocurrencyAmountUpdated(SellCryptocurrencyAmountUpdated event,
       Emitter<SellCryptocurrencyState> emit) {
-    final String currentAmount = (state as SellCryptocurrencyInitial)
+    final SellCryptocurrencyInitial sellCryptocurrenciesInitial =
+        (state as SellCryptocurrencyInitial);
+
+    final String currentAmount = sellCryptocurrenciesInitial
         .amountCryptocurrency
         .appendNumber(event.amountCryptocurrency);
 
+    final double price = sellCryptocurrenciesInitial.priceCryptocurrency;
+
     final Cryptocurrency cryptocurrency =
-        (state as SellCryptocurrencyInitial).cryptocurrency;
+        sellCryptocurrenciesInitial.cryptocurrency;
+
+    final double estimatedAmount =
+        double.parse((double.parse(currentAmount) * price).toStringAsFixed(5));
 
     emit(SellCryptocurrencyInitial(
-        cryptocurrency, AccountBalance.readAccountBalance(), currentAmount, 0));
+        cryptocurrency,
+        AccountBalance.readAccountBalance(),
+        currentAmount,
+        estimatedAmount,
+        price));
   }
 
   void _onSellCryptocurrencyConfirmed(SellCryptocurrencyConfirmed event,

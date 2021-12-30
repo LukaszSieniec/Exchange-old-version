@@ -10,11 +10,15 @@ abstract class SellCryptocurrencyState extends Equatable {
 
 class SellCryptocurrencyInitial extends SellCryptocurrencyState {
   final Cryptocurrency cryptocurrency;
-  final double accountBalance, estimatedAmount;
+  final double accountBalance, estimatedAmount, priceCryptocurrency;
   final String amountCryptocurrency;
 
-  const SellCryptocurrencyInitial(this.cryptocurrency, this.accountBalance,
-      this.amountCryptocurrency, this.estimatedAmount);
+  const SellCryptocurrencyInitial(
+      this.cryptocurrency,
+      this.accountBalance,
+      this.amountCryptocurrency,
+      this.estimatedAmount,
+      this.priceCryptocurrency);
 
   @override
   List<Object> get props =>

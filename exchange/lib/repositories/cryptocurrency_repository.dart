@@ -44,7 +44,7 @@ class CryptocurrencyRepository {
     return marketChartData;
   }
 
-  Future<dynamic> fetchPrice(String id) async =>
+  Future<double> fetchPrice(String id) async =>
       await _cryptocurrencyService.fetchPrice(id);
 
   Future<void> createOrUpdateCryptocurrency(
