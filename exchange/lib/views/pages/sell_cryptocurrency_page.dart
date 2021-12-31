@@ -23,7 +23,7 @@ class SellCryptocurrencyPage extends StatelessWidget {
           if (state is SellCryptocurrencyNotEnoughCryptocurrency) {
             ScaffoldMessenger.of(context).showSnackBar(
                 PrimarySnackBar(title: Messages.notEnoughCryptocurrency));
-          }else if (state is SellCryptocurrencyInvalidAmount) {
+          } else if (state is SellCryptocurrencyInvalidAmount) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(PrimarySnackBar(title: Messages.invalidAmount));
           }
@@ -45,10 +45,11 @@ class SellCryptocurrencyPage extends StatelessWidget {
                             alignment: AlignmentDirectional.centerEnd,
                             child: Container(
                                 margin: const EdgeInsets.only(right: 8.0),
-                                child: Text('Balance: ${state.accountBalance}',
+                                child: Text(
+                                    'Balance: ${state.cryptocurrency.amount} ${state.cryptocurrency.symbol.toUpperCase()}',
                                     style: const TextStyle(
                                         color: Colors.white,
-                                        fontSize: 24.0,
+                                        fontSize: 20.0,
                                         fontWeight: FontWeight.bold))))),
                     leading: IconButton(
                         icon: const Icon(Icons.arrow_back),

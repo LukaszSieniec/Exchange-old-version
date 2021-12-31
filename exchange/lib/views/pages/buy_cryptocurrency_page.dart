@@ -53,7 +53,7 @@ class BuyCryptocurrencyPage extends StatelessWidget {
                                       'Balance: ${state.accountBalance}',
                                       style: const TextStyle(
                                           color: Colors.white,
-                                          fontSize: 24.0,
+                                          fontSize: 20.0,
                                           fontWeight: FontWeight.bold))))),
                       leading: IconButton(
                           icon: const Icon(Icons.arrow_back),

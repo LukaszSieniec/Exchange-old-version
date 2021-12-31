@@ -69,7 +69,8 @@ class Transactions extends StatelessWidget {
                                 Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
-                                      Text('${transactions[index].amount} \$',
+                                      Text(
+                                          '${transactions[index].type == MyLabels.bought ? '-' : '+'} ${transactions[index].amount} \$',
                                           style: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 20.0)),
