@@ -26,6 +26,9 @@ class SellCryptocurrencyPage extends StatelessWidget {
           } else if (state is SellCryptocurrencyInvalidAmount) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(PrimarySnackBar(title: Messages.invalidAmount));
+          } else if (state is SellCryptocurrencySuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(
+                PrimarySnackBar(title: '${Messages.sold} ${state.name}'));
           }
         },
         bloc: BlocProvider.of<SellCryptocurrencyBloc>(context),
