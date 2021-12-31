@@ -5,6 +5,7 @@ import 'package:exchange/blocs/wallet/wallet_state.dart';
 import 'package:exchange/database/account_balance.dart';
 import 'package:exchange/models/cryptocurrency.dart';
 import 'package:exchange/models/cryptocurrency_response.dart';
+import 'package:exchange/models/transaction.dart';
 import 'package:exchange/repositories/cryptocurrency_repository.dart';
 import 'package:exchange/utils/extensions.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class SellCryptocurrencyBloc
 
   void _onSellCryptocurrencyLoaded(SellCryptocurrencyLoaded event,
       Emitter<SellCryptocurrencyState> emit) async {
-    final double price = await cryptocurrencyRepository.fetchPrice(event.id);
+    final dynamic price = await cryptocurrencyRepository.fetchPrice(event.id);
 
     final Cryptocurrency cryptocurrency =
         (walletBloc.state as WalletLoadSuccess)
@@ -44,7 +45,7 @@ class SellCryptocurrencyBloc
         .amountCryptocurrency
         .appendNumber(event.amountCryptocurrency);
 
-    final double price = sellCryptocurrenciesInitial.priceCryptocurrency;
+    final dynamic price = sellCryptocurrenciesInitial.priceCryptocurrency;
 
     final Cryptocurrency cryptocurrency =
         sellCryptocurrenciesInitial.cryptocurrency;
@@ -61,5 +62,52 @@ class SellCryptocurrencyBloc
   }
 
   void _onSellCryptocurrencyConfirmed(SellCryptocurrencyConfirmed event,
-      Emitter<SellCryptocurrencyState> emit) {}
+      Emitter<SellCryptocurrencyState> emit) {
+    final SellCryptocurrencyInitial sellCryptocurrencyInitial =
+        (state as SellCryptocurrencyInitial);
+
+    final String currentAmount = sellCryptocurrencyInitial.amountCryptocurrency;
+    final double accountBalance = sellCryptocurrencyInitial.accountBalance;
+    final double estimatedAmount = sellCryptocurrencyInitial.estimatedAmount;
+    final Cryptocurrency cryptocurrency =
+        sellCryptocurrencyInitial.cryptocurrency;
+    final dynamic price = sellCryptocurrencyInitial.priceCryptocurrency;
+
+    if (double.parse(currentAmount) > cryptocurrency.amount) {
+      emit(SellCryptocurrencyNotEnoughCryptocurrency());
+      emit(SellCryptocurrencyInitial(cryptocurrency, accountBalance,
+          currentAmount, estimatedAmount, price));
+    } else if (currentAmount == '0') {
+      emit(SellCryptocurrencyInvalidAmount());
+      emit(SellCryptocurrencyInitial(cryptocurrency, accountBalance,
+          currentAmount, estimatedAmount, price));
+    } else {
+      try {
+        final double newAccountBalance = accountBalance + estimatedAmount;
+
+        emit(SellCryptocurrencySuccess(cryptocurrency));
+        emit(SellCryptocurrencyInitial(
+            cryptocurrency, newAccountBalance, '0', 0, price));
+
+        _updateCryptocurrency(cryptocurrency, double.parse(currentAmount));
+        _createTransaction(cryptocurrency, estimatedAmount, price);
+        _saveAccountBalance(newAccountBalance);
+      } on Exception {
+        emit(SellCryptocurrencyLoadFailure());
+      }
+    }
+  }
+
+  Future<void> _updateCryptocurrency(
+          Cryptocurrency cryptocurrency, double currentAmount) =>
+      cryptocurrencyRepository
+          .updateCryptocurrency(cryptocurrency.id, currentAmount);
+
+  Future<void> _createTransaction(Cryptocurrency cryptocurrency,
+          double estimatedAmount, double price) =>
+      cryptocurrencyRepository.createTransaction(Transaction.fromCryptocurrency(
+          cryptocurrency, estimatedAmount, price));
+
+  Future<void> _saveAccountBalance(double newAccountBalance) =>
+      AccountBalance.saveAccountBalance(newAccountBalance);
 }

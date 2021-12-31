@@ -44,7 +44,7 @@ class CryptocurrencyRepository {
     return marketChartData;
   }
 
-  Future<double> fetchPrice(String id) async =>
+  Future<dynamic> fetchPrice(String id) async =>
       await _cryptocurrencyService.fetchPrice(id);
 
   Future<void> createOrUpdateCryptocurrency(
@@ -66,6 +66,16 @@ class CryptocurrencyRepository {
     }
   }
 
+  Future<void> updateCryptocurrency(String id, double currentAmount) async {
+    final Cryptocurrency myCryptocurrency =
+        await _cryptocurrencyDatabase.readCryptocurrency(id);
+
+    final double amount = myCryptocurrency.amount - currentAmount;
+
+    _cryptocurrencyDatabase
+        .updateCryptocurrency(myCryptocurrency.copyWith(amount: amount));
+  }
+
   Future<void> createCryptocurrency(Cryptocurrency cryptocurrency) async =>
       _cryptocurrencyDatabase.createCryptocurrency(cryptocurrency);
 
@@ -74,9 +84,6 @@ class CryptocurrencyRepository {
         await _cryptocurrencyDatabase.readCryptocurrency(id);
     return cryptocurrency;
   }
-
-  Future<void> updateCryptocurrency(Cryptocurrency cryptocurrency) async =>
-      _cryptocurrencyDatabase.updateCryptocurrency(cryptocurrency);
 
   Future<void> deleteCryptocurrency(String id) async =>
       _cryptocurrencyDatabase.deleteCryptocurrency(id);

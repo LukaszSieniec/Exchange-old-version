@@ -4,6 +4,7 @@ import 'package:exchange/blocs/sell_cryptocurrency/sell_cryptocurrency_state.dar
 import 'package:exchange/constants/my_constants.dart';
 import 'package:exchange/views/widgets/buy_cryptocurrency/confirm_button.dart';
 import 'package:exchange/views/widgets/buy_cryptocurrency/keyboard.dart';
+import 'package:exchange/views/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,7 +19,15 @@ class SellCryptocurrencyPage extends StatelessWidget {
         .add(SellCryptocurrencyLoaded(id));
 
     return BlocConsumer<SellCryptocurrencyBloc, SellCryptocurrencyState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is SellCryptocurrencyNotEnoughCryptocurrency) {
+            ScaffoldMessenger.of(context).showSnackBar(
+                PrimarySnackBar(title: Messages.notEnoughCryptocurrency));
+          }else if (state is SellCryptocurrencyInvalidAmount) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(PrimarySnackBar(title: Messages.invalidAmount));
+          }
+        },
         bloc: BlocProvider.of<SellCryptocurrencyBloc>(context),
         builder: (context, state) {
           if (state is SellCryptocurrencyLoadInProgress) {

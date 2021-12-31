@@ -1,3 +1,5 @@
+import 'package:exchange/models/cryptocurrency.dart';
+
 import 'cryptocurrency_response.dart';
 
 class Transaction {
@@ -20,6 +22,18 @@ class Transaction {
       required this.image,
       required this.amount,
       required this.cryptocurrencyPrice});
+
+  factory Transaction.fromCryptocurrency(
+          Cryptocurrency cryptocurrency, double amount, final dynamic price) =>
+      Transaction(
+          cryptocurrencyId: cryptocurrency.id,
+          cryptocurrencySymbol: cryptocurrency.symbol,
+          cryptocurrencyName: cryptocurrency.name,
+          type: 'Sold',
+          date: DateTime.now().toIso8601String(),
+          image: cryptocurrency.image,
+          amount: amount,
+          cryptocurrencyPrice: price);
 
   factory Transaction.fromCryptocurrencyResponse(
           CryptocurrencyResponse cryptocurrencyResponse, double amount) =>

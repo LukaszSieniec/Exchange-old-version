@@ -10,8 +10,10 @@ abstract class SellCryptocurrencyState extends Equatable {
 
 class SellCryptocurrencyInitial extends SellCryptocurrencyState {
   final Cryptocurrency cryptocurrency;
-  final double accountBalance, estimatedAmount, priceCryptocurrency;
+  final double accountBalance, estimatedAmount;
   final String amountCryptocurrency;
+
+  final dynamic priceCryptocurrency;
 
   const SellCryptocurrencyInitial(
       this.cryptocurrency,
@@ -21,8 +23,29 @@ class SellCryptocurrencyInitial extends SellCryptocurrencyState {
       this.priceCryptocurrency);
 
   @override
-  List<Object> get props =>
-      [cryptocurrency, accountBalance, amountCryptocurrency, estimatedAmount];
+  List<Object> get props => [
+        cryptocurrency,
+        accountBalance,
+        amountCryptocurrency,
+        estimatedAmount,
+        priceCryptocurrency
+      ];
 }
 
 class SellCryptocurrencyLoadInProgress extends SellCryptocurrencyState {}
+
+class SellCryptocurrencySuccess extends SellCryptocurrencyState {
+  final Cryptocurrency cryptocurrency;
+
+  const SellCryptocurrencySuccess(this.cryptocurrency);
+
+  @override
+  List<Object> get props => [cryptocurrency];
+}
+
+class SellCryptocurrencyNotEnoughCryptocurrency
+    extends SellCryptocurrencyState {}
+
+class SellCryptocurrencyInvalidAmount extends SellCryptocurrencyState {}
+
+class SellCryptocurrencyLoadFailure extends SellCryptocurrencyState {}

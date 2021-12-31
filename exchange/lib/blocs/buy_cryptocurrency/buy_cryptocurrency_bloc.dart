@@ -55,15 +55,15 @@ class BuyCryptocurrencyBloc
 
   Future<void> _onBuyCryptocurrencyConfirmed(BuyCryptocurrencyConfirmed event,
       Emitter<BuyCryptocurrencyState> emit) async {
-    final BuyCryptocurrencyInitial buyCryptocurrenciesInitial =
+    final BuyCryptocurrencyInitial buyCryptocurrencyInitial =
         (state as BuyCryptocurrencyInitial);
 
-    final String currentAmount = buyCryptocurrenciesInitial.amountMoney;
-    final double accountBalance = buyCryptocurrenciesInitial.accountBalance;
+    final String currentAmount = buyCryptocurrencyInitial.amountMoney;
+    final double accountBalance = buyCryptocurrencyInitial.accountBalance;
     final double estimatedAmount =
-        buyCryptocurrenciesInitial.estimatedAmountCryptocurrency;
+        buyCryptocurrencyInitial.estimatedAmountCryptocurrency;
     final CryptocurrencyResponse cryptocurrency =
-        buyCryptocurrenciesInitial.cryptocurrencyResponse;
+        buyCryptocurrencyInitial.cryptocurrencyResponse;
 
     if (double.parse(currentAmount) > accountBalance) {
       emit(const BuyCryptocurrencyNotEnoughFunds());
