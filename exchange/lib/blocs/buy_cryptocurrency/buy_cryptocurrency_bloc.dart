@@ -40,7 +40,7 @@ class BuyCryptocurrencyBloc
       Emitter<BuyCryptocurrencyState> emit) async {
     final String currentAmount = (state as BuyCryptocurrencyInitial)
         .amountMoney
-        .appendNumber(event.amountMoney);
+        .appendAmountMoney(event.amountMoney);
 
     final CryptocurrencyResponse cryptocurrencyResponse =
         (state as BuyCryptocurrencyInitial).cryptocurrencyResponse;

@@ -40,7 +40,7 @@ class SellCryptocurrencyBloc
 
     final String currentAmount = sellCryptocurrenciesInitial
         .amountCryptocurrency
-        .appendNumber(event.amountCryptocurrency);
+        .appendAmountCryptocurrency(event.amountCryptocurrency);
 
     final dynamic price = sellCryptocurrenciesInitial.priceCryptocurrency;
 
