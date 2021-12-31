@@ -16,9 +16,9 @@ class ConfirmButton extends StatelessWidget {
     return OutlinedButton(
         onPressed: () => mode == MyLabels.buyMode
             ? BlocProvider.of<BuyCryptocurrencyBloc>(context)
-                .add(const BuyCryptocurrencyConfirmed())
+                .add(BuyCryptocurrencyConfirmed())
             : BlocProvider.of<SellCryptocurrencyBloc>(context)
-                .add(const SellCryptocurrencyConfirmed()),
+                .add(SellCryptocurrencyConfirmed()),
         style: OutlinedButton.styleFrom(
             elevation: 4.0,
             shape: const StadiumBorder(),

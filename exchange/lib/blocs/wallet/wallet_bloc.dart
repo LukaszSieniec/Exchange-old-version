@@ -6,9 +6,9 @@ import 'package:exchange/repositories/cryptocurrency_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WalletBloc extends Bloc<WalletEvent, WalletState> {
-  final CryptocurrencyRepository _cryptocurrencyRepository;
+  final CryptocurrencyRepository cryptocurrencyRepository;
 
-  WalletBloc(this._cryptocurrencyRepository) : super(WalletLoadInProgress()) {
+  WalletBloc(this.cryptocurrencyRepository) : super(WalletLoadInProgress()) {
     on<WalletLoaded>(_onWalletLoaded);
   }
 
@@ -16,7 +16,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
       WalletLoaded event, Emitter<WalletState> emit) async {
     try {
       final List<Cryptocurrency> cryptocurrencies =
-          await _cryptocurrencyRepository.readAllCryptocurrencies();
+          await cryptocurrencyRepository.readAllCryptocurrencies();
       final double accountBalance = AccountBalance.readAccountBalance();
 
       emit(WalletLoadSuccess(accountBalance, cryptocurrencies));

@@ -30,17 +30,6 @@ class BuyCryptocurrencyInitial extends BuyCryptocurrencyState {
 
 class BuyCryptocurrencyLoadInProgress extends BuyCryptocurrencyState {}
 
-class BuyCryptocurrencyLoadSuccess extends BuyCryptocurrencyState {
-  final String amountMoney;
-  final String estimatedAmountCryptocurrency;
-
-  const BuyCryptocurrencyLoadSuccess(
-      this.amountMoney, this.estimatedAmountCryptocurrency);
-
-  @override
-  List<Object> get props => [amountMoney, estimatedAmountCryptocurrency];
-}
-
 class BuyCryptocurrencyLoadFailure extends BuyCryptocurrencyState {}
 
 class BuyCryptocurrencySuccess extends BuyCryptocurrencyState {
@@ -52,10 +41,6 @@ class BuyCryptocurrencySuccess extends BuyCryptocurrencyState {
   List<Object> get props => [name];
 }
 
-class BuyCryptocurrencyNotEnoughFunds extends BuyCryptocurrencyState {
-  const BuyCryptocurrencyNotEnoughFunds();
-}
+class BuyCryptocurrencyNotEnoughFunds extends BuyCryptocurrencyState {}
 
-class BuyCryptocurrencyInvalidAmount extends BuyCryptocurrencyState {
-  const BuyCryptocurrencyInvalidAmount();
-}
+class BuyCryptocurrencyInvalidAmount extends BuyCryptocurrencyState {}

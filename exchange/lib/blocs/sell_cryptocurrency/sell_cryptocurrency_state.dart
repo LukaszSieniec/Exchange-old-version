@@ -32,6 +32,8 @@ class SellCryptocurrencyInitial extends SellCryptocurrencyState {
 
 class SellCryptocurrencyLoadInProgress extends SellCryptocurrencyState {}
 
+class SellCryptocurrencyLoadFailure extends SellCryptocurrencyState {}
+
 class SellCryptocurrencySuccess extends SellCryptocurrencyState {
   final String name;
 
@@ -45,5 +47,3 @@ class SellCryptocurrencyNotEnoughCryptocurrency
     extends SellCryptocurrencyState {}
 
 class SellCryptocurrencyInvalidAmount extends SellCryptocurrencyState {}
-
-class SellCryptocurrencyLoadFailure extends SellCryptocurrencyState {}

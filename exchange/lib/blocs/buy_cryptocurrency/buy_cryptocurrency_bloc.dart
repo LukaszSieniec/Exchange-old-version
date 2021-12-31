@@ -66,11 +66,11 @@ class BuyCryptocurrencyBloc
         buyCryptocurrencyInitial.cryptocurrencyResponse;
 
     if (double.parse(currentAmount) > accountBalance) {
-      emit(const BuyCryptocurrencyNotEnoughFunds());
+      emit(BuyCryptocurrencyNotEnoughFunds());
       emit(BuyCryptocurrencyInitial(
           cryptocurrency, accountBalance, currentAmount, estimatedAmount));
     } else if (currentAmount == '0') {
-      emit(const BuyCryptocurrencyInvalidAmount());
+      emit(BuyCryptocurrencyInvalidAmount());
       emit(BuyCryptocurrencyInitial(
           cryptocurrency, accountBalance, currentAmount, estimatedAmount));
     } else {

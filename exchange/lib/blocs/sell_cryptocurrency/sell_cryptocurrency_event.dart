@@ -25,9 +25,4 @@ class SellCryptocurrencyAmountUpdated extends SellCryptocurrencyEvent {
   List<Object> get props => [amountCryptocurrency];
 }
 
-class SellCryptocurrencyConfirmed extends SellCryptocurrencyEvent {
-  const SellCryptocurrencyConfirmed();
-
-  @override
-  List<Object> get props => [];
-}
+class SellCryptocurrencyConfirmed extends SellCryptocurrencyEvent {}

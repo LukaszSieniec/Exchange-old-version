@@ -4,9 +4,6 @@ abstract class MarketChartEvent extends Equatable {
   final String id;
 
   const MarketChartEvent(this.id);
-
-  @override
-  List<Object> get props => [];
 }
 
 class MarketChartFetched extends MarketChartEvent {
