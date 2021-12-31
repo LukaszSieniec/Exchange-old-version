@@ -22,6 +22,15 @@ void main() async {
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await AccountBalance.init();
 
+  const String amount = '47.35';
+
+  const int length = amount.length;
+  debugPrint('${amount.indexOf('.')}');
+  debugPrint('$length');
+
+  final int difference = length - amount.indexOf('.');
+  debugPrint('$difference');
+
   runApp(const MyApp());
 }
 

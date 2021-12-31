@@ -8,7 +8,11 @@ extension NumberAppend on String {
       case MyLabels.dot:
         return contains(MyLabels.dot) ? this : this + MyLabels.dot;
       default:
-        return this == MyLabels.zero ? value : this + value;
+        if (contains('.') && length - indexOf('.') >= 3) {
+          return this;
+        } else {
+          return this == MyLabels.zero ? value : this + value;
+        }
     }
   }
 }
