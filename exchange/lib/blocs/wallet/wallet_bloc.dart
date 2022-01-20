@@ -51,6 +51,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
           ..add(event.cryptocurrency);
     emit(WalletLoadSuccess(
         AccountBalance.readAccountBalance(), cryptocurrencies));
+    cryptocurrencyRepository.createOrUpdateCryptocurrency(event.cryptocurrency);
   }
 
   @override
