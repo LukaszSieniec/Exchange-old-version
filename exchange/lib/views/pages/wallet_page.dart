@@ -1,5 +1,4 @@
 import 'package:exchange/blocs/wallet/wallet_bloc.dart';
-import 'package:exchange/blocs/wallet/wallet_event.dart';
 import 'package:exchange/blocs/wallet/wallet_state.dart';
 import 'package:exchange/constants/my_constants.dart';
 import 'package:exchange/models/cryptocurrency.dart';
@@ -13,8 +12,6 @@ class WalletPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<WalletBloc>(context).add(WalletLoaded());
-
     return BlocBuilder<WalletBloc, WalletState>(builder: (context, state) {
       if (state is WalletLoadInProgress) {
         return _buildLoading();

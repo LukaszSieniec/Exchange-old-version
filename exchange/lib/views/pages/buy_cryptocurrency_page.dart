@@ -30,7 +30,7 @@ class BuyCryptocurrencyPage extends StatelessWidget {
                 .showSnackBar(PrimarySnackBar(title: Messages.invalidAmount));
           } else if (state is BuyCryptocurrencySuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
-                PrimarySnackBar(title: '${Messages.bought} ${state.name}'));
+                PrimarySnackBar(title: '${Messages.bought} ${state.cryptocurrency.name}'));
           }
         },
         builder: (context, state) {

@@ -20,6 +20,7 @@ class CryptocurrencyService {
     });
 
     if (response.statusCode == 200) {
+      debugPrint('Success!');
       final Iterable json = response.data;
       return json
           .map((element) => CryptocurrencyResponse.fromJson(element))

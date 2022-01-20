@@ -79,7 +79,8 @@ class BuyCryptocurrencyBloc
         final double newAccountBalance =
             accountBalance - double.parse(currentAmount);
 
-        emit(BuyCryptocurrencySuccess(cryptocurrency.name));
+        emit(BuyCryptocurrencySuccess(Cryptocurrency.fromCryptocurrencyResponse(
+            cryptocurrency, estimatedAmount)));
         emit(BuyCryptocurrencyInitial(
             cryptocurrency, newAccountBalance, '0', 0));
 
