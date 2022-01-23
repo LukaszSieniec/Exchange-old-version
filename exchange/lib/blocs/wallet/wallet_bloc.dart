@@ -26,7 +26,6 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
       }
     }
 
-    onWalletStateChanged(buyCryptocurrencyBloc.state);
     buyCryptocurrencySubscription =
         buyCryptocurrencyBloc.stream.listen(onWalletStateChanged);
   }

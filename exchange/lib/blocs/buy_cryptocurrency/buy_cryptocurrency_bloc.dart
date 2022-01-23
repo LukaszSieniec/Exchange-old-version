@@ -16,8 +16,8 @@ class BuyCryptocurrencyBloc
   CryptocurrenciesBloc cryptocurrenciesBloc;
   CryptocurrencyRepository cryptocurrencyRepository;
 
-  BuyCryptocurrencyBloc(this.cryptocurrenciesBloc,
-      this.cryptocurrencyRepository)
+  BuyCryptocurrencyBloc(
+      this.cryptocurrenciesBloc, this.cryptocurrencyRepository)
       : super(BuyCryptocurrencyLoadInProgress()) {
     on<BuyCryptocurrencyLoaded>(_onBuyCryptocurrencyLoaded);
     on<BuyCryptocurrencyAmountUpdated>(_onBuyCryptocurrencyAmountUpdated);
@@ -27,9 +27,9 @@ class BuyCryptocurrencyBloc
   Future<void> _onBuyCryptocurrencyLoaded(BuyCryptocurrencyLoaded event,
       Emitter<BuyCryptocurrencyState> emit) async {
     final CryptocurrencyResponse cryptocurrency =
-    (cryptocurrenciesBloc.state as CryptocurrenciesLoadSuccess)
-        .cryptocurrencies
-        .firstWhere((element) => element.id == event.id);
+        (cryptocurrenciesBloc.state as CryptocurrenciesLoadSuccess)
+            .cryptocurrencies
+            .firstWhere((element) => element.id == event.id);
 
     emit(BuyCryptocurrencyInitial(
         cryptocurrency, AccountBalance.readAccountBalance(), '0', 0));
@@ -56,7 +56,7 @@ class BuyCryptocurrencyBloc
   Future<void> _onBuyCryptocurrencyConfirmed(BuyCryptocurrencyConfirmed event,
       Emitter<BuyCryptocurrencyState> emit) async {
     final BuyCryptocurrencyInitial buyCryptocurrencyInitial =
-    (state as BuyCryptocurrencyInitial);
+        (state as BuyCryptocurrencyInitial);
 
     final String currentAmount = buyCryptocurrencyInitial.amountMoney;
     final double accountBalance = buyCryptocurrencyInitial.accountBalance;
@@ -78,16 +78,19 @@ class BuyCryptocurrencyBloc
       try {
         final double newAccountBalance =
             accountBalance - double.parse(currentAmount);
-        final purchasedCryptocurrency =
-        Cryptocurrency.fromCryptocurrencyResponse(
-            cryptocurrency, estimatedAmount);
+        final Cryptocurrency purchasedCryptocurrency =
+            Cryptocurrency.fromCryptocurrencyResponse(
+                cryptocurrency, estimatedAmount);
 
-        emit(BuyCryptocurrencySuccess(purchasedCryptocurrency));
+        final Transaction transaction = Transaction.fromCryptocurrencyResponse(
+            cryptocurrency, double.parse(currentAmount));
+
+        emit(BuyCryptocurrencySuccess(purchasedCryptocurrency, transaction));
         emit(BuyCryptocurrencyInitial(
             cryptocurrency, newAccountBalance, '0', 0));
 
         _createCryptocurrency(purchasedCryptocurrency);
-        _createTransaction(cryptocurrency, double.parse(currentAmount));
+        _createTransaction(transaction);
         _saveAccountBalance(newAccountBalance);
       } on Exception {
         emit(BuyCryptocurrencyLoadFailure());
@@ -96,13 +99,10 @@ class BuyCryptocurrencyBloc
   }
 
   Future<void> _createCryptocurrency(Cryptocurrency cryptocurrency) =>
-      cryptocurrencyRepository
-          .createOrUpdateCryptocurrency(cryptocurrency);
+      cryptocurrencyRepository.createOrUpdateCryptocurrency(cryptocurrency);
 
-  Future<void> _createTransaction(CryptocurrencyResponse cryptocurrency,
-      double amount) =>
-      cryptocurrencyRepository.createTransaction(
-          Transaction.fromCryptocurrencyResponse(cryptocurrency, amount));
+  Future<void> _createTransaction(Transaction transaction) =>
+      cryptocurrencyRepository.createTransaction(transaction);
 
   Future<void> _saveAccountBalance(double newAccountBalance) =>
       AccountBalance.saveAccountBalance(newAccountBalance);

@@ -12,8 +12,6 @@ class TransactionsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<TransactionsBloc>(context).add(TransactionsLoaded());
-
     return BlocBuilder<TransactionsBloc, TransactionsState>(
         builder: (context, state) {
       if (state is TransactionsLoadInProgress) {
