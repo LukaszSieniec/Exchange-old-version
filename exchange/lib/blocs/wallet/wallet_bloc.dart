@@ -20,15 +20,15 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     on<WalletLoaded>(_onWalletLoaded);
     on<WalletUpdated>(_onWalletUpdated);
 
-    void onWalletChanged(state) {
+    void onWalletStateChanged(state) {
       if (state is BuyCryptocurrencySuccess) {
         add(WalletUpdated(state.cryptocurrency));
       }
     }
 
-    onWalletChanged(buyCryptocurrencyBloc.state);
+    onWalletStateChanged(buyCryptocurrencyBloc.state);
     buyCryptocurrencySubscription =
-        buyCryptocurrencyBloc.stream.listen(onWalletChanged);
+        buyCryptocurrencyBloc.stream.listen(onWalletStateChanged);
   }
 
   Future<void> _onWalletLoaded(
