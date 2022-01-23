@@ -46,9 +46,20 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
 
   Future<void> _onWalletUpdated(
       WalletUpdated event, Emitter<WalletState> emit) async {
-    final List<Cryptocurrency> cryptocurrencies =
-        List.from((state as WalletLoadSuccess).cryptocurrencies)
-          ..add(event.cryptocurrency);
+    final List<Cryptocurrency> cryptocurrencies = (state as WalletLoadSuccess)
+        .cryptocurrencies
+        .map((cryptocurrency) => cryptocurrency.id == event.cryptocurrency.id
+            ? cryptocurrency.copyWith(
+                amount: cryptocurrency.amount + event.cryptocurrency.amount)
+            : cryptocurrency)
+        .toList();
+
+    final bool isExist = (state as WalletLoadSuccess)
+        .cryptocurrencies
+        .any((element) => element.id == event.cryptocurrency.id);
+
+    if (!isExist) cryptocurrencies.add(event.cryptocurrency);
+
     emit(WalletLoadSuccess(
         AccountBalance.readAccountBalance(), cryptocurrencies));
   }
