@@ -10,7 +10,7 @@ class Transaction {
       type,
       date,
       image;
-  final double amount, cryptocurrencyPrice;
+  final num amount, cryptocurrencyPrice;
 
   Transaction(
       {this.id,

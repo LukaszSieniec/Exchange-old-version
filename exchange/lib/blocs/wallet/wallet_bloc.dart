@@ -13,7 +13,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
   final CryptocurrencyRepository cryptocurrencyRepository;
   final BuyCryptocurrencyBloc buyCryptocurrencyBloc;
 
-  StreamSubscription? buyCryptocurrencySubscription;
+  late final StreamSubscription buyCryptocurrencySubscription;
 
   WalletBloc(this.cryptocurrencyRepository, this.buyCryptocurrencyBloc)
       : super(WalletLoadInProgress()) {
@@ -51,12 +51,11 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
           ..add(event.cryptocurrency);
     emit(WalletLoadSuccess(
         AccountBalance.readAccountBalance(), cryptocurrencies));
-    cryptocurrencyRepository.createOrUpdateCryptocurrency(event.cryptocurrency);
   }
 
   @override
   Future<void> close() {
-    buyCryptocurrencySubscription!.cancel();
+    buyCryptocurrencySubscription.cancel();
     return super.close();
   }
 }

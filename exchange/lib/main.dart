@@ -22,7 +22,7 @@ void main() async {
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await AccountBalance.init();
-  print('Example!');
+  print('Changed!');
 
   runApp(const MyApp());
 }

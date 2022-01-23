@@ -3,11 +3,11 @@ import 'package:exchange/models/sparkline.dart';
 class CryptocurrencyResponse {
   final String id, symbol, name, image;
   final int marketCapRank;
-  final dynamic currentPrice,
+  final num currentPrice,
       marketCap,
       circulatingSupply,
-      totalSupply,
       priceChangePercentage24h;
+  final num? totalSupply;
   final Sparkline sparkline;
 
   CryptocurrencyResponse(
