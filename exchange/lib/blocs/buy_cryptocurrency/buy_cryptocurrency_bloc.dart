@@ -6,6 +6,7 @@ import 'package:exchange/models/cryptocurrency_response.dart';
 import 'package:exchange/models/transaction.dart';
 import 'package:exchange/repositories/cryptocurrency_repository.dart';
 import 'package:exchange/utils/extensions.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'buy_cryptocurrency_event.dart';
@@ -45,11 +46,9 @@ class BuyCryptocurrencyBloc
     final CryptocurrencyResponse cryptocurrencyResponse =
         (state as BuyCryptocurrencyInitial).cryptocurrencyResponse;
 
-    final double estimatedAmount = double.parse(
+    final double estimatedAmount =
         (double.parse(currentAmount) / cryptocurrencyResponse.currentPrice)
-            .toStringAsFixed(6));
-
-    print('Estimated amount: $estimatedAmount');
+            .setAmountCryptocurrencyPrecision();
 
     emit(BuyCryptocurrencyInitial(cryptocurrencyResponse,
         AccountBalance.readAccountBalance(), currentAmount, estimatedAmount));
@@ -78,8 +77,13 @@ class BuyCryptocurrencyBloc
     } else {
       emit(BuyCryptocurrencyLoadInProgress());
       try {
-        final double newAccountBalance = double.parse(
-            (accountBalance - double.parse(currentAmount)).toStringAsFixed(2));
+        final double newAccountBalance =
+            (accountBalance - (double.parse(currentAmount)))
+                .setAmountMoneyPrecision();
+
+        debugPrint(
+            'newAccountBalance normal: ${double.parse((accountBalance - double.parse(currentAmount)).toString())}');
+        debugPrint('newAccountBalance with Precision: $newAccountBalance');
         final Cryptocurrency purchasedCryptocurrency =
             Cryptocurrency.fromCryptocurrencyResponse(
                 cryptocurrency, estimatedAmount);

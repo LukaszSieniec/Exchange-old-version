@@ -27,3 +27,24 @@ extension NumberAppend on String {
     }
   }
 }
+
+extension Precision on double {
+  double setAmountCryptocurrencyPrecision() {
+    if (toString().contains('.') &&
+        toString().length - toString().indexOf('.') >= 5) {
+      return double.parse(toStringAsPrecision(4));
+    } else {
+      return this;
+    }
+  }
+
+  double setAmountMoneyPrecision() {
+    if (toString().contains('.')) {
+      final int index = toString().indexOf('.');
+      final int precision = index + 2;
+      return double.parse(toStringAsPrecision(precision));
+    } else {
+      return this;
+    }
+  }
+}

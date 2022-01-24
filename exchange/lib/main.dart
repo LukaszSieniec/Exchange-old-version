@@ -24,7 +24,6 @@ void main() async {
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await AccountBalance.init();
   print('Changed!');
-
   runApp(const MyApp());
 }
 

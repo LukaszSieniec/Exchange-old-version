@@ -42,7 +42,7 @@ class SellCryptocurrencyBloc
         sellCryptocurrenciesInitial.cryptocurrency;
 
     final double estimatedAmount =
-        double.parse((double.parse(currentAmount) * price).toStringAsFixed(5));
+        (double.parse(currentAmount) * price).setAmountMoneyPrecision();
 
     emit(SellCryptocurrencyInitial(
         cryptocurrency, currentAmount, estimatedAmount, price));
@@ -70,7 +70,7 @@ class SellCryptocurrencyBloc
     } else {
       try {
         final double newAccountBalance =
-            AccountBalance.readAccountBalance() + estimatedAmount;
+            (AccountBalance.readAccountBalance() + estimatedAmount).setAmountMoneyPrecision();
         final Transaction transaction = Transaction.fromCryptocurrency(
             cryptocurrency, estimatedAmount, price);
         final Cryptocurrency newCryprocurrency = cryptocurrency.copyWith(

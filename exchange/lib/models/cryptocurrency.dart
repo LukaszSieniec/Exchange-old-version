@@ -1,3 +1,5 @@
+import 'package:exchange/utils/extensions.dart';
+
 import 'cryptocurrency_response.dart';
 
 class Cryptocurrency {
@@ -45,7 +47,7 @@ class Cryptocurrency {
         id: id ?? this.id,
         symbol: symbol ?? this.symbol,
         name: name ?? this.name,
-        amount: amount ?? this.amount,
+        amount: amount?.setAmountCryptocurrencyPrecision() ?? this.amount,
         image: image ?? this.image);
   }
 }

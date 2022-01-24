@@ -59,7 +59,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
         .cryptocurrencies
         .map((cryptocurrency) => cryptocurrency.id == event.cryptocurrency.id
             ? cryptocurrency.copyWith(
-                amount: cryptocurrency.amount + event.cryptocurrency.amount)
+                amount: (cryptocurrency.amount + event.cryptocurrency.amount))
             : cryptocurrency)
         .toList();
 
