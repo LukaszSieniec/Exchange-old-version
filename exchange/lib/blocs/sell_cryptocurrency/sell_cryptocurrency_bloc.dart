@@ -1,7 +1,5 @@
 import 'package:exchange/blocs/sell_cryptocurrency/sell_cryptocurrency_event.dart';
 import 'package:exchange/blocs/sell_cryptocurrency/sell_cryptocurrency_state.dart';
-import 'package:exchange/blocs/wallet/wallet_bloc.dart';
-import 'package:exchange/blocs/wallet/wallet_state.dart';
 import 'package:exchange/database/account_balance.dart';
 import 'package:exchange/models/cryptocurrency.dart';
 import 'package:exchange/models/transaction.dart';
@@ -12,9 +10,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SellCryptocurrencyBloc
     extends Bloc<SellCryptocurrencyEvent, SellCryptocurrencyState> {
   final CryptocurrencyRepository cryptocurrencyRepository;
-  final WalletBloc walletBloc;
 
-  SellCryptocurrencyBloc(this.cryptocurrencyRepository, this.walletBloc)
+  SellCryptocurrencyBloc(this.cryptocurrencyRepository)
       : super(SellCryptocurrencyLoadInProgress()) {
     on<SellCryptocurrencyLoaded>(_onSellCryptocurrencyLoaded);
     on<SellCryptocurrencyAmountUpdated>(_onSellCryptocurrencyAmountUpdated);
@@ -23,14 +20,10 @@ class SellCryptocurrencyBloc
 
   void _onSellCryptocurrencyLoaded(SellCryptocurrencyLoaded event,
       Emitter<SellCryptocurrencyState> emit) async {
-    final num price = await cryptocurrencyRepository.fetchPrice(event.id);
+    final num price =
+        await cryptocurrencyRepository.fetchPrice(event.cryptocurrency.id);
 
-    final Cryptocurrency cryptocurrency =
-        (walletBloc.state as WalletLoadSuccess)
-            .cryptocurrencies
-            .firstWhere((element) => element.id == event.id);
-
-    emit(SellCryptocurrencyInitial(cryptocurrency, '0', 0, price));
+    emit(SellCryptocurrencyInitial(event.cryptocurrency, '0', 0, price));
   }
 
   void _onSellCryptocurrencyAmountUpdated(SellCryptocurrencyAmountUpdated event,

@@ -2,6 +2,7 @@ import 'package:exchange/blocs/sell_cryptocurrency/sell_cryptocurrency_bloc.dart
 import 'package:exchange/blocs/sell_cryptocurrency/sell_cryptocurrency_event.dart';
 import 'package:exchange/blocs/sell_cryptocurrency/sell_cryptocurrency_state.dart';
 import 'package:exchange/constants/my_constants.dart';
+import 'package:exchange/models/cryptocurrency.dart';
 import 'package:exchange/views/widgets/buy_cryptocurrency/confirm_button.dart';
 import 'package:exchange/views/widgets/buy_cryptocurrency/keyboard.dart';
 import 'package:exchange/views/widgets/snackbar.dart';
@@ -9,15 +10,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SellCryptocurrencyPage extends StatelessWidget {
-  final String id;
+  final Cryptocurrency cryptocurrency;
 
-  const SellCryptocurrencyPage(this.id, {Key? key}) : super(key: key);
+  const SellCryptocurrencyPage(this.cryptocurrency, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<SellCryptocurrencyBloc>(context)
-        .add(SellCryptocurrencyLoaded(id));
-
+        .add(SellCryptocurrencyLoaded(cryptocurrency));
     return BlocConsumer<SellCryptocurrencyBloc, SellCryptocurrencyState>(
         listener: (context, state) {
           if (state is SellCryptocurrencyNotEnoughCryptocurrency) {

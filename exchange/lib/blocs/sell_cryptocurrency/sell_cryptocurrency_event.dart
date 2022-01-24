@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:exchange/models/cryptocurrency.dart';
 
 abstract class SellCryptocurrencyEvent extends Equatable {
   const SellCryptocurrencyEvent();
@@ -8,12 +9,12 @@ abstract class SellCryptocurrencyEvent extends Equatable {
 }
 
 class SellCryptocurrencyLoaded extends SellCryptocurrencyEvent {
-  final String id;
+  final Cryptocurrency cryptocurrency;
 
-  const SellCryptocurrencyLoaded(this.id);
+  const SellCryptocurrencyLoaded(this.cryptocurrency);
 
   @override
-  List<Object> get props => [id];
+  List<Object> get props => [cryptocurrency];
 }
 
 class SellCryptocurrencyAmountUpdated extends SellCryptocurrencyEvent {
