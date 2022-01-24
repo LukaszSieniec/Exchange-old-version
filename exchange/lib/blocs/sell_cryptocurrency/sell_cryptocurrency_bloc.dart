@@ -23,7 +23,7 @@ class SellCryptocurrencyBloc
 
   void _onSellCryptocurrencyLoaded(SellCryptocurrencyLoaded event,
       Emitter<SellCryptocurrencyState> emit) async {
-    final dynamic price = await cryptocurrencyRepository.fetchPrice(event.id);
+    final num price = await cryptocurrencyRepository.fetchPrice(event.id);
 
     final Cryptocurrency cryptocurrency =
         (walletBloc.state as WalletLoadSuccess)
@@ -63,7 +63,7 @@ class SellCryptocurrencyBloc
     final double estimatedAmount = sellCryptocurrencyInitial.estimatedAmount;
     final Cryptocurrency cryptocurrency =
         sellCryptocurrencyInitial.cryptocurrency;
-    final dynamic price = sellCryptocurrencyInitial.priceCryptocurrency;
+    final num price = sellCryptocurrencyInitial.priceCryptocurrency;
 
     if (double.parse(currentAmount) > cryptocurrency.amount) {
       emit(SellCryptocurrencyNotEnoughCryptocurrency());
@@ -77,12 +77,14 @@ class SellCryptocurrencyBloc
       try {
         final double newAccountBalance =
             AccountBalance.readAccountBalance() + estimatedAmount;
+        final Transaction transaction = Transaction.fromCryptocurrency(
+            cryptocurrency, estimatedAmount, price);
 
-        emit(SellCryptocurrencySuccess(cryptocurrency.name));
+        emit(SellCryptocurrencySuccess(cryptocurrency.name, transaction));
         emit(SellCryptocurrencyInitial(cryptocurrency, '0', 0, price));
 
         _updateCryptocurrency(cryptocurrency, double.parse(currentAmount));
-        _createTransaction(cryptocurrency, estimatedAmount, price);
+        _createTransaction(transaction);
         _saveAccountBalance(newAccountBalance);
       } on Exception {
         emit(SellCryptocurrencyLoadFailure());
@@ -95,10 +97,8 @@ class SellCryptocurrencyBloc
       cryptocurrencyRepository.updateCryptocurrency(
           cryptocurrency.id, currentAmount);
 
-  Future<void> _createTransaction(Cryptocurrency cryptocurrency,
-          double estimatedAmount, double price) =>
-      cryptocurrencyRepository.createTransaction(Transaction.fromCryptocurrency(
-          cryptocurrency, estimatedAmount, price));
+  Future<void> _createTransaction(Transaction transaction) =>
+      cryptocurrencyRepository.createTransaction(transaction);
 
   Future<void> _saveAccountBalance(double newAccountBalance) =>
       AccountBalance.saveAccountBalance(newAccountBalance);

@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:exchange/models/cryptocurrency.dart';
+import 'package:exchange/models/transaction.dart';
 
 abstract class SellCryptocurrencyState extends Equatable {
   const SellCryptocurrencyState();
@@ -36,11 +37,12 @@ class SellCryptocurrencyLoadFailure extends SellCryptocurrencyState {}
 
 class SellCryptocurrencySuccess extends SellCryptocurrencyState {
   final String name;
+  final Transaction transaction;
 
-  const SellCryptocurrencySuccess(this.name);
+  const SellCryptocurrencySuccess(this.name, this.transaction);
 
   @override
-  List<Object> get props => [name];
+  List<Object> get props => [name, transaction];
 }
 
 class SellCryptocurrencyNotEnoughCryptocurrency

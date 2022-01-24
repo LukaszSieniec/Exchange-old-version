@@ -65,7 +65,8 @@ class MyApp extends StatelessWidget {
               create: (context) => TransactionsBloc(
                   CryptocurrencyRepository(
                       CryptocurrencyService(), CryptocurrencyDatabase.get),
-                  BlocProvider.of<BuyCryptocurrencyBloc>(context))
+                  BlocProvider.of<BuyCryptocurrencyBloc>(context),
+                  BlocProvider.of<SellCryptocurrencyBloc>(context))
                 ..add(TransactionsLoaded()))
         ],
         child: MaterialApp(

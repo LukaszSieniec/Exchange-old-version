@@ -1,5 +1,4 @@
 import 'package:exchange/blocs/transactions/transactions_bloc.dart';
-import 'package:exchange/blocs/transactions/transactions_event.dart';
 import 'package:exchange/blocs/transactions/transactions_state.dart';
 import 'package:exchange/constants/my_constants.dart';
 import 'package:exchange/models/transaction.dart';
