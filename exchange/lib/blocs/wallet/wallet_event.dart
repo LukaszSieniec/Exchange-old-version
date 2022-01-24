@@ -10,10 +10,19 @@ abstract class WalletEvent extends Equatable {
 
 class WalletLoaded extends WalletEvent {}
 
-class WalletUpdated extends WalletEvent {
+class WalletUpdatedSale extends WalletEvent {
   final Cryptocurrency cryptocurrency;
 
-  const WalletUpdated(this.cryptocurrency);
+  const WalletUpdatedSale(this.cryptocurrency);
+
+  @override
+  List<Object> get props => [cryptocurrency];
+}
+
+class WalletUpdatedPurchase extends WalletEvent {
+  final Cryptocurrency cryptocurrency;
+
+  const WalletUpdatedPurchase(this.cryptocurrency);
 
   @override
   List<Object> get props => [cryptocurrency];

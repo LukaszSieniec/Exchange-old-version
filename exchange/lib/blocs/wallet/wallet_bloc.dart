@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:exchange/blocs/buy_cryptocurrency/buy_cryptocurrency_bloc.dart';
 import 'package:exchange/blocs/buy_cryptocurrency/buy_cryptocurrency_state.dart';
+import 'package:exchange/blocs/sell_cryptocurrency/sell_cryptocurrency_bloc.dart';
+import 'package:exchange/blocs/sell_cryptocurrency/sell_cryptocurrency_state.dart';
 import 'package:exchange/blocs/wallet/wallet_event.dart';
 import 'package:exchange/blocs/wallet/wallet_state.dart';
 import 'package:exchange/database/account_balance.dart';
@@ -12,22 +14,30 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class WalletBloc extends Bloc<WalletEvent, WalletState> {
   final CryptocurrencyRepository cryptocurrencyRepository;
   final BuyCryptocurrencyBloc buyCryptocurrencyBloc;
+  final SellCryptocurrencyBloc sellCryptocurrencyBloc;
 
   late final StreamSubscription buyCryptocurrencySubscription;
+  late final StreamSubscription sellCryptocurrencySubscription;
 
-  WalletBloc(this.cryptocurrencyRepository, this.buyCryptocurrencyBloc)
+  WalletBloc(this.cryptocurrencyRepository, this.buyCryptocurrencyBloc,
+      this.sellCryptocurrencyBloc)
       : super(WalletLoadInProgress()) {
     on<WalletLoaded>(_onWalletLoaded);
-    on<WalletUpdated>(_onWalletUpdated);
+    on<WalletUpdatedSale>(_onWalletUpdatedSale);
+    on<WalletUpdatedPurchase>(_onWalletUpdatedPurchase);
 
     void onWalletStateChanged(state) {
       if (state is BuyCryptocurrencySuccess) {
-        add(WalletUpdated(state.cryptocurrency));
+        add(WalletUpdatedSale(state.cryptocurrency));
+      } else if (state is SellCryptocurrencySuccess) {
+        add(WalletUpdatedPurchase(state.cryptocurrency));
       }
     }
 
     buyCryptocurrencySubscription =
         buyCryptocurrencyBloc.stream.listen(onWalletStateChanged);
+    sellCryptocurrencySubscription =
+        sellCryptocurrencyBloc.stream.listen(onWalletStateChanged);
   }
 
   Future<void> _onWalletLoaded(
@@ -43,8 +53,8 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     }
   }
 
-  Future<void> _onWalletUpdated(
-      WalletUpdated event, Emitter<WalletState> emit) async {
+  Future<void> _onWalletUpdatedSale(
+      WalletUpdatedSale event, Emitter<WalletState> emit) async {
     final List<Cryptocurrency> cryptocurrencies = (state as WalletLoadSuccess)
         .cryptocurrencies
         .map((cryptocurrency) => cryptocurrency.id == event.cryptocurrency.id
@@ -63,9 +73,23 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
         AccountBalance.readAccountBalance(), cryptocurrencies));
   }
 
+  Future<void> _onWalletUpdatedPurchase(
+      WalletUpdatedPurchase event, Emitter<WalletState> emit) async {
+    final List<Cryptocurrency> cryptocurrencies = (state as WalletLoadSuccess)
+        .cryptocurrencies
+        .map((cryptocurrency) => cryptocurrency.id == event.cryptocurrency.id
+            ? event.cryptocurrency
+            : cryptocurrency)
+        .toList();
+
+    emit(WalletLoadSuccess(
+        AccountBalance.readAccountBalance(), cryptocurrencies));
+  }
+
   @override
   Future<void> close() {
     buyCryptocurrencySubscription.cancel();
+    sellCryptocurrencySubscription.cancel();
     return super.close();
   }
 }

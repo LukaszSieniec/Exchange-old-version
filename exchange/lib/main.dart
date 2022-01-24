@@ -51,15 +51,16 @@ class MyApp extends StatelessWidget {
                   CryptocurrencyRepository(
                       CryptocurrencyService(), CryptocurrencyDatabase.get))),
           BlocProvider(
-              create: (context) => WalletBloc(
-                  CryptocurrencyRepository(
-                      CryptocurrencyService(), CryptocurrencyDatabase.get),
-                  BlocProvider.of<BuyCryptocurrencyBloc>(context))
-                ..add(WalletLoaded())),
-          BlocProvider(
               create: (context) => SellCryptocurrencyBloc(
                   CryptocurrencyRepository(
                       CryptocurrencyService(), CryptocurrencyDatabase.get))),
+          BlocProvider(
+              create: (context) => WalletBloc(
+                  CryptocurrencyRepository(
+                      CryptocurrencyService(), CryptocurrencyDatabase.get),
+                  BlocProvider.of<BuyCryptocurrencyBloc>(context),
+                  BlocProvider.of<SellCryptocurrencyBloc>(context))
+                ..add(WalletLoaded())),
           BlocProvider(
               create: (context) => TransactionsBloc(
                   CryptocurrencyRepository(

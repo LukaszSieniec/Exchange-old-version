@@ -20,6 +20,7 @@ class SellCryptocurrencyBloc
 
   void _onSellCryptocurrencyLoaded(SellCryptocurrencyLoaded event,
       Emitter<SellCryptocurrencyState> emit) async {
+    emit(SellCryptocurrencyLoadInProgress());
     final num price =
         await cryptocurrencyRepository.fetchPrice(event.cryptocurrency.id);
 
@@ -72,9 +73,11 @@ class SellCryptocurrencyBloc
             AccountBalance.readAccountBalance() + estimatedAmount;
         final Transaction transaction = Transaction.fromCryptocurrency(
             cryptocurrency, estimatedAmount, price);
+        final Cryptocurrency newCryprocurrency = cryptocurrency.copyWith(
+            amount: cryptocurrency.amount - double.parse(currentAmount));
 
-        emit(SellCryptocurrencySuccess(cryptocurrency.name, transaction));
-        emit(SellCryptocurrencyInitial(cryptocurrency, '0', 0, price));
+        emit(SellCryptocurrencySuccess(newCryprocurrency, transaction));
+        emit(SellCryptocurrencyInitial(newCryprocurrency, '0', 0, price));
 
         _updateCryptocurrency(cryptocurrency, double.parse(currentAmount));
         _createTransaction(transaction);

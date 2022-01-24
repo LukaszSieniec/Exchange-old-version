@@ -36,13 +36,13 @@ class SellCryptocurrencyLoadInProgress extends SellCryptocurrencyState {}
 class SellCryptocurrencyLoadFailure extends SellCryptocurrencyState {}
 
 class SellCryptocurrencySuccess extends SellCryptocurrencyState {
-  final String name;
+  final Cryptocurrency cryptocurrency;
   final Transaction transaction;
 
-  const SellCryptocurrencySuccess(this.name, this.transaction);
+  const SellCryptocurrencySuccess(this.cryptocurrency, this.transaction);
 
   @override
-  List<Object> get props => [name, transaction];
+  List<Object> get props => [cryptocurrency, transaction];
 }
 
 class SellCryptocurrencyNotEnoughCryptocurrency
