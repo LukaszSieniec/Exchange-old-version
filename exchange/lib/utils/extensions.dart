@@ -31,8 +31,8 @@ extension NumberAppend on String {
 extension Precision on double {
   double setAmountCryptocurrencyPrecision() {
     if (toString().contains('.') &&
-        toString().length - toString().indexOf('.') >= 5) {
-      return double.parse(toStringAsPrecision(4));
+        toString().length - toString().indexOf('.') >= 6) {
+      return double.parse(toStringAsPrecision(5));
     } else {
       return this;
     }
