@@ -23,6 +23,7 @@ class SellCryptocurrencyBloc
     emit(SellCryptocurrencyLoadInProgress());
     final num price =
         await cryptocurrencyRepository.fetchPrice(event.cryptocurrency.id);
+    print('Price: $price');
 
     emit(SellCryptocurrencyInitial(event.cryptocurrency, '0', 0, price));
   }

@@ -41,7 +41,13 @@ extension Precision on double {
   double setAmountMoneyPrecision() {
     if (toString().contains('.')) {
       final int index = toString().indexOf('.');
-      final int precision = index + 2;
+      final int precision;
+
+      if (index == 1 && toString()[0] == '0') {
+        precision = index + 1;
+      } else {
+        precision = index + 2;
+      }
       return double.parse(toStringAsPrecision(precision));
     } else {
       return this;
