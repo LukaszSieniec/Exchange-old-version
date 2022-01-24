@@ -23,14 +23,14 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
       this.sellCryptocurrencyBloc)
       : super(WalletLoadInProgress()) {
     on<WalletLoaded>(_onWalletLoaded);
-    on<WalletUpdatedSale>(_onWalletUpdatedSale);
     on<WalletUpdatedPurchase>(_onWalletUpdatedPurchase);
+    on<WalletUpdatedSale>(_onWalletUpdatedSale);
 
     void onWalletStateChanged(state) {
       if (state is BuyCryptocurrencySuccess) {
-        add(WalletUpdatedSale(state.cryptocurrency));
-      } else if (state is SellCryptocurrencySuccess) {
         add(WalletUpdatedPurchase(state.cryptocurrency));
+      } else if (state is SellCryptocurrencySuccess) {
+        add(WalletUpdatedSale(state.cryptocurrency));
       }
     }
 
@@ -53,8 +53,8 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     }
   }
 
-  Future<void> _onWalletUpdatedSale(
-      WalletUpdatedSale event, Emitter<WalletState> emit) async {
+  Future<void> _onWalletUpdatedPurchase(
+      WalletUpdatedPurchase event, Emitter<WalletState> emit) async {
     final List<Cryptocurrency> cryptocurrencies = (state as WalletLoadSuccess)
         .cryptocurrencies
         .map((cryptocurrency) => cryptocurrency.id == event.cryptocurrency.id
@@ -73,8 +73,8 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
         AccountBalance.readAccountBalance(), cryptocurrencies));
   }
 
-  Future<void> _onWalletUpdatedPurchase(
-      WalletUpdatedPurchase event, Emitter<WalletState> emit) async {
+  Future<void> _onWalletUpdatedSale(
+      WalletUpdatedSale event, Emitter<WalletState> emit) async {
     final List<Cryptocurrency> cryptocurrencies = (state as WalletLoadSuccess)
         .cryptocurrencies
         .map((cryptocurrency) => cryptocurrency.id == event.cryptocurrency.id

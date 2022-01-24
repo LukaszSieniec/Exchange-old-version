@@ -47,7 +47,9 @@ class BuyCryptocurrencyBloc
 
     final double estimatedAmount = double.parse(
         (double.parse(currentAmount) / cryptocurrencyResponse.currentPrice)
-            .toStringAsFixed(5));
+            .toStringAsFixed(6));
+
+    print('Estimated amount: $estimatedAmount');
 
     emit(BuyCryptocurrencyInitial(cryptocurrencyResponse,
         AccountBalance.readAccountBalance(), currentAmount, estimatedAmount));
@@ -76,8 +78,8 @@ class BuyCryptocurrencyBloc
     } else {
       emit(BuyCryptocurrencyLoadInProgress());
       try {
-        final double newAccountBalance =
-            accountBalance - double.parse(currentAmount);
+        final double newAccountBalance = double.parse(
+            (accountBalance - double.parse(currentAmount)).toStringAsFixed(2));
         final Cryptocurrency purchasedCryptocurrency =
             Cryptocurrency.fromCryptocurrencyResponse(
                 cryptocurrency, estimatedAmount);
