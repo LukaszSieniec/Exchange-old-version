@@ -14,12 +14,11 @@ class TransactionsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<TransactionsBloc, TransactionsState>(
         builder: (context, state) {
-      if (state is TransactionsLoadInProgress) {
+      if (state.transactionsStatus == TransactionsStatus.loading) {
         return buildLoading();
-      } else if (state is TransactionsLoadSuccess) {
+      } else if (state.transactionsStatus == TransactionsStatus.success) {
         return _buildBody(state.transactions);
-      } else if (state is TransactionsLoadFailure) {}
-
+      } else if (state.transactionsStatus == TransactionsStatus.failure) {}
       return Container();
     });
   }

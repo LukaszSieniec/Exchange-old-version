@@ -1,22 +1,25 @@
 import 'package:equatable/equatable.dart';
 import 'package:exchange/models/transaction.dart';
 
-abstract class TransactionsState extends Equatable {
-  const TransactionsState();
+enum TransactionsStatus { initial, loading, success, failure }
 
-  @override
-  List<Object> get props => [];
-}
-
-class TransactionsLoadInProgress extends TransactionsState {}
-
-class TransactionsLoadSuccess extends TransactionsState {
+class TransactionsState extends Equatable {
   final List<Transaction> transactions;
 
-  const TransactionsLoadSuccess([this.transactions = const []]);
+  final TransactionsStatus transactionsStatus;
+
+  const TransactionsState(
+      {this.transactions = const [],
+      this.transactionsStatus = TransactionsStatus.initial});
+
+  TransactionsState copyWith(
+      {List<Transaction>? transactions,
+      TransactionsStatus? transactionsStatus}) {
+    return TransactionsState(
+        transactions: transactions ?? this.transactions,
+        transactionsStatus: transactionsStatus ?? this.transactionsStatus);
+  }
 
   @override
-  List<Object> get props => [transactions];
+  List<Object?> get props => [transactions, transactionsStatus];
 }
-
-class TransactionsLoadFailure extends TransactionsState {}

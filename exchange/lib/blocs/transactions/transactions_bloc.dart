@@ -21,7 +21,7 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
 
   TransactionsBloc(this.cryptocurrencyRepository, this.buyCryptocurrencyBloc,
       this.sellCryptocurrencyBloc)
-      : super(TransactionsLoadInProgress()) {
+      : super(const TransactionsState()) {
     on<TransactionsLoaded>(_onTransactionsLoaded);
     on<TransactionsUpdated>(_onTransactionsUpdated);
 
@@ -41,21 +41,27 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
 
   Future<void> _onTransactionsLoaded(
       TransactionsLoaded event, Emitter<TransactionsState> emit) async {
+    emit(state.copyWith(transactionsStatus: TransactionsStatus.loading));
     try {
       final List<Transaction> transactions =
           await cryptocurrencyRepository.readAllTransactions();
-      emit(TransactionsLoadSuccess(transactions));
+
+      emit(state.copyWith(
+          transactions: transactions,
+          transactionsStatus: TransactionsStatus.success));
     } on Exception {
-      emit(TransactionsLoadFailure());
+      emit(state.copyWith(transactionsStatus: TransactionsStatus.failure));
     }
   }
 
   Future<void> _onTransactionsUpdated(
       TransactionsUpdated event, Emitter<TransactionsState> emit) async {
-    final List<Transaction> transactions =
-        (state as TransactionsLoadSuccess).transactions..add(event.transaction);
+    final List<Transaction> transactions = [
+      ...state.transactions,
+      event.transaction
+    ];
 
-    emit(TransactionsLoadSuccess(transactions));
+    emit(state.copyWith(transactions: transactions));
   }
 
   @override
