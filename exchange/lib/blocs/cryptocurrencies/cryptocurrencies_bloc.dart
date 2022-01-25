@@ -14,28 +14,41 @@ class CryptocurrenciesBloc
     on<CryptocurrenciesFetched>(_onCryptocurrenciesFetched);
   }
 
-  void _onCryptocurrenciesFetched(
-      CryptocurrenciesFetched event, Emitter<CryptocurrenciesState> emit) async {
+  void _onCryptocurrenciesFetched(CryptocurrenciesFetched event,
+      Emitter<CryptocurrenciesState> emit) async {
     try {
-      final List<PopularCryptocurrency> trendingBasicInformations =
-          await _cryptocurrencyRepository.fetchTrending();
-
-      final List<String> ids = <String>[];
-
-      for (final singleBasicInformation in trendingBasicInformations) {
-        ids.add(singleBasicInformation.id);
-      }
-
       final List<List<CryptocurrencyResponse>> cryptocurrencies =
-          await Future.wait([
-        _cryptocurrencyRepository.fetchCryptocurrencies(),
-        _cryptocurrencyRepository.fetchCryptocurrenciesByIds(ids)
-      ]);
+          await _fetchCryptocurrencies();
 
       emit(CryptocurrenciesLoadSuccess(
           cryptocurrencies[0], cryptocurrencies[1]));
     } on Exception {
       emit(CryptocurrenciesLoadFailure());
     }
+
+    await emit.forEach<List<List<CryptocurrencyResponse>>>(
+        Stream.periodic(const Duration(seconds: 5))
+            .asyncMap((i) => _fetchCryptocurrencies()),
+        onData: (data) => CryptocurrenciesLoadSuccess(data[0], data[1]),
+        onError: (_, __) => CryptocurrenciesLoadFailure());
+  }
+
+  Future<List<List<CryptocurrencyResponse>>> _fetchCryptocurrencies() async {
+    final List<PopularCryptocurrency> trendingBasicInformations =
+        await _cryptocurrencyRepository.fetchTrending();
+
+    final List<String> ids = <String>[];
+
+    for (final singleBasicInformation in trendingBasicInformations) {
+      ids.add(singleBasicInformation.id);
+    }
+
+    final List<List<CryptocurrencyResponse>> cryptocurrencies =
+        await Future.wait([
+      _cryptocurrencyRepository.fetchCryptocurrencies(),
+      _cryptocurrencyRepository.fetchCryptocurrenciesByIds(ids)
+    ]);
+
+    return cryptocurrencies;
   }
 }

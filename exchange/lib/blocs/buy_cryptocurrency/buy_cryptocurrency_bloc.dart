@@ -81,9 +81,7 @@ class BuyCryptocurrencyBloc
             (accountBalance - (double.parse(currentAmount)))
                 .setAmountMoneyPrecision();
 
-        debugPrint(
-            'newAccountBalance normal: ${double.parse((accountBalance - double.parse(currentAmount)).toString())}');
-        debugPrint('newAccountBalance with Precision: $newAccountBalance');
+        print('Price: ${cryptocurrency.currentPrice}');
         final Cryptocurrency purchasedCryptocurrency =
             Cryptocurrency.fromCryptocurrencyResponse(
                 cryptocurrency, estimatedAmount);

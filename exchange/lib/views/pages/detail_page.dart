@@ -19,6 +19,7 @@ class DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<MarketChartBloc>(context).add(MarketChartFetched(id));
     return Scaffold(
         backgroundColor: const Color(MyColors.background),
         body: SafeArea(
@@ -30,10 +31,6 @@ class DetailPage extends StatelessWidget {
                       (state as CryptocurrenciesLoadSuccess)
                           .cryptocurrencies
                           .firstWhere((element) => element.id == id);
-
-                  BlocProvider.of<MarketChartBloc>(context)
-                      .add(MarketChartFetched(cryptocurrency.id));
-
                   return Column(children: [
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

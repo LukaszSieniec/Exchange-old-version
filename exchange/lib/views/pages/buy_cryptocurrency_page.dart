@@ -18,7 +18,6 @@ class BuyCryptocurrencyPage extends StatelessWidget {
   Widget build(BuildContext context) {
     BlocProvider.of<BuyCryptocurrencyBloc>(context)
         .add(BuyCryptocurrencyLoaded(id));
-
     return BlocConsumer(
         bloc: BlocProvider.of<BuyCryptocurrencyBloc>(context),
         listener: (context, state) {
@@ -29,8 +28,8 @@ class BuyCryptocurrencyPage extends StatelessWidget {
             ScaffoldMessenger.of(context)
                 .showSnackBar(PrimarySnackBar(title: Messages.invalidAmount));
           } else if (state is BuyCryptocurrencySuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(
-                PrimarySnackBar(title: '${Messages.bought} ${state.cryptocurrency.name}'));
+            ScaffoldMessenger.of(context).showSnackBar(PrimarySnackBar(
+                title: '${Messages.bought} ${state.cryptocurrency.name}'));
           }
         },
         builder: (context, state) {
