@@ -14,9 +14,10 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CryptocurrenciesBloc, CryptocurrenciesState>(
         builder: (context, state) {
-      if (state is CryptocurrenciesLoadInProgress) {
+      if (state.cryptocurrenciesStatus == CryptocurrenciesStatus.loading) {
         return buildLoading();
-      } else if (state is CryptocurrenciesLoadSuccess) {
+      } else if (state.cryptocurrenciesStatus ==
+          CryptocurrenciesStatus.success) {
         return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           const Text(MyLabels.trending,
               style: TextStyle(
@@ -45,7 +46,8 @@ class HomePage extends StatelessWidget {
                     return CryptocurrencyItem(state.cryptocurrencies[index]);
                   }))
         ]);
-      } else if (state is CryptocurrenciesLoadFailure) {
+      } else if (state.cryptocurrenciesStatus ==
+          CryptocurrenciesStatus.failure) {
         return Container();
       }
       return Container();

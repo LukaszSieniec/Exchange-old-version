@@ -10,27 +10,36 @@ class CryptocurrenciesBloc
   final CryptocurrencyRepository _cryptocurrencyRepository;
 
   CryptocurrenciesBloc(this._cryptocurrencyRepository)
-      : super(CryptocurrenciesLoadInProgress()) {
+      : super(const CryptocurrenciesState()) {
     on<CryptocurrenciesFetched>(_onCryptocurrenciesFetched);
   }
 
   void _onCryptocurrenciesFetched(CryptocurrenciesFetched event,
       Emitter<CryptocurrenciesState> emit) async {
+    emit(
+        state.copyWith(cryptocurrenciesStatus: CryptocurrenciesStatus.loading));
     try {
       final List<List<CryptocurrencyResponse>> cryptocurrencies =
           await _fetchCryptocurrencies();
 
-      emit(CryptocurrenciesLoadSuccess(
-          cryptocurrencies[0], cryptocurrencies[1]));
+      emit(state.copyWith(
+          cryptocurrencies: cryptocurrencies[0],
+          trending: cryptocurrencies[1],
+          cryptocurrenciesStatus: CryptocurrenciesStatus.success));
     } on Exception {
-      emit(CryptocurrenciesLoadFailure());
+      emit(state.copyWith(
+          cryptocurrenciesStatus: CryptocurrenciesStatus.failure));
     }
 
     await emit.forEach<List<List<CryptocurrencyResponse>>>(
-        Stream.periodic(const Duration(seconds: 5))
+        Stream.periodic(const Duration(seconds: 60))
             .asyncMap((i) => _fetchCryptocurrencies()),
-        onData: (data) => CryptocurrenciesLoadSuccess(data[0], data[1]),
-        onError: (_, __) => CryptocurrenciesLoadFailure());
+        onData: (data) => state.copyWith(
+            cryptocurrencies: data[0],
+            trending: data[1],
+            cryptocurrenciesStatus: CryptocurrenciesStatus.success),
+        onError: (_, __) => state.copyWith(
+            cryptocurrenciesStatus: CryptocurrenciesStatus.failure));
   }
 
   Future<List<List<CryptocurrencyResponse>>> _fetchCryptocurrencies() async {

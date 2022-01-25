@@ -28,10 +28,9 @@ class DetailPage extends StatelessWidget {
                 margin: const EdgeInsets.all(8.0),
                 child: BlocBuilder<CryptocurrenciesBloc, CryptocurrenciesState>(
                     builder: (context, state) {
-                  final CryptocurrencyResponse cryptocurrency =
-                      (state as CryptocurrenciesLoadSuccess)
-                          .cryptocurrencies
-                          .firstWhere((element) => element.id == id);
+                  final CryptocurrencyResponse cryptocurrency = state
+                      .cryptocurrencies
+                      .firstWhere((element) => element.id == id);
                   return Column(children: [
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

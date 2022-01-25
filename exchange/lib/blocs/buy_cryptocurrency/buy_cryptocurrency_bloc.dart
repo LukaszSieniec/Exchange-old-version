@@ -1,5 +1,4 @@
 import 'package:exchange/blocs/cryptocurrencies/cryptocurrencies_bloc.dart';
-import 'package:exchange/blocs/cryptocurrencies/cryptocurrencies_state.dart';
 import 'package:exchange/database/account_balance.dart';
 import 'package:exchange/models/cryptocurrency.dart';
 import 'package:exchange/models/cryptocurrency_response.dart';
@@ -26,10 +25,9 @@ class BuyCryptocurrencyBloc
 
   Future<void> _onBuyCryptocurrencyLoaded(BuyCryptocurrencyLoaded event,
       Emitter<BuyCryptocurrencyState> emit) async {
-    final CryptocurrencyResponse cryptocurrency =
-        (cryptocurrenciesBloc.state as CryptocurrenciesLoadSuccess)
-            .cryptocurrencies
-            .firstWhere((element) => element.id == event.id);
+    final CryptocurrencyResponse cryptocurrency = cryptocurrenciesBloc
+        .state.cryptocurrencies
+        .firstWhere((element) => element.id == event.id);
 
     emit(BuyCryptocurrencyInitial(
         cryptocurrency, AccountBalance.readAccountBalance(), '0', 0));

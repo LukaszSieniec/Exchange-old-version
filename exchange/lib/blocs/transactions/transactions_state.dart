@@ -21,5 +21,5 @@ class TransactionsState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [transactions, transactionsStatus];
+  List<Object> get props => [transactions, transactionsStatus];
 }

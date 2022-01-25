@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
               create: (context) => CryptocurrenciesBloc(
                   CryptocurrencyRepository(
                       CryptocurrencyService(), CryptocurrencyDatabase.get))
-                ..add(CryptocurrenciesFetched())),
+                ..add(const CryptocurrenciesFetched())),
           BlocProvider(
               create: (context) => MarketChartBloc(CryptocurrencyRepository(
                   CryptocurrencyService(), CryptocurrencyDatabase.get))),
@@ -58,14 +58,14 @@ class MyApp extends StatelessWidget {
                       CryptocurrencyService(), CryptocurrencyDatabase.get),
                   BlocProvider.of<BuyCryptocurrencyBloc>(context),
                   BlocProvider.of<SellCryptocurrencyBloc>(context))
-                ..add(WalletLoaded())),
+                ..add(const WalletLoaded())),
           BlocProvider(
               create: (context) => TransactionsBloc(
                   CryptocurrencyRepository(
                       CryptocurrencyService(), CryptocurrencyDatabase.get),
                   BlocProvider.of<BuyCryptocurrencyBloc>(context),
                   BlocProvider.of<SellCryptocurrencyBloc>(context))
-                ..add(TransactionsLoaded()))
+                ..add(const TransactionsLoaded()))
         ],
         child: MaterialApp(
             debugShowCheckedModeBanner: false,
