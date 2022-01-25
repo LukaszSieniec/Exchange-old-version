@@ -14,11 +14,11 @@ class WalletPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<WalletBloc, WalletState>(builder: (context, state) {
-      if (state is WalletLoadInProgress) {
+      if (state.walletStatus == WalletStatus.loading) {
         return buildLoading();
-      } else if (state is WalletLoadSuccess) {
-        return _buildBody(state.cryptocurrencies, state.accountBalance);
-      } else if (state is WalletLoadFailure) {}
+      } else if (state.walletStatus == WalletStatus.success) {
+        return _buildBody(state.cryptocurrencies, state.accountBalance!);
+      } else if (state.walletStatus == WalletStatus.failure) {}
       return Container();
     });
   }

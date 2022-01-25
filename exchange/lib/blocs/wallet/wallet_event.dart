@@ -8,7 +8,9 @@ abstract class WalletEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class WalletLoaded extends WalletEvent {}
+class WalletLoaded extends WalletEvent {
+  const WalletLoaded();
+}
 
 class WalletUpdatedSale extends WalletEvent {
   final Cryptocurrency cryptocurrency;

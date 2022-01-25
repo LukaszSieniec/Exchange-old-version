@@ -21,7 +21,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
 
   WalletBloc(this.cryptocurrencyRepository, this.buyCryptocurrencyBloc,
       this.sellCryptocurrencyBloc)
-      : super(WalletLoadInProgress()) {
+      : super(const WalletState()) {
     on<WalletLoaded>(_onWalletLoaded);
     on<WalletUpdatedPurchase>(_onWalletUpdatedPurchase);
     on<WalletUpdatedSale>(_onWalletUpdatedSale);
@@ -42,48 +42,51 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
 
   Future<void> _onWalletLoaded(
       WalletLoaded event, Emitter<WalletState> emit) async {
+    emit(state.copyWith(walletStatus: WalletStatus.loading));
     try {
       final List<Cryptocurrency> cryptocurrencies =
           await cryptocurrencyRepository.readAllCryptocurrencies();
       final double accountBalance = AccountBalance.readAccountBalance();
 
-      emit(WalletLoadSuccess(accountBalance, cryptocurrencies));
+      emit(state.copyWith(
+          cryptocurrencies: cryptocurrencies,
+          accountBalance: accountBalance,
+          walletStatus: WalletStatus.success));
     } on Exception {
-      emit(WalletLoadFailure());
+      emit(state.copyWith(walletStatus: WalletStatus.failure));
     }
   }
 
   Future<void> _onWalletUpdatedPurchase(
       WalletUpdatedPurchase event, Emitter<WalletState> emit) async {
-    final List<Cryptocurrency> cryptocurrencies = (state as WalletLoadSuccess)
-        .cryptocurrencies
+    final List<Cryptocurrency> cryptocurrencies = state.cryptocurrencies
         .map((cryptocurrency) => cryptocurrency.id == event.cryptocurrency.id
             ? cryptocurrency.copyWith(
                 amount: (cryptocurrency.amount + event.cryptocurrency.amount))
             : cryptocurrency)
         .toList();
 
-    final bool isExist = (state as WalletLoadSuccess)
-        .cryptocurrencies
+    final bool isExist = state.cryptocurrencies
         .any((element) => element.id == event.cryptocurrency.id);
 
     if (!isExist) cryptocurrencies.add(event.cryptocurrency);
 
-    emit(WalletLoadSuccess(
-        AccountBalance.readAccountBalance(), cryptocurrencies));
+    emit(state.copyWith(
+        cryptocurrencies: cryptocurrencies,
+        accountBalance: AccountBalance.readAccountBalance()));
   }
 
   Future<void> _onWalletUpdatedSale(
       WalletUpdatedSale event, Emitter<WalletState> emit) async {
-    final List<Cryptocurrency> cryptocurrencies = (state as WalletLoadSuccess)
-        .cryptocurrencies
+    final List<Cryptocurrency> cryptocurrencies = state.cryptocurrencies
         .map((cryptocurrency) => cryptocurrency.id == event.cryptocurrency.id
             ? event.cryptocurrency
             : cryptocurrency)
         .toList();
 
-    emit(WalletLoadSuccess(
-        AccountBalance.readAccountBalance(), cryptocurrencies));
+    emit(state.copyWith(
+        cryptocurrencies: cryptocurrencies,
+        accountBalance: AccountBalance.readAccountBalance()));
   }
 
   @override
