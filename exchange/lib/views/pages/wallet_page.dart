@@ -2,6 +2,7 @@ import 'package:exchange/blocs/wallet/wallet_bloc.dart';
 import 'package:exchange/blocs/wallet/wallet_state.dart';
 import 'package:exchange/constants/my_constants.dart';
 import 'package:exchange/models/cryptocurrency.dart';
+import 'package:exchange/views/widgets/loading.dart';
 import 'package:exchange/views/widgets/wallet/coins.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class WalletPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<WalletBloc, WalletState>(builder: (context, state) {
       if (state is WalletLoadInProgress) {
-        return _buildLoading();
+        return buildLoading();
       } else if (state is WalletLoadSuccess) {
         return _buildBody(state.cryptocurrencies, state.accountBalance);
       } else if (state is WalletLoadFailure) {}
@@ -51,8 +52,6 @@ class WalletPage extends StatelessWidget {
               : _buildMessage()
         ]));
   }
-
-  Widget _buildLoading() => const Center(child: CircularProgressIndicator());
 
   Widget _buildMessage() {
     return const Expanded(

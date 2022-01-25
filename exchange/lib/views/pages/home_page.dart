@@ -3,6 +3,7 @@ import 'package:exchange/blocs/cryptocurrencies/cryptocurrencies_state.dart';
 import 'package:exchange/constants/my_constants.dart';
 import 'package:exchange/views/widgets/home/cryptocurrency_item.dart';
 import 'package:exchange/views/widgets/home/trending_item.dart';
+import 'package:exchange/views/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,7 +15,7 @@ class HomePage extends StatelessWidget {
     return BlocBuilder<CryptocurrenciesBloc, CryptocurrenciesState>(
         builder: (context, state) {
       if (state is CryptocurrenciesLoadInProgress) {
-        return _buildLoading();
+        return buildLoading();
       } else if (state is CryptocurrenciesLoadSuccess) {
         return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           const Text(MyLabels.trending,
@@ -50,6 +51,4 @@ class HomePage extends StatelessWidget {
       return Container();
     });
   }
-
-  Widget _buildLoading() => const Center(child: CircularProgressIndicator());
 }

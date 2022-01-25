@@ -6,6 +6,7 @@ import 'package:exchange/blocs/market_chart/market_chart_state.dart';
 import 'package:exchange/constants/my_constants.dart';
 import 'package:exchange/models/cryptocurrency_response.dart';
 import 'package:exchange/views/widgets/detail/cryptocurrency_summary.dart';
+import 'package:exchange/views/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
@@ -90,7 +91,7 @@ class DetailPage extends StatelessWidget {
                                             if (state
                                                 is MarketChartLoadInProgress) {
                                               debugPrint('Loading in progress');
-                                              return _buildLoading();
+                                              return buildLoading();
                                             } else if (state
                                                 is MarketChartLoadSuccess) {
                                               return SfSparkAreaChart.custom(
@@ -189,6 +190,4 @@ class DetailPage extends StatelessWidget {
   }
 
   Color _getColor(final dynamic value) => value > 0 ? Colors.green : Colors.red;
-
-  Widget _buildLoading() => const Center(child: CircularProgressIndicator());
 }

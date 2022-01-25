@@ -2,6 +2,7 @@ import 'package:exchange/blocs/buy_cryptocurrency/buy_cryptocurrency_bloc.dart';
 import 'package:exchange/blocs/buy_cryptocurrency/buy_cryptocurrency_event.dart';
 import 'package:exchange/blocs/buy_cryptocurrency/buy_cryptocurrency_state.dart';
 import 'package:exchange/constants/my_constants.dart';
+import 'package:exchange/views/widgets/loading.dart';
 import '../widgets/confirm_button.dart';
 import '../widgets/keyboard/keyboard.dart';
 import 'package:exchange/views/widgets/snackbar.dart';
@@ -36,7 +37,7 @@ class BuyCryptocurrencyPage extends StatelessWidget {
           return BlocBuilder<BuyCryptocurrencyBloc, BuyCryptocurrencyState>(
               builder: (context, state) {
             if (state is BuyCryptocurrencyLoadInProgress) {
-              return _buildLoading();
+              return buildLoading();
             } else if (state is BuyCryptocurrencyInitial) {
               return Scaffold(
                   backgroundColor: const Color(MyColors.background),
@@ -94,6 +95,4 @@ class BuyCryptocurrencyPage extends StatelessWidget {
           });
         });
   }
-
-  Widget _buildLoading() => const Center(child: CircularProgressIndicator());
 }

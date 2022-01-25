@@ -3,6 +3,7 @@ import 'package:exchange/blocs/sell_cryptocurrency/sell_cryptocurrency_event.dar
 import 'package:exchange/blocs/sell_cryptocurrency/sell_cryptocurrency_state.dart';
 import 'package:exchange/constants/my_constants.dart';
 import 'package:exchange/models/cryptocurrency.dart';
+import 'package:exchange/views/widgets/loading.dart';
 import '../widgets/confirm_button.dart';
 import '../widgets/keyboard/keyboard.dart';
 import 'package:exchange/views/widgets/snackbar.dart';
@@ -37,7 +38,7 @@ class SellCryptocurrencyPage extends StatelessWidget {
           if (state is SellCryptocurrencyLoadInProgress) {
             return Scaffold(
                 backgroundColor: const Color(MyColors.background),
-                body: _buildLoading());
+                body: buildLoading());
           } else if (state is SellCryptocurrencyInitial) {
             return Scaffold(
                 backgroundColor: const Color(MyColors.background),
@@ -93,6 +94,4 @@ class SellCryptocurrencyPage extends StatelessWidget {
           return Container();
         });
   }
-
-  Widget _buildLoading() => const Center(child: CircularProgressIndicator());
 }

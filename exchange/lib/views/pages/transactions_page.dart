@@ -2,6 +2,7 @@ import 'package:exchange/blocs/transactions/transactions_bloc.dart';
 import 'package:exchange/blocs/transactions/transactions_state.dart';
 import 'package:exchange/constants/my_constants.dart';
 import 'package:exchange/models/transaction.dart';
+import 'package:exchange/views/widgets/loading.dart';
 import 'package:exchange/views/widgets/transactions/transactions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +15,7 @@ class TransactionsPage extends StatelessWidget {
     return BlocBuilder<TransactionsBloc, TransactionsState>(
         builder: (context, state) {
       if (state is TransactionsLoadInProgress) {
-        return _buildLoading();
+        return buildLoading();
       } else if (state is TransactionsLoadSuccess) {
         return _buildBody(state.transactions);
       } else if (state is TransactionsLoadFailure) {}
@@ -48,6 +49,4 @@ class TransactionsPage extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     fontSize: 18.0))));
   }
-
-  Widget _buildLoading() => const Center(child: CircularProgressIndicator());
 }
