@@ -3,8 +3,8 @@ import 'package:exchange/blocs/sell_cryptocurrency/sell_cryptocurrency_event.dar
 import 'package:exchange/blocs/sell_cryptocurrency/sell_cryptocurrency_state.dart';
 import 'package:exchange/constants/my_constants.dart';
 import 'package:exchange/models/cryptocurrency.dart';
-import 'package:exchange/views/widgets/buy_cryptocurrency/confirm_button.dart';
-import 'package:exchange/views/widgets/buy_cryptocurrency/keyboard.dart';
+import '../widgets/confirm_button.dart';
+import '../widgets/keyboard/keyboard.dart';
 import 'package:exchange/views/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
