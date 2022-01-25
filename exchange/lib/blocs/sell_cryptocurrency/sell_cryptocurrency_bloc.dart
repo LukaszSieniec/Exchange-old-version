@@ -23,7 +23,6 @@ class SellCryptocurrencyBloc
     emit(SellCryptocurrencyLoadInProgress());
     final num price =
         await cryptocurrencyRepository.fetchPrice(event.cryptocurrency.id);
-    print('Price: $price');
 
     emit(SellCryptocurrencyInitial(event.cryptocurrency, '0', 0, price));
   }
@@ -71,7 +70,8 @@ class SellCryptocurrencyBloc
     } else {
       try {
         final double newAccountBalance =
-            (AccountBalance.readAccountBalance() + estimatedAmount).setAmountMoneyPrecision();
+            (AccountBalance.readAccountBalance() + estimatedAmount)
+                .setAmountMoneyPrecision();
         final Transaction transaction = Transaction.fromCryptocurrency(
             cryptocurrency, estimatedAmount, price);
         final Cryptocurrency newCryprocurrency = cryptocurrency.copyWith(

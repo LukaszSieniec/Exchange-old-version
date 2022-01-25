@@ -6,7 +6,6 @@ import 'package:exchange/models/cryptocurrency_response.dart';
 import 'package:exchange/models/transaction.dart';
 import 'package:exchange/repositories/cryptocurrency_repository.dart';
 import 'package:exchange/utils/extensions.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'buy_cryptocurrency_event.dart';
@@ -81,7 +80,6 @@ class BuyCryptocurrencyBloc
             (accountBalance - (double.parse(currentAmount)))
                 .setAmountMoneyPrecision();
 
-        print('Price: ${cryptocurrency.currentPrice}');
         final Cryptocurrency purchasedCryptocurrency =
             Cryptocurrency.fromCryptocurrencyResponse(
                 cryptocurrency, estimatedAmount);

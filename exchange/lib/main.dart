@@ -1,4 +1,3 @@
-import 'package:exchange/blocs/bottom_navigation_bar/bottom_navigation_bar_bloc.dart';
 import 'package:exchange/blocs/cryptocurrencies/cryptocurrencies_bloc.dart';
 import 'package:exchange/blocs/cryptocurrencies/cryptocurrencies_event.dart';
 import 'package:exchange/blocs/market_chart/market_chart_bloc.dart';
@@ -16,6 +15,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'blocs/buy_cryptocurrency/buy_cryptocurrency_bloc.dart';
 import 'blocs/transactions/transactions_bloc.dart';
+import 'cubit/bottom_navigation_bar_cubit.dart';
 import 'database/account_balance.dart';
 
 void main() async {
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => BottomNavigationBarBloc()),
+          BlocProvider(create: (context) => AppTabCubit()),
           BlocProvider(
               create: (context) => CryptocurrenciesBloc(
                   CryptocurrencyRepository(
