@@ -17,7 +17,7 @@ class ConfirmButton extends StatelessWidget {
         onPressed: () => mode == MyLabels.buyMode
             ? context
                 .read<BuyCryptocurrencyBloc>()
-                .add(BuyCryptocurrencyConfirmed())
+                .add(const BuyCryptocurrencyConfirmed())
             : context
                 .read<SellCryptocurrencyBloc>()
                 .add(SellCryptocurrencyConfirmed()),

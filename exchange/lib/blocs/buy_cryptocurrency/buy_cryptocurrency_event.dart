@@ -16,13 +16,16 @@ class BuyCryptocurrencyLoaded extends BuyCryptocurrencyEvent {
   List<Object> get props => [id];
 }
 
-class BuyCryptocurrencyAmountUpdated extends BuyCryptocurrencyEvent {
-  final String amountMoney;
+class BuyCryptocurrencyCurrentAmountMoneyUpdated
+    extends BuyCryptocurrencyEvent {
+  final String selectedLabel;
 
-  const BuyCryptocurrencyAmountUpdated(this.amountMoney);
+  const BuyCryptocurrencyCurrentAmountMoneyUpdated(this.selectedLabel);
 
   @override
-  List<Object> get props => [amountMoney];
+  List<Object> get props => [selectedLabel];
 }
 
-class BuyCryptocurrencyConfirmed extends BuyCryptocurrencyEvent {}
+class BuyCryptocurrencyConfirmed extends BuyCryptocurrencyEvent {
+  const BuyCryptocurrencyConfirmed();
+}

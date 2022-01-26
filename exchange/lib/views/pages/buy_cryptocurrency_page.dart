@@ -18,26 +18,31 @@ class BuyCryptocurrencyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<BuyCryptocurrencyBloc>().add(BuyCryptocurrencyLoaded(id));
-    return BlocConsumer(
+    return BlocConsumer<BuyCryptocurrencyBloc, BuyCryptocurrencyState>(
         bloc: BlocProvider.of<BuyCryptocurrencyBloc>(context),
         listener: (context, state) {
-          if (state is BuyCryptocurrencyNotEnoughFunds) {
+          if (state.buyCryptocurrencyStatus ==
+              BuyCryptocurrencyStatus.notEnoughFunds) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(PrimarySnackBar(title: Messages.notEnoughFunds));
-          } else if (state is BuyCryptocurrencyInvalidAmount) {
+          } else if (state.buyCryptocurrencyStatus ==
+              BuyCryptocurrencyStatus.invalidAmount) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(PrimarySnackBar(title: Messages.invalidAmount));
-          } else if (state is BuyCryptocurrencySuccess) {
+          } else if (state.buyCryptocurrencyStatus ==
+              BuyCryptocurrencyStatus.success) {
             ScaffoldMessenger.of(context).showSnackBar(PrimarySnackBar(
-                title: '${Messages.bought} ${state.cryptocurrency.name}'));
+                title: '${Messages.bought} ${state.cryptocurrency?.name}'));
           }
         },
         builder: (context, state) {
           return BlocBuilder<BuyCryptocurrencyBloc, BuyCryptocurrencyState>(
               builder: (context, state) {
-            if (state is BuyCryptocurrencyLoadInProgress) {
+            if (state.buyCryptocurrencyStatus ==
+                BuyCryptocurrencyStatus.loading) {
               return buildLoading();
-            } else if (state is BuyCryptocurrencyInitial) {
+            } else if (state.buyCryptocurrencyStatus ==
+                BuyCryptocurrencyStatus.initial) {
               return Scaffold(
                   backgroundColor: const Color(MyColors.background),
                   appBar: AppBar(
@@ -61,7 +66,7 @@ class BuyCryptocurrencyPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Divider(height: 2.0, color: Colors.white),
-                        Text('${state.amountMoney} \$',
+                        Text('${state.currentAmountMoney} \$',
                             style: const TextStyle(
                                 fontSize: 48.0, color: Colors.white)),
                         Container(
@@ -72,7 +77,7 @@ class BuyCryptocurrencyPage extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                        'Estimated ${state.cryptocurrencyResponse.symbol.toUpperCase()}: ',
+                                        'Estimated ${state.cryptocurrencyResponse?.symbol.toUpperCase()}: ',
                                         style: const TextStyle(
                                             fontSize: 16.0,
                                             color: Color(MyColors.colorText))),

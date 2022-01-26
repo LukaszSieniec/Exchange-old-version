@@ -25,18 +25,22 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
     on<TransactionsLoaded>(_onTransactionsLoaded);
     on<TransactionsUpdated>(_onTransactionsUpdated);
 
-    void onTransactionsStateChanged(state) {
-      if (state is BuyCryptocurrencySuccess) {
-        add(TransactionsUpdated(state.transaction));
-      } else if (state is SellCryptocurrencySuccess) {
+    void onTransactionsStateChangedByPurchase(BuyCryptocurrencyState state) {
+      if (state.buyCryptocurrencyStatus == BuyCryptocurrencyStatus.success) {
+        add(TransactionsUpdated(state.transaction!));
+      }
+    }
+
+    void onTransactionsStateChangedBySale(state) {
+      if (state is SellCryptocurrencySuccess) {
         add(TransactionsUpdated(state.transaction));
       }
     }
 
-    buyCryptocurrencySubscription =
-        buyCryptocurrencyBloc.stream.listen(onTransactionsStateChanged);
+    buyCryptocurrencySubscription = buyCryptocurrencyBloc.stream
+        .listen(onTransactionsStateChangedByPurchase);
     sellCryptocurrencySubscription =
-        sellCryptocurrencyBloc.stream.listen(onTransactionsStateChanged);
+        sellCryptocurrencyBloc.stream.listen(onTransactionsStateChangedBySale);
   }
 
   Future<void> _onTransactionsLoaded(

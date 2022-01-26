@@ -27,18 +27,22 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     on<WalletUpdatedPurchase>(_onWalletUpdatedPurchase);
     on<WalletUpdatedSale>(_onWalletUpdatedSale);
 
-    void onWalletStateChanged(state) {
-      if (state is BuyCryptocurrencySuccess) {
-        add(WalletUpdatedPurchase(state.cryptocurrency));
-      } else if (state is SellCryptocurrencySuccess) {
+    void onWalletStateChangedByPurchase(BuyCryptocurrencyState state) {
+      if (state.buyCryptocurrencyStatus == BuyCryptocurrencyStatus.success) {
+        add(WalletUpdatedPurchase(state.cryptocurrency!));
+      }
+    }
+
+    void onWalletStateChangedBySale(state) {
+      if (state is SellCryptocurrencySuccess) {
         add(WalletUpdatedSale(state.cryptocurrency));
       }
     }
 
     buyCryptocurrencySubscription =
-        buyCryptocurrencyBloc.stream.listen(onWalletStateChanged);
+        buyCryptocurrencyBloc.stream.listen(onWalletStateChangedByPurchase);
     sellCryptocurrencySubscription =
-        sellCryptocurrencyBloc.stream.listen(onWalletStateChanged);
+        sellCryptocurrencyBloc.stream.listen(onWalletStateChangedBySale);
   }
 
   Future<void> _onWalletLoaded(

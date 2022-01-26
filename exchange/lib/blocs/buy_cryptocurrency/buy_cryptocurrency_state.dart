@@ -3,47 +3,65 @@ import 'package:exchange/models/cryptocurrency.dart';
 import 'package:exchange/models/cryptocurrency_response.dart';
 import 'package:exchange/models/transaction.dart';
 
-abstract class BuyCryptocurrencyState extends Equatable {
-  const BuyCryptocurrencyState();
-
-  @override
-  List<Object> get props => [];
+enum BuyCryptocurrencyStatus {
+  initial,
+  loading,
+  success,
+  failure,
+  notEnoughFunds,
+  invalidAmount
 }
 
-class BuyCryptocurrencyInitial extends BuyCryptocurrencyState {
-  final CryptocurrencyResponse cryptocurrencyResponse;
-  final double accountBalance, estimatedAmountCryptocurrency;
-  final String amountMoney;
+class BuyCryptocurrencyState extends Equatable {
+  final CryptocurrencyResponse? cryptocurrencyResponse;
+  final Cryptocurrency? cryptocurrency;
+  final Transaction? transaction;
 
-  const BuyCryptocurrencyInitial(
-      this.cryptocurrencyResponse,
+  final double? accountBalance;
+  final double estimatedAmountCryptocurrency;
+  final String currentAmountMoney;
+
+  final BuyCryptocurrencyStatus buyCryptocurrencyStatus;
+
+  const BuyCryptocurrencyState(
+      {this.cryptocurrencyResponse,
+      this.cryptocurrency,
+      this.transaction,
       this.accountBalance,
-      this.amountMoney,
-      this.estimatedAmountCryptocurrency);
+      this.estimatedAmountCryptocurrency = 0,
+      this.currentAmountMoney = '',
+      this.buyCryptocurrencyStatus = BuyCryptocurrencyStatus.initial});
+
+  BuyCryptocurrencyState copyWith(
+      {CryptocurrencyResponse? cryptocurrencyResponse,
+      Cryptocurrency? cryptocurrency,
+      Transaction? transaction,
+      double? accountBalance,
+      double? estimatedAmountCryptocurrency,
+      String? currentAmountMoney,
+      BuyCryptocurrencyStatus? buyCryptocurrencyStatus}) {
+    return BuyCryptocurrencyState(
+      cryptocurrencyResponse:
+          cryptocurrencyResponse ?? this.cryptocurrencyResponse,
+      cryptocurrency: cryptocurrency ?? this.cryptocurrency,
+      transaction: transaction ?? this.transaction,
+      accountBalance: accountBalance ?? this.accountBalance,
+      estimatedAmountCryptocurrency:
+          estimatedAmountCryptocurrency ?? this.estimatedAmountCryptocurrency,
+      currentAmountMoney: currentAmountMoney ?? this.currentAmountMoney,
+      buyCryptocurrencyStatus:
+          buyCryptocurrencyStatus ?? this.buyCryptocurrencyStatus,
+    );
+  }
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         cryptocurrencyResponse,
+        cryptocurrency,
+        transaction,
         accountBalance,
-        amountMoney,
-        estimatedAmountCryptocurrency
+        estimatedAmountCryptocurrency,
+        currentAmountMoney,
+        buyCryptocurrencyStatus
       ];
 }
-
-class BuyCryptocurrencyLoadInProgress extends BuyCryptocurrencyState {}
-
-class BuyCryptocurrencyLoadFailure extends BuyCryptocurrencyState {}
-
-class BuyCryptocurrencySuccess extends BuyCryptocurrencyState {
-  final Cryptocurrency cryptocurrency;
-  final Transaction transaction;
-
-  const BuyCryptocurrencySuccess(this.cryptocurrency, this.transaction);
-
-  @override
-  List<Object> get props => [cryptocurrency, transaction];
-}
-
-class BuyCryptocurrencyNotEnoughFunds extends BuyCryptocurrencyState {}
-
-class BuyCryptocurrencyInvalidAmount extends BuyCryptocurrencyState {}
