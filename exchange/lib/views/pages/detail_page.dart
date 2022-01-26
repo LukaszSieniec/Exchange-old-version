@@ -20,7 +20,7 @@ class DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<MarketChartBloc>(context).add(MarketChartFetched(id));
+    context.read<MarketChartBloc>().add(MarketChartFetched(id));
     return Scaffold(
         backgroundColor: const Color(MyColors.background),
         body: SafeArea(
@@ -126,8 +126,8 @@ class DetailPage extends StatelessWidget {
                                                           MyColors.orange)),
                                                   insets: EdgeInsets.symmetric(
                                                       horizontal: 16.0)),
-                                          onTap: (index) => BlocProvider.of<
-                                                  MarketChartBloc>(context)
+                                          onTap: (index) => context
+                                              .read<MarketChartBloc>()
                                               .add(MarketChartUpdated(
                                                   cryptocurrency.id, index)),
                                           tabs: [

@@ -27,9 +27,11 @@ class Keyboard extends StatelessWidget {
         itemBuilder: (context, index) => KeyboardButton(
             MyLabels.keyboardLabels[index],
             onPressed: (label) => mode == MyLabels.buyMode
-                ? BlocProvider.of<BuyCryptocurrencyBloc>(context)
+                ? context
+                    .read<BuyCryptocurrencyBloc>()
                     .add(BuyCryptocurrencyAmountUpdated(label))
-                : BlocProvider.of<SellCryptocurrencyBloc>(context)
+                : context
+                    .read<SellCryptocurrencyBloc>()
                     .add(SellCryptocurrencyAmountUpdated(label))));
   }
 }

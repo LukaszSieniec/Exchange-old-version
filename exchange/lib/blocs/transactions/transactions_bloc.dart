@@ -62,7 +62,11 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
     ];
 
     emit(state.copyWith(transactions: transactions));
+    _createTransaction(event.transaction);
   }
+
+  Future<void> _createTransaction(Transaction transaction) =>
+      cryptocurrencyRepository.createTransaction(transaction);
 
   @override
   Future<void> close() {

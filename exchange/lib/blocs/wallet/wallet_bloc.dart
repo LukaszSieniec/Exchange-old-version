@@ -75,6 +75,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     emit(state.copyWith(
         cryptocurrencies: cryptocurrencies,
         accountBalance: AccountBalance.readAccountBalance()));
+    _createOrUpdateCryptocurrency(event.cryptocurrency);
   }
 
   Future<void> _onWalletUpdatedSale(
@@ -88,7 +89,14 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     emit(state.copyWith(
         cryptocurrencies: cryptocurrencies,
         accountBalance: AccountBalance.readAccountBalance()));
+    _updateCryptocurrency(event.cryptocurrency);
   }
+
+  Future<void> _createOrUpdateCryptocurrency(Cryptocurrency cryptocurrency) =>
+      cryptocurrencyRepository.createOrUpdateCryptocurrency(cryptocurrency);
+
+  Future<void> _updateCryptocurrency(Cryptocurrency cryptocurrency) =>
+      cryptocurrencyRepository.updateCryptocurrency(cryptocurrency);
 
   @override
   Future<void> close() {

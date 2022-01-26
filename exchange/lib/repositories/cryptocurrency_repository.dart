@@ -66,14 +66,8 @@ class CryptocurrencyRepository {
     }
   }
 
-  Future<void> updateCryptocurrency(String id, double currentAmount) async {
-    final Cryptocurrency myCryptocurrency =
-        await _cryptocurrencyDatabase.readCryptocurrency(id);
-
-    final double amount = myCryptocurrency.amount - currentAmount;
-
-    _cryptocurrencyDatabase
-        .updateCryptocurrency(myCryptocurrency.copyWith(amount: amount));
+  Future<void> updateCryptocurrency(Cryptocurrency cryptocurrency) async {
+    _cryptocurrencyDatabase.updateCryptocurrency(cryptocurrency);
   }
 
   Future<void> createCryptocurrency(Cryptocurrency cryptocurrency) async =>

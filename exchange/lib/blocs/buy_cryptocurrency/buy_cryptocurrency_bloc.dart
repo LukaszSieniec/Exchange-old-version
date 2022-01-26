@@ -89,20 +89,12 @@ class BuyCryptocurrencyBloc
         emit(BuyCryptocurrencyInitial(
             cryptocurrency, newAccountBalance, '0', 0));
 
-        _createCryptocurrency(purchasedCryptocurrency);
-        _createTransaction(transaction);
         _saveAccountBalance(newAccountBalance);
       } on Exception {
         emit(BuyCryptocurrencyLoadFailure());
       }
     }
   }
-
-  Future<void> _createCryptocurrency(Cryptocurrency cryptocurrency) =>
-      cryptocurrencyRepository.createOrUpdateCryptocurrency(cryptocurrency);
-
-  Future<void> _createTransaction(Transaction transaction) =>
-      cryptocurrencyRepository.createTransaction(transaction);
 
   Future<void> _saveAccountBalance(double newAccountBalance) =>
       AccountBalance.saveAccountBalance(newAccountBalance);

@@ -80,22 +80,12 @@ class SellCryptocurrencyBloc
         emit(SellCryptocurrencySuccess(newCryprocurrency, transaction));
         emit(SellCryptocurrencyInitial(newCryprocurrency, '0', 0, price));
 
-        _updateCryptocurrency(cryptocurrency, double.parse(currentAmount));
-        _createTransaction(transaction);
         _saveAccountBalance(newAccountBalance);
       } on Exception {
         emit(SellCryptocurrencyLoadFailure());
       }
     }
   }
-
-  Future<void> _updateCryptocurrency(
-          Cryptocurrency cryptocurrency, double currentAmount) =>
-      cryptocurrencyRepository.updateCryptocurrency(
-          cryptocurrency.id, currentAmount);
-
-  Future<void> _createTransaction(Transaction transaction) =>
-      cryptocurrencyRepository.createTransaction(transaction);
 
   Future<void> _saveAccountBalance(double newAccountBalance) =>
       AccountBalance.saveAccountBalance(newAccountBalance);

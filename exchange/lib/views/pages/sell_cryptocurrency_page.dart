@@ -18,7 +18,8 @@ class SellCryptocurrencyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<SellCryptocurrencyBloc>(context)
+    context
+        .read<SellCryptocurrencyBloc>()
         .add(SellCryptocurrencyLoaded(cryptocurrency));
     return BlocConsumer<SellCryptocurrencyBloc, SellCryptocurrencyState>(
         listener: (context, state) {
