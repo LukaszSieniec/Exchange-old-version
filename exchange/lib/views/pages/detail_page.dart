@@ -87,29 +87,31 @@ class DetailPage extends StatelessWidget {
                                           child: BlocBuilder<MarketChartBloc,
                                                   MarketChartState>(
                                               builder: (context, state) {
-                                            if (state
-                                                is MarketChartLoadInProgress) {
+                                            if (state.marketChartStatus ==
+                                                MarketChartStatus.loading) {
                                               debugPrint('Loading in progress');
                                               return buildLoading();
                                             } else if (state
-                                                is MarketChartLoadSuccess) {
+                                                    .marketChartStatus ==
+                                                MarketChartStatus.success) {
                                               return SfSparkAreaChart.custom(
                                                   borderColor: Colors.green,
                                                   color: const Color(
                                                       MyColors.background),
                                                   dataCount: state
                                                       .marketChartData
-                                                      .prices
+                                                      ?.prices
                                                       .length,
                                                   xValueMapper: (index) => state
                                                       .marketChartData
-                                                      .prices[index][0],
+                                                      ?.prices[index][0],
                                                   yValueMapper: (index) => state
                                                       .marketChartData
-                                                      .prices[index][1],
+                                                      ?.prices[index][1],
                                                   axisLineWidth: 0);
                                             } else if (state
-                                                is MarketChartLoadFailure) {}
+                                                    .marketChartStatus ==
+                                                MarketChartStatus.failure) {}
                                             return Container();
                                           }))),
                                   DefaultTabController(
