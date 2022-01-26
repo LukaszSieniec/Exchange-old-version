@@ -31,9 +31,9 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
       }
     }
 
-    void onTransactionsStateChangedBySale(state) {
-      if (state is SellCryptocurrencySuccess) {
-        add(TransactionsUpdated(state.transaction));
+    void onTransactionsStateChangedBySale(SellCryptocurrencyState state) {
+      if (state.sellCryptocurrencyStatus == SellCryptocurrencyStatus.success) {
+        add(TransactionsUpdated(state.transaction!));
       }
     }
 

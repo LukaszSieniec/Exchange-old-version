@@ -5,6 +5,7 @@ import 'package:exchange/models/cryptocurrency.dart';
 import 'package:exchange/models/transaction.dart';
 import 'package:exchange/repositories/cryptocurrency_repository.dart';
 import 'package:exchange/utils/extensions.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SellCryptocurrencyBloc
@@ -12,7 +13,7 @@ class SellCryptocurrencyBloc
   final CryptocurrencyRepository cryptocurrencyRepository;
 
   SellCryptocurrencyBloc(this.cryptocurrencyRepository)
-      : super(SellCryptocurrencyLoadInProgress()) {
+      : super(const SellCryptocurrencyState()) {
     on<SellCryptocurrencyLoaded>(_onSellCryptocurrencyLoaded);
     on<SellCryptocurrencyAmountUpdated>(_onSellCryptocurrencyAmountUpdated);
     on<SellCryptocurrencyConfirmed>(_onSellCryptocurrencyConfirmed);
@@ -20,69 +21,79 @@ class SellCryptocurrencyBloc
 
   void _onSellCryptocurrencyLoaded(SellCryptocurrencyLoaded event,
       Emitter<SellCryptocurrencyState> emit) async {
-    emit(SellCryptocurrencyLoadInProgress());
-    final num price =
-        await cryptocurrencyRepository.fetchPrice(event.cryptocurrency.id);
+    emit(state.copyWith(
+        sellCryptocurrencyStatus: SellCryptocurrencyStatus.loading));
 
-    emit(SellCryptocurrencyInitial(event.cryptocurrency, '0', 0, price));
+    try {
+      final num priceCryptocurrency =
+          await cryptocurrencyRepository.fetchPrice(event.cryptocurrency.id);
+
+      emit(state.copyWith(
+          cryptocurrency: event.cryptocurrency,
+          priceCryptocurrency: priceCryptocurrency,
+          sellCryptocurrencyStatus: SellCryptocurrencyStatus.initial));
+    } catch (e) {
+      print('Fcking exception: $e');
+      emit(state.copyWith(
+          sellCryptocurrencyStatus: SellCryptocurrencyStatus.failure));
+    }
   }
 
   void _onSellCryptocurrencyAmountUpdated(SellCryptocurrencyAmountUpdated event,
       Emitter<SellCryptocurrencyState> emit) {
-    final SellCryptocurrencyInitial sellCryptocurrenciesInitial =
-        (state as SellCryptocurrencyInitial);
+    final String currentAmountCryptocurrency = state.currentAmountCryptocurrency
+        .appendAmountCryptocurrency(event.selectedLabel);
 
-    final String currentAmount = sellCryptocurrenciesInitial
-        .amountCryptocurrency
-        .appendAmountCryptocurrency(event.amountCryptocurrency);
+    final double estimatedAmountMoney =
+        (double.parse(currentAmountCryptocurrency) * state.priceCryptocurrency!)
+            .setAmountMoneyPrecision();
 
-    final dynamic price = sellCryptocurrenciesInitial.priceCryptocurrency;
-
-    final Cryptocurrency cryptocurrency =
-        sellCryptocurrenciesInitial.cryptocurrency;
-
-    final double estimatedAmount =
-        (double.parse(currentAmount) * price).setAmountMoneyPrecision();
-
-    emit(SellCryptocurrencyInitial(
-        cryptocurrency, currentAmount, estimatedAmount, price));
+    emit(state.copyWith(
+        estimatedAmountMoney: estimatedAmountMoney,
+        currentAmountCryptocurrency: currentAmountCryptocurrency));
   }
 
   void _onSellCryptocurrencyConfirmed(SellCryptocurrencyConfirmed event,
       Emitter<SellCryptocurrencyState> emit) {
-    final SellCryptocurrencyInitial sellCryptocurrencyInitial =
-        (state as SellCryptocurrencyInitial);
-
-    final String currentAmount = sellCryptocurrencyInitial.amountCryptocurrency;
-    final double estimatedAmount = sellCryptocurrencyInitial.estimatedAmount;
-    final Cryptocurrency cryptocurrency =
-        sellCryptocurrencyInitial.cryptocurrency;
-    final num price = sellCryptocurrencyInitial.priceCryptocurrency;
-
-    if (double.parse(currentAmount) > cryptocurrency.amount) {
-      emit(SellCryptocurrencyNotEnoughCryptocurrency());
-      emit(SellCryptocurrencyInitial(
-          cryptocurrency, currentAmount, estimatedAmount, price));
-    } else if (currentAmount == '0') {
-      emit(SellCryptocurrencyInvalidAmount());
-      emit(SellCryptocurrencyInitial(
-          cryptocurrency, currentAmount, estimatedAmount, price));
+    if (double.parse(state.currentAmountCryptocurrency) >
+        state.cryptocurrency!.amount) {
+      emit(state.copyWith(
+          sellCryptocurrencyStatus:
+              SellCryptocurrencyStatus.notEnoughCryptocurrency));
+      emit(state.copyWith(
+          sellCryptocurrencyStatus: SellCryptocurrencyStatus.initial));
+    } else if (state.currentAmountCryptocurrency == '0') {
+      emit(state.copyWith(
+          sellCryptocurrencyStatus: SellCryptocurrencyStatus.invalidAmount));
+      emit(state.copyWith(
+          sellCryptocurrencyStatus: SellCryptocurrencyStatus.initial));
     } else {
       try {
         final double newAccountBalance =
-            (AccountBalance.readAccountBalance() + estimatedAmount)
+            (AccountBalance.readAccountBalance() + state.estimatedAmountMoney)
                 .setAmountMoneyPrecision();
         final Transaction transaction = Transaction.fromCryptocurrency(
-            cryptocurrency, estimatedAmount, price);
-        final Cryptocurrency newCryprocurrency = cryptocurrency.copyWith(
-            amount: cryptocurrency.amount - double.parse(currentAmount));
+            state.cryptocurrency!,
+            state.estimatedAmountMoney,
+            state.priceCryptocurrency);
+        final Cryptocurrency newCryprocurrency = state.cryptocurrency!.copyWith(
+            amount: state.cryptocurrency!.amount -
+                double.parse(state.currentAmountCryptocurrency));
 
-        emit(SellCryptocurrencySuccess(newCryprocurrency, transaction));
-        emit(SellCryptocurrencyInitial(newCryprocurrency, '0', 0, price));
+        emit(state.copyWith(
+            cryptocurrency: newCryprocurrency,
+            transaction: transaction,
+            sellCryptocurrencyStatus: SellCryptocurrencyStatus.success));
+
+        emit(state.copyWith(
+            estimatedAmountMoney: 0,
+            currentAmountCryptocurrency: '0',
+            sellCryptocurrencyStatus: SellCryptocurrencyStatus.initial));
 
         _saveAccountBalance(newAccountBalance);
       } on Exception {
-        emit(SellCryptocurrencyLoadFailure());
+        emit(state.copyWith(
+            sellCryptocurrencyStatus: SellCryptocurrencyStatus.failure));
       }
     }
   }

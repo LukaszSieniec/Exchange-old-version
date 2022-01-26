@@ -29,7 +29,7 @@ class BuyCryptocurrencyState extends Equatable {
       this.transaction,
       this.accountBalance,
       this.estimatedAmountCryptocurrency = 0,
-      this.currentAmountMoney = '',
+      this.currentAmountMoney = '0',
       this.buyCryptocurrencyStatus = BuyCryptocurrencyStatus.initial});
 
   BuyCryptocurrencyState copyWith(

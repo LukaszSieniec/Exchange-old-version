@@ -33,9 +33,9 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
       }
     }
 
-    void onWalletStateChangedBySale(state) {
-      if (state is SellCryptocurrencySuccess) {
-        add(WalletUpdatedSale(state.cryptocurrency));
+    void onWalletStateChangedBySale(SellCryptocurrencyState state) {
+      if (state.sellCryptocurrencyStatus == SellCryptocurrencyStatus.success) {
+        add(WalletUpdatedSale(state.cryptocurrency!));
       }
     }
 

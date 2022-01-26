@@ -23,24 +23,29 @@ class SellCryptocurrencyPage extends StatelessWidget {
         .add(SellCryptocurrencyLoaded(cryptocurrency));
     return BlocConsumer<SellCryptocurrencyBloc, SellCryptocurrencyState>(
         listener: (context, state) {
-          if (state is SellCryptocurrencyNotEnoughCryptocurrency) {
+          if (state.sellCryptocurrencyStatus ==
+              SellCryptocurrencyStatus.notEnoughCryptocurrency) {
             ScaffoldMessenger.of(context).showSnackBar(
                 PrimarySnackBar(title: Messages.notEnoughCryptocurrency));
-          } else if (state is SellCryptocurrencyInvalidAmount) {
+          } else if (state.sellCryptocurrencyStatus ==
+              SellCryptocurrencyStatus.invalidAmount) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(PrimarySnackBar(title: Messages.invalidAmount));
-          } else if (state is SellCryptocurrencySuccess) {
+          } else if (state.sellCryptocurrencyStatus ==
+              SellCryptocurrencyStatus.success) {
             ScaffoldMessenger.of(context).showSnackBar(PrimarySnackBar(
-                title: '${Messages.sold} ${state.cryptocurrency.name}'));
+                title: '${Messages.sold} ${state.cryptocurrency?.name}'));
           }
         },
         bloc: BlocProvider.of<SellCryptocurrencyBloc>(context),
         builder: (context, state) {
-          if (state is SellCryptocurrencyLoadInProgress) {
+          if (state.sellCryptocurrencyStatus ==
+              SellCryptocurrencyStatus.loading) {
             return Scaffold(
                 backgroundColor: const Color(MyColors.background),
                 body: buildLoading());
-          } else if (state is SellCryptocurrencyInitial) {
+          } else if (state.sellCryptocurrencyStatus ==
+              SellCryptocurrencyStatus.initial) {
             return Scaffold(
                 backgroundColor: const Color(MyColors.background),
                 appBar: AppBar(
@@ -52,7 +57,7 @@ class SellCryptocurrencyPage extends StatelessWidget {
                             child: Container(
                                 margin: const EdgeInsets.only(right: 8.0),
                                 child: Text(
-                                    'Balance: ${state.cryptocurrency.amount} ${state.cryptocurrency.symbol.toUpperCase()}',
+                                    'Balance: ${state.cryptocurrency?.amount} ${state.cryptocurrency?.symbol.toUpperCase()}',
                                     style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 20.0,
@@ -65,7 +70,7 @@ class SellCryptocurrencyPage extends StatelessWidget {
                     children: [
                       const Divider(height: 2.0, color: Colors.white),
                       Text(
-                          '${state.amountCryptocurrency} ${state.cryptocurrency.symbol.toUpperCase()}',
+                          '${state.currentAmountCryptocurrency} ${state.cryptocurrency?.symbol.toUpperCase()}',
                           style: const TextStyle(
                               fontSize: 48.0, color: Colors.white)),
                       Container(
@@ -79,7 +84,7 @@ class SellCryptocurrencyPage extends StatelessWidget {
                                       style: TextStyle(
                                           fontSize: 16.0,
                                           color: Color(MyColors.colorText))),
-                                  Text('${state.estimatedAmount}',
+                                  Text('${state.estimatedAmountMoney}',
                                       style: const TextStyle(
                                           fontSize: 20.0,
                                           color: Colors.white,
@@ -92,7 +97,9 @@ class SellCryptocurrencyPage extends StatelessWidget {
                           ]))
                     ]));
           }
-          return Container();
+          return Scaffold(
+              backgroundColor: const Color(MyColors.background),
+              body: Container());
         });
   }
 }

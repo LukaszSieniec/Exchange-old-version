@@ -20,7 +20,7 @@ class ConfirmButton extends StatelessWidget {
                 .add(const BuyCryptocurrencyConfirmed())
             : context
                 .read<SellCryptocurrencyBloc>()
-                .add(SellCryptocurrencyConfirmed()),
+                .add(const SellCryptocurrencyConfirmed()),
         style: OutlinedButton.styleFrom(
             elevation: 4.0,
             shape: const StadiumBorder(),
