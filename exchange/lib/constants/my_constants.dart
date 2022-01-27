@@ -12,6 +12,12 @@ class MyLabels {
   static const String wallet = 'Wallet';
   static const String transactions = 'Transactions';
 
+  static const String noCryptocurrencies = 'No Cryptocurrencies';
+  static const String coins = 'Your Coins';
+  static const String accountBalance = 'Account balance';
+
+  static const String noTransactions = 'No transactions';
+
   static const String day = 'D';
   static const String week = 'W';
   static const String month = 'M';
@@ -66,5 +72,6 @@ class Messages {
   static const String bought = 'You bought';
   static const String sold = 'You sold';
 
-  static const String notEnoughCryptocurrency = 'Not enough cryptocurrency on the account!';
+  static const String notEnoughCryptocurrency =
+      'Not enough cryptocurrency on the account!';
 }

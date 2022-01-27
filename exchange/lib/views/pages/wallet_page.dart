@@ -4,6 +4,7 @@ import 'package:exchange/constants/my_constants.dart';
 import 'package:exchange/models/cryptocurrency.dart';
 import 'package:exchange/views/widgets/loading.dart';
 import 'package:exchange/views/widgets/wallet/coins.dart';
+import '../widgets/message.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,18 +18,18 @@ class WalletPage extends StatelessWidget {
       if (state.walletStatus == WalletStatus.loading) {
         return buildLoading();
       } else if (state.walletStatus == WalletStatus.success) {
-        return _buildBody(state.cryptocurrencies, state.accountBalance!);
+        return _buildWalletBody(state.cryptocurrencies, state.accountBalance!);
       } else if (state.walletStatus == WalletStatus.failure) {}
       return Container();
     });
   }
 
-  Widget _buildBody(final List<Cryptocurrency> cryptocurrencies,
-      final double accountBalance) {
+  Widget _buildWalletBody(
+      List<Cryptocurrency> cryptocurrencies, double accountBalance) {
     return Container(
         margin: const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          const Text('Account balance',
+          const Text(MyLabels.accountBalance,
               style:
                   TextStyle(color: Color(MyColors.colorText), fontSize: 16.0)),
           const SizedBox(height: 4.0),
@@ -42,24 +43,14 @@ class WalletPage extends StatelessWidget {
             const Expanded(child: Divider(height: 2, color: Colors.white)),
             Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: const Text('Your Coins',
+                child: const Text(MyLabels.coins,
                     style: TextStyle(color: Colors.white, fontSize: 16.0))),
             const Expanded(child: Divider(height: 2, color: Colors.white))
           ]),
           const SizedBox(height: 16.0),
           cryptocurrencies.isNotEmpty
               ? Coins(cryptocurrencies)
-              : _buildMessage()
+              : const Message(MyLabels.noCryptocurrencies)
         ]));
-  }
-
-  Widget _buildMessage() {
-    return const Expanded(
-        child: Center(
-            child: Text('No Cryptocurrencies',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18.0))));
   }
 }
