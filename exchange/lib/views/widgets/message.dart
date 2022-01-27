@@ -1,4 +1,3 @@
-import 'package:exchange/constants/my_constants.dart';
 import 'package:flutter/material.dart';
 
 class Message extends StatelessWidget {
@@ -8,10 +7,10 @@ class Message extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Expanded(
+    return Expanded(
         child: Center(
-            child: Text(MyLabels.noCryptocurrencies,
-                style: TextStyle(
+            child: Text(message,
+                style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 18.0))));
