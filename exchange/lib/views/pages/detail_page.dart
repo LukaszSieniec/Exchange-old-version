@@ -89,7 +89,6 @@ class DetailPage extends StatelessWidget {
                                               builder: (context, state) {
                                             if (state.marketChartStatus ==
                                                 MarketChartStatus.loading) {
-                                              debugPrint('Loading in progress');
                                               return buildLoading();
                                             } else if (state
                                                     .marketChartStatus ==
