@@ -5,7 +5,6 @@ import 'package:exchange/models/cryptocurrency.dart';
 import 'package:exchange/models/transaction.dart';
 import 'package:exchange/repositories/cryptocurrency_repository.dart';
 import 'package:exchange/utils/extensions.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SellCryptocurrencyBloc
@@ -30,10 +29,11 @@ class SellCryptocurrencyBloc
 
       emit(state.copyWith(
           cryptocurrency: event.cryptocurrency,
+          estimatedAmountMoney: 0,
+          currentAmountCryptocurrency: '0',
           priceCryptocurrency: priceCryptocurrency,
           sellCryptocurrencyStatus: SellCryptocurrencyStatus.initial));
     } catch (e) {
-      print('Fcking exception: $e');
       emit(state.copyWith(
           sellCryptocurrencyStatus: SellCryptocurrencyStatus.failure));
     }

@@ -32,7 +32,9 @@ class BuyCryptocurrencyBloc
 
     emit(state.copyWith(
         cryptocurrencyResponse: cryptocurrency,
-        accountBalance: AccountBalance.readAccountBalance()));
+        accountBalance: AccountBalance.readAccountBalance(),
+        estimatedAmountCryptocurrency: 0,
+        currentAmountMoney: '0'));
   }
 
   Future<void> _onBuyCryptocurrencyCurrentAmountMoneyUpdated(
