@@ -15,6 +15,8 @@ class MyLabels {
   static const String noCryptocurrencies = 'No Cryptocurrencies';
   static const String coins = 'Your Coins';
   static const String accountBalance = 'Account balance';
+  static const String balance = 'Balance';
+  static const String estimated = 'Estimated';
 
   static const String noTransactions = 'No transactions';
 

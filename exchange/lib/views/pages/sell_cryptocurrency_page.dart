@@ -41,65 +41,68 @@ class SellCryptocurrencyPage extends StatelessWidget {
         builder: (context, state) {
           if (state.sellCryptocurrencyStatus ==
               SellCryptocurrencyStatus.loading) {
-            return Scaffold(
-                backgroundColor: const Color(MyColors.background),
-                body: buildLoading());
+            return _buildScaffold(buildLoading());
           } else if (state.sellCryptocurrencyStatus ==
               SellCryptocurrencyStatus.initial) {
-            return Scaffold(
-                backgroundColor: const Color(MyColors.background),
-                appBar: AppBar(
-                    backgroundColor: Colors.transparent,
-                    elevation: 0,
-                    flexibleSpace: SafeArea(
-                        child: Align(
-                            alignment: AlignmentDirectional.centerEnd,
-                            child: Container(
-                                margin: const EdgeInsets.only(right: 8.0),
-                                child: Text(
-                                    'Balance: ${state.cryptocurrency?.amount} ${state.cryptocurrency?.symbol.toUpperCase()}',
-                                    style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold))))),
-                    leading: IconButton(
-                        icon: const Icon(Icons.arrow_back),
-                        onPressed: () => Navigator.of(context).pop())),
-                body: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Divider(height: 2.0, color: Colors.white),
-                      Text(
-                          '${state.currentAmountCryptocurrency} ${state.cryptocurrency?.symbol.toUpperCase()}',
-                          style: const TextStyle(
-                              fontSize: 48.0, color: Colors.white)),
-                      Container(
-                          margin: const EdgeInsets.only(
-                              bottom: 16.0, left: 8.0, right: 8.0),
-                          child: Column(children: [
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text('Estimated \$: ',
-                                      style: TextStyle(
-                                          fontSize: 16.0,
-                                          color: Color(MyColors.colorText))),
-                                  Text('${state.estimatedAmountMoney}',
-                                      style: const TextStyle(
-                                          fontSize: 20.0,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold))
-                                ]),
-                            const SizedBox(height: 16.0),
-                            const Keyboard(MyLabels.sellMode),
-                            const SizedBox(height: 32.0),
-                            const ConfirmButton(MyLabels.sellMode)
-                          ]))
-                    ]));
+            return _buildSellCryptocurrencyBody(state, context);
           }
-          return Scaffold(
-              backgroundColor: const Color(MyColors.background),
-              body: Container());
+          return _buildScaffold(Container());
         });
+  }
+
+  Widget _buildSellCryptocurrencyBody(
+      SellCryptocurrencyState state, BuildContext context) {
+    return Scaffold(
+        backgroundColor: const Color(MyColors.background),
+        appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            flexibleSpace: SafeArea(
+                child: Align(
+                    alignment: AlignmentDirectional.centerEnd,
+                    child: Container(
+                        margin: const EdgeInsets.only(right: 8.0),
+                        child: Text(
+                            '${MyLabels.balance}: ${state.cryptocurrency?.amount} ${state.cryptocurrency?.symbol.toUpperCase()}',
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold))))),
+            leading: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () => Navigator.of(context).pop())),
+        body: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Divider(height: 2.0, color: Colors.white),
+              Text(
+                  '${state.currentAmountCryptocurrency} ${state.cryptocurrency?.symbol.toUpperCase()}',
+                  style: const TextStyle(fontSize: 48.0, color: Colors.white)),
+              Container(
+                  margin: const EdgeInsets.only(
+                      bottom: 16.0, left: 8.0, right: 8.0),
+                  child: Column(children: [
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      const Text('${MyLabels.estimated} \$: ',
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              color: Color(MyColors.colorText))),
+                      Text('${state.estimatedAmountMoney}',
+                          style: const TextStyle(
+                              fontSize: 20.0,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold))
+                    ]),
+                    const SizedBox(height: 16.0),
+                    const Keyboard(MyLabels.sellMode),
+                    const SizedBox(height: 32.0),
+                    const ConfirmButton(MyLabels.sellMode)
+                  ]))
+            ]));
+  }
+
+  Widget _buildScaffold(Widget child) {
+    return Scaffold(
+        backgroundColor: const Color(MyColors.background), body: child);
   }
 }
