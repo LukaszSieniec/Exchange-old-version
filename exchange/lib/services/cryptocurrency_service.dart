@@ -26,9 +26,6 @@ class CryptocurrencyService {
           .map((element) => CryptocurrencyResponse.fromJson(element))
           .toList();
     } else {
-      debugPrint('fetchCryptocurrencies');
-      debugPrint('${response.statusCode}');
-      debugPrint('${response.statusMessage}');
       throw Exception('Error!');
     }
   }
@@ -48,9 +45,6 @@ class CryptocurrencyService {
           .map((element) => CryptocurrencyResponse.fromJson(element))
           .toList();
     } else {
-      debugPrint('fetchCryptocurrenciesByIds');
-      debugPrint('${response.statusCode}');
-      debugPrint('${response.statusMessage}');
       throw Exception('Error!');
     }
   }
@@ -64,9 +58,6 @@ class CryptocurrencyService {
           .map((element) => PopularCryptocurrency.fromJson(element))
           .toList();
     } else {
-      debugPrint('fetchTrending');
-      debugPrint('${response.statusCode}');
-      debugPrint('${response.statusMessage}');
       throw Exception('Error!');
     }
   }
