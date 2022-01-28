@@ -6,7 +6,6 @@ import 'package:exchange/views/widgets/loading.dart';
 import '../widgets/confirm_button.dart';
 import '../widgets/keyboard/keyboard.dart';
 import 'package:exchange/views/widgets/snackbar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

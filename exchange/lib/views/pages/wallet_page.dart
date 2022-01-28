@@ -5,7 +5,6 @@ import 'package:exchange/models/cryptocurrency.dart';
 import 'package:exchange/views/widgets/loading.dart';
 import 'package:exchange/views/widgets/wallet/coins.dart';
 import '../widgets/message.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,8 +18,9 @@ class WalletPage extends StatelessWidget {
         return buildLoading();
       } else if (state.walletStatus == WalletStatus.success) {
         return _buildWalletBody(state.cryptocurrencies, state.accountBalance!);
-      } else if (state.walletStatus == WalletStatus.failure) {}
-      return Container();
+      } else {
+        return Container();
+      }
     });
   }
 

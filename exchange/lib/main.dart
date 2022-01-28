@@ -29,7 +29,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -45,9 +44,7 @@ class MyApp extends StatelessWidget {
                   CryptocurrencyService(), CryptocurrencyDatabase.get))),
           BlocProvider(
               create: (context) => BuyCryptocurrencyBloc(
-                  BlocProvider.of<CryptocurrenciesBloc>(context),
-                  CryptocurrencyRepository(
-                      CryptocurrencyService(), CryptocurrencyDatabase.get))),
+                  BlocProvider.of<CryptocurrenciesBloc>(context))),
           BlocProvider(
               create: (context) => SellCryptocurrencyBloc(
                   CryptocurrencyRepository(
@@ -67,9 +64,7 @@ class MyApp extends StatelessWidget {
                   BlocProvider.of<SellCryptocurrencyBloc>(context))
                 ..add(const TransactionsLoaded()))
         ],
-        child: MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(primarySwatch: Colors.blue),
-            home: const BasicPage()));
+        child: const MaterialApp(
+            debugShowCheckedModeBanner: false, home: BasicPage()));
   }
 }

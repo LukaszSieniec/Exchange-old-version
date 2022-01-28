@@ -12,16 +12,16 @@ import 'package:exchange/repositories/cryptocurrency_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WalletBloc extends Bloc<WalletEvent, WalletState> {
-  final CryptocurrencyRepository cryptocurrencyRepository;
+  final CryptocurrencyRepository _cryptocurrencyRepository;
 
-  final BuyCryptocurrencyBloc buyCryptocurrencyBloc;
-  final SellCryptocurrencyBloc sellCryptocurrencyBloc;
+  final BuyCryptocurrencyBloc _buyCryptocurrencyBloc;
+  final SellCryptocurrencyBloc _sellCryptocurrencyBloc;
 
-  late final StreamSubscription buyCryptocurrencySubscription;
-  late final StreamSubscription sellCryptocurrencySubscription;
+  late final StreamSubscription _buyCryptocurrencySubscription;
+  late final StreamSubscription _sellCryptocurrencySubscription;
 
-  WalletBloc(this.cryptocurrencyRepository, this.buyCryptocurrencyBloc,
-      this.sellCryptocurrencyBloc)
+  WalletBloc(this._cryptocurrencyRepository, this._buyCryptocurrencyBloc,
+      this._sellCryptocurrencyBloc)
       : super(const WalletState()) {
     on<WalletLoaded>(_onWalletLoaded);
     on<WalletUpdatedPurchase>(_onWalletUpdatedPurchase);
@@ -39,10 +39,10 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
       }
     }
 
-    buyCryptocurrencySubscription =
-        buyCryptocurrencyBloc.stream.listen(onWalletStateChangedByPurchase);
-    sellCryptocurrencySubscription =
-        sellCryptocurrencyBloc.stream.listen(onWalletStateChangedBySale);
+    _buyCryptocurrencySubscription =
+        _buyCryptocurrencyBloc.stream.listen(onWalletStateChangedByPurchase);
+    _sellCryptocurrencySubscription =
+        _sellCryptocurrencyBloc.stream.listen(onWalletStateChangedBySale);
   }
 
   Future<void> _onWalletLoaded(
@@ -50,7 +50,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     emit(state.copyWith(walletStatus: WalletStatus.loading));
     try {
       final List<Cryptocurrency> cryptocurrencies =
-          await cryptocurrencyRepository.readAllCryptocurrencies();
+          await _cryptocurrencyRepository.readAllCryptocurrencies();
       final double accountBalance = AccountBalance.readAccountBalance();
 
       emit(state.copyWith(
@@ -97,15 +97,15 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
   }
 
   Future<void> _createOrUpdateCryptocurrency(Cryptocurrency cryptocurrency) =>
-      cryptocurrencyRepository.createOrUpdateCryptocurrency(cryptocurrency);
+      _cryptocurrencyRepository.createOrUpdateCryptocurrency(cryptocurrency);
 
   Future<void> _updateCryptocurrency(Cryptocurrency cryptocurrency) =>
-      cryptocurrencyRepository.updateCryptocurrency(cryptocurrency);
+      _cryptocurrencyRepository.updateCryptocurrency(cryptocurrency);
 
   @override
   Future<void> close() {
-    buyCryptocurrencySubscription.cancel();
-    sellCryptocurrencySubscription.cancel();
+    _buyCryptocurrencySubscription.cancel();
+    _sellCryptocurrencySubscription.cancel();
     return super.close();
   }
 }

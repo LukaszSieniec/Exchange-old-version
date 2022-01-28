@@ -1,7 +1,6 @@
 import 'package:exchange/constants/my_constants.dart';
 import 'package:exchange/models/transaction.dart';
 import 'package:exchange/utils/format.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Transactions extends StatelessWidget {
@@ -25,7 +24,7 @@ class Transactions extends StatelessWidget {
                       borderRadius:
                           const BorderRadius.all(Radius.circular(16.0))),
                   message: '${formatDate(transactions[index].date)}\n'
-                      'Price: ${transactions[index].cryptocurrencyPrice}',
+                      '${MyLabels.price}: ${transactions[index].cryptocurrencyPrice}',
                   child: Card(
                       elevation: 4,
                       color: const Color(MyColors.brighterBackground),

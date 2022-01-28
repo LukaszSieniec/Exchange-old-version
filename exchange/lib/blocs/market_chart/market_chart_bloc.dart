@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MarketChartBloc extends Bloc<MarketChartEvent, MarketChartState> {
   final CryptocurrencyRepository _cryptocurrencyRepository;
-  final List<int> _days = const [1, 7, 30, 90, 180, 360];
+  static const List<int> _days = [1, 7, 30, 90, 180, 360];
 
   MarketChartBloc(this._cryptocurrencyRepository)
       : super(const MarketChartState()) {

@@ -9,9 +9,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SellCryptocurrencyBloc
     extends Bloc<SellCryptocurrencyEvent, SellCryptocurrencyState> {
-  final CryptocurrencyRepository cryptocurrencyRepository;
+  final CryptocurrencyRepository _cryptocurrencyRepository;
 
-  SellCryptocurrencyBloc(this.cryptocurrencyRepository)
+  SellCryptocurrencyBloc(this._cryptocurrencyRepository)
       : super(const SellCryptocurrencyState()) {
     on<SellCryptocurrencyLoaded>(_onSellCryptocurrencyLoaded);
     on<SellCryptocurrencyAmountUpdated>(_onSellCryptocurrencyAmountUpdated);
@@ -25,7 +25,7 @@ class SellCryptocurrencyBloc
 
     try {
       final num priceCryptocurrency =
-          await cryptocurrencyRepository.fetchPrice(event.cryptocurrency.id);
+          await _cryptocurrencyRepository.fetchPrice(event.cryptocurrency.id);
 
       emit(state.copyWith(
           cryptocurrency: event.cryptocurrency,
@@ -72,10 +72,12 @@ class SellCryptocurrencyBloc
         final double newAccountBalance =
             (AccountBalance.readAccountBalance() + state.estimatedAmountMoney)
                 .setAmountMoneyPrecision();
+
         final Transaction transaction = Transaction.fromCryptocurrency(
             state.cryptocurrency!,
             state.estimatedAmountMoney,
             state.priceCryptocurrency);
+
         final Cryptocurrency newCryprocurrency = state.cryptocurrency!.copyWith(
             amount: state.cryptocurrency!.amount -
                 double.parse(state.currentAmountCryptocurrency));

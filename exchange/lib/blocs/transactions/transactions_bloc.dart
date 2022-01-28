@@ -11,16 +11,16 @@ import 'package:exchange/repositories/cryptocurrency_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
-  final CryptocurrencyRepository cryptocurrencyRepository;
+  final CryptocurrencyRepository _cryptocurrencyRepository;
 
-  final BuyCryptocurrencyBloc buyCryptocurrencyBloc;
-  final SellCryptocurrencyBloc sellCryptocurrencyBloc;
+  final BuyCryptocurrencyBloc _buyCryptocurrencyBloc;
+  final SellCryptocurrencyBloc _sellCryptocurrencyBloc;
 
-  late final StreamSubscription buyCryptocurrencySubscription;
-  late final StreamSubscription sellCryptocurrencySubscription;
+  late final StreamSubscription _buyCryptocurrencySubscription;
+  late final StreamSubscription _sellCryptocurrencySubscription;
 
-  TransactionsBloc(this.cryptocurrencyRepository, this.buyCryptocurrencyBloc,
-      this.sellCryptocurrencyBloc)
+  TransactionsBloc(this._cryptocurrencyRepository, this._buyCryptocurrencyBloc,
+      this._sellCryptocurrencyBloc)
       : super(const TransactionsState()) {
     on<TransactionsLoaded>(_onTransactionsLoaded);
     on<TransactionsUpdated>(_onTransactionsUpdated);
@@ -37,10 +37,10 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
       }
     }
 
-    buyCryptocurrencySubscription = buyCryptocurrencyBloc.stream
+    _buyCryptocurrencySubscription = _buyCryptocurrencyBloc.stream
         .listen(onTransactionsStateChangedByPurchase);
-    sellCryptocurrencySubscription =
-        sellCryptocurrencyBloc.stream.listen(onTransactionsStateChangedBySale);
+    _sellCryptocurrencySubscription =
+        _sellCryptocurrencyBloc.stream.listen(onTransactionsStateChangedBySale);
   }
 
   Future<void> _onTransactionsLoaded(
@@ -48,7 +48,7 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
     emit(state.copyWith(transactionsStatus: TransactionsStatus.loading));
     try {
       final List<Transaction> transactions =
-          await cryptocurrencyRepository.readAllTransactions();
+          await _cryptocurrencyRepository.readAllTransactions();
 
       emit(state.copyWith(
           transactions: transactions,
@@ -70,12 +70,12 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
   }
 
   Future<void> _createTransaction(Transaction transaction) =>
-      cryptocurrencyRepository.createTransaction(transaction);
+      _cryptocurrencyRepository.createTransaction(transaction);
 
   @override
   Future<void> close() {
-    buyCryptocurrencySubscription.cancel();
-    sellCryptocurrencySubscription.cancel();
+    _buyCryptocurrencySubscription.cancel();
+    _sellCryptocurrencySubscription.cancel();
     return super.close();
   }
 }

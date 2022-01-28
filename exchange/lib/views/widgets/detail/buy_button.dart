@@ -26,7 +26,8 @@ class BuyButton extends StatelessWidget {
             padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
             child: SizedBox(
                 width: double.infinity,
-                child: Text('BUY ${cryptocurrency.name.toUpperCase()}',
+                child: Text(
+                    '${MyLabels.buy} ${cryptocurrency.name.toUpperCase()}',
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                         color: Colors.white,

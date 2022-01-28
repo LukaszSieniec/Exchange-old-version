@@ -29,7 +29,7 @@ class ConfirmButton extends StatelessWidget {
             padding: EdgeInsets.only(top: 16.0, bottom: 16.0),
             child: SizedBox(
                 width: double.infinity,
-                child: Text('Confirm',
+                child: Text(MyLabels.confirm,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.white,

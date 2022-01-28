@@ -19,8 +19,9 @@ class TransactionsPage extends StatelessWidget {
         return buildLoading();
       } else if (state.transactionsStatus == TransactionsStatus.success) {
         return _buildTransactionsBody(state.transactions);
-      } else if (state.transactionsStatus == TransactionsStatus.failure) {}
-      return Container();
+      } else {
+        return Container();
+      }
     });
   }
 

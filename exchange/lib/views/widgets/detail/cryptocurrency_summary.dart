@@ -1,7 +1,6 @@
 import 'package:exchange/constants/my_constants.dart';
 import 'package:exchange/models/cryptocurrency_response.dart';
 import 'package:exchange/utils/format.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CryptocurrencySummary extends StatelessWidget {

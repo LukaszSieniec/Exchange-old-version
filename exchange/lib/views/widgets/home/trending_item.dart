@@ -54,7 +54,7 @@ class TrendingItem extends StatelessWidget {
                                             fontSize: 16.0))
                                   ])
                             ]),
-                            _getIcon(cryptocurrency)
+                            _buildIcon(cryptocurrency)
                           ]),
                       Container(
                           margin: const EdgeInsets.all(12.0),
@@ -73,7 +73,7 @@ class TrendingItem extends StatelessWidget {
   }
 }
 
-Icon _getIcon(CryptocurrencyResponse cryptocurrency) {
+Icon _buildIcon(CryptocurrencyResponse cryptocurrency) {
   return cryptocurrency
               .sparkline.price[cryptocurrency.sparkline.price.length - 1] >
           cryptocurrency

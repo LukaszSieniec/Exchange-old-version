@@ -10,8 +10,6 @@ class CryptocurrencyDatabase {
 
   static Database? _database;
 
-  CryptocurrencyDatabase._internal();
-
   static CryptocurrencyDatabase get = _instance;
 
   Future<Database> get database async {
@@ -20,6 +18,8 @@ class CryptocurrencyDatabase {
     _database = await _initDatabase();
     return _database!;
   }
+
+  CryptocurrencyDatabase._internal();
 
   Future<Database> _initDatabase() async {
     final String databasePath = await getDatabasesPath();

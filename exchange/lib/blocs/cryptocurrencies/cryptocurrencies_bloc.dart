@@ -14,7 +14,7 @@ class CryptocurrenciesBloc
     on<CryptocurrenciesFetched>(_onCryptocurrenciesFetched);
   }
 
-  void _onCryptocurrenciesFetched(CryptocurrenciesFetched event,
+  Future<void> _onCryptocurrenciesFetched(CryptocurrenciesFetched event,
       Emitter<CryptocurrenciesState> emit) async {
     emit(
         state.copyWith(cryptocurrenciesStatus: CryptocurrenciesStatus.loading));
@@ -33,7 +33,7 @@ class CryptocurrenciesBloc
 
     await emit.forEach<List<List<CryptocurrencyResponse>>>(
         Stream.periodic(const Duration(seconds: 60))
-            .asyncMap((i) => _fetchCryptocurrencies()),
+            .asyncMap((_) => _fetchCryptocurrencies()),
         onData: (data) => state.copyWith(
             cryptocurrencies: data[0],
             trending: data[1],

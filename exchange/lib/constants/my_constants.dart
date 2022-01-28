@@ -17,8 +17,11 @@ class MyLabels {
   static const String accountBalance = 'Account balance';
   static const String balance = 'Balance';
   static const String estimated = 'Estimated';
-
   static const String noTransactions = 'No transactions';
+  static const String price = 'Price';
+
+  static const String confirm = 'Confirm';
+  static const String buy = 'BUY';
 
   static const String day = 'D';
   static const String week = 'W';

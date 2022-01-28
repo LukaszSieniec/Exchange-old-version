@@ -3,7 +3,6 @@ import 'package:exchange/database/account_balance.dart';
 import 'package:exchange/models/cryptocurrency.dart';
 import 'package:exchange/models/cryptocurrency_response.dart';
 import 'package:exchange/models/transaction.dart';
-import 'package:exchange/repositories/cryptocurrency_repository.dart';
 import 'package:exchange/utils/extensions.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,11 +11,9 @@ import 'buy_cryptocurrency_state.dart';
 
 class BuyCryptocurrencyBloc
     extends Bloc<BuyCryptocurrencyEvent, BuyCryptocurrencyState> {
-  CryptocurrenciesBloc cryptocurrenciesBloc;
-  CryptocurrencyRepository cryptocurrencyRepository;
+  final CryptocurrenciesBloc _cryptocurrenciesBloc;
 
-  BuyCryptocurrencyBloc(
-      this.cryptocurrenciesBloc, this.cryptocurrencyRepository)
+  BuyCryptocurrencyBloc(this._cryptocurrenciesBloc)
       : super(const BuyCryptocurrencyState()) {
     on<BuyCryptocurrencyLoaded>(_onBuyCryptocurrencyLoaded);
     on<BuyCryptocurrencyCurrentAmountMoneyUpdated>(
@@ -26,7 +23,7 @@ class BuyCryptocurrencyBloc
 
   Future<void> _onBuyCryptocurrencyLoaded(BuyCryptocurrencyLoaded event,
       Emitter<BuyCryptocurrencyState> emit) async {
-    final CryptocurrencyResponse cryptocurrency = cryptocurrenciesBloc
+    final CryptocurrencyResponse cryptocurrency = _cryptocurrenciesBloc
         .state.cryptocurrencies
         .firstWhere((element) => element.id == event.id);
 
