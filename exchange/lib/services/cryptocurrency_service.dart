@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:exchange/models/cryptocurrency_response.dart';
 import 'package:exchange/models/market_chart_data.dart';
 import 'package:exchange/models/popular_cryptocurrency.dart';
-import 'package:flutter/cupertino.dart';
 
 class CryptocurrencyService {
   final Dio _dio = Dio(BaseOptions(
@@ -20,7 +19,6 @@ class CryptocurrencyService {
     });
 
     if (response.statusCode == 200) {
-      debugPrint('Success!');
       final Iterable json = response.data;
       return json
           .map((element) => CryptocurrencyResponse.fromJson(element))

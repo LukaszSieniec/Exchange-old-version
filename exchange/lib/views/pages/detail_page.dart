@@ -5,7 +5,9 @@ import 'package:exchange/blocs/market_chart/market_chart_event.dart';
 import 'package:exchange/blocs/market_chart/market_chart_state.dart';
 import 'package:exchange/constants/my_constants.dart';
 import 'package:exchange/models/cryptocurrency_response.dart';
+import 'package:exchange/views/widgets/detail/buy_button.dart';
 import 'package:exchange/views/widgets/detail/cryptocurrency_summary.dart';
+import 'package:exchange/views/widgets/detail/time_button.dart';
 import 'package:exchange/views/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -129,15 +131,13 @@ class DetailPage extends StatelessWidget {
                                               .read<MarketChartBloc>()
                                               .add(MarketChartUpdated(
                                                   cryptocurrency.id, index)),
-                                          tabs: [
-                                            _buildTimeButton(MyLabels.day),
-                                            _buildTimeButton(MyLabels.week),
-                                            _buildTimeButton(MyLabels.month),
-                                            _buildTimeButton(
-                                                MyLabels.threeMonths),
-                                            _buildTimeButton(
-                                                MyLabels.sixMonths),
-                                            _buildTimeButton(MyLabels.year)
+                                          tabs: const [
+                                            TimeButton(MyLabels.day),
+                                            TimeButton(MyLabels.week),
+                                            TimeButton(MyLabels.month),
+                                            TimeButton(MyLabels.threeMonths),
+                                            TimeButton(MyLabels.sixMonths),
+                                            TimeButton(MyLabels.year)
                                           ]))
                                 ])))),
                     Expanded(
@@ -147,47 +147,11 @@ class DetailPage extends StatelessWidget {
                               const EdgeInsets.only(top: 16.0, bottom: 16.0),
                           child: CryptocurrencySummary(cryptocurrency),
                         )),
-                    _buildBuyButton(context, cryptocurrency),
+                    BuyButton(cryptocurrency),
                     const SizedBox(height: 8.0)
                   ]);
                 }))));
   }
 
-  Widget _buildBuyButton(
-      BuildContext context, CryptocurrencyResponse cryptocurrency) {
-    return OutlinedButton(
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      BuyCryptocurrencyPage(cryptocurrency.id)));
-        },
-        style: OutlinedButton.styleFrom(
-            side: const BorderSide(width: 2.0, color: Colors.green),
-            shape: const StadiumBorder(),
-            backgroundColor: const Color(MyColors.brighterBackground)),
-        child: Padding(
-            padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
-            child: SizedBox(
-                width: double.infinity,
-                child: Text('BUY ${cryptocurrency.name.toUpperCase()}',
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold)))));
-  }
-
-  Widget _buildTimeButton(String text) {
-    return Padding(
-        padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
-        child: Text(text,
-            style: const TextStyle(
-                color: Colors.white,
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold)));
-  }
-
-  Color _getColor(final dynamic value) => value > 0 ? Colors.green : Colors.red;
+  Color _getColor(num value) => value > 0 ? Colors.green : Colors.red;
 }
