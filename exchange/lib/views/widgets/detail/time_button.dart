@@ -1,3 +1,4 @@
+import 'package:exchange/utils/size_config.dart';
 import 'package:flutter/material.dart';
 
 class TimeButton extends StatelessWidget {
@@ -7,12 +8,15 @@ class TimeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig.init(context);
     return Padding(
-        padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
+        padding: EdgeInsets.only(
+            bottom: SizeConfig.blockSizeVertical * 1.15,
+            top: SizeConfig.blockSizeVertical * 1.15),
         child: Text(text,
-            style: const TextStyle(
+            style: TextStyle(
                 color: Colors.white,
-                fontSize: 18.0,
+                fontSize: SizeConfig.blockSizeVertical * 2.15,
                 fontWeight: FontWeight.bold)));
   }
 }

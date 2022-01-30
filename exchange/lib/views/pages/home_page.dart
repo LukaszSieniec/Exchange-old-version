@@ -1,6 +1,7 @@
 import 'package:exchange/blocs/cryptocurrencies/cryptocurrencies_bloc.dart';
 import 'package:exchange/blocs/cryptocurrencies/cryptocurrencies_state.dart';
 import 'package:exchange/constants/my_constants.dart';
+import 'package:exchange/utils/size_config.dart';
 import 'package:exchange/views/widgets/home/cryptocurrency_item.dart';
 import 'package:exchange/views/widgets/home/trending_item.dart';
 import 'package:exchange/views/widgets/loading.dart';
@@ -12,6 +13,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig.init(context);
     return BlocBuilder<CryptocurrenciesBloc, CryptocurrenciesState>(
         builder: (context, state) {
       if (state.cryptocurrenciesStatus == CryptocurrenciesStatus.loading) {
@@ -27,11 +29,11 @@ class HomePage extends StatelessWidget {
 
   Widget _buildHomeBody(CryptocurrenciesState state) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const Text(MyLabels.trending,
+      Text(MyLabels.trending,
           style: TextStyle(
-              color: Color(MyColors.colorText),
+              color: const Color(MyColors.colorText),
               fontWeight: FontWeight.bold,
-              fontSize: 20.0)),
+              fontSize: SizeConfig.blockSizeVertical * 2.80)),
       Expanded(
           flex: 3,
           child: ListView.builder(
@@ -40,11 +42,11 @@ class HomePage extends StatelessWidget {
               itemBuilder: (context, index) {
                 return TrendingItem(state.trending[index]);
               })),
-      const Text(MyLabels.cryptocurrencies,
+      Text(MyLabels.cryptocurrencies,
           style: TextStyle(
-              color: Color(MyColors.colorText),
+              color: const Color(MyColors.colorText),
               fontWeight: FontWeight.bold,
-              fontSize: 20.0)),
+              fontSize: SizeConfig.blockSizeVertical * 2.80)),
       Expanded(
           flex: 4,
           child: ListView.builder(

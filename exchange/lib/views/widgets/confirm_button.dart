@@ -3,6 +3,7 @@ import 'package:exchange/blocs/buy_cryptocurrency/buy_cryptocurrency_event.dart'
 import 'package:exchange/blocs/sell_cryptocurrency/sell_cryptocurrency_bloc.dart';
 import 'package:exchange/blocs/sell_cryptocurrency/sell_cryptocurrency_event.dart';
 import 'package:exchange/constants/my_constants.dart';
+import 'package:exchange/utils/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,6 +14,7 @@ class ConfirmButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig.init(context);
     return OutlinedButton(
         onPressed: () => mode == MyLabels.buyMode
             ? context
@@ -25,15 +27,17 @@ class ConfirmButton extends StatelessWidget {
             elevation: 4.0,
             shape: const StadiumBorder(),
             backgroundColor: const Color(MyColors.brighterBackground)),
-        child: const Padding(
-            padding: EdgeInsets.only(top: 16.0, bottom: 16.0),
+        child: Padding(
+            padding: EdgeInsets.only(
+                top: SizeConfig.blockSizeVertical * 2.25,
+                bottom: SizeConfig.blockSizeVertical * 2.25),
             child: SizedBox(
                 width: double.infinity,
                 child: Text(MyLabels.confirm,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.white,
-                        fontSize: 20,
+                        fontSize: SizeConfig.blockSizeVertical * 2.80,
                         fontWeight: FontWeight.bold)))));
   }
 }

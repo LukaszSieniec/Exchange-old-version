@@ -1,3 +1,4 @@
+import 'package:exchange/utils/size_config.dart';
 import 'package:flutter/material.dart';
 
 class Message extends StatelessWidget {
@@ -7,12 +8,13 @@ class Message extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig.init(context);
     return Expanded(
         child: Center(
             child: Text(message,
-                style: const TextStyle(
+                style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 18.0))));
+                    fontSize: SizeConfig.blockSizeVertical * 2.50))));
   }
 }

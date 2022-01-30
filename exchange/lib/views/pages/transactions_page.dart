@@ -2,6 +2,7 @@ import 'package:exchange/blocs/transactions/transactions_bloc.dart';
 import 'package:exchange/blocs/transactions/transactions_state.dart';
 import 'package:exchange/constants/my_constants.dart';
 import 'package:exchange/models/transaction.dart';
+import 'package:exchange/utils/size_config.dart';
 import 'package:exchange/views/widgets/loading.dart';
 import 'package:exchange/views/widgets/message.dart';
 import 'package:exchange/views/widgets/transactions/transactions.dart';
@@ -13,6 +14,7 @@ class TransactionsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig.init(context);
     return BlocBuilder<TransactionsBloc, TransactionsState>(
         builder: (context, state) {
       if (state.transactionsStatus == TransactionsStatus.loading) {
@@ -27,16 +29,19 @@ class TransactionsPage extends StatelessWidget {
 
   Widget _buildTransactionsBody(List<Transaction> transactions) {
     return Container(
-        margin: const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
+        margin: EdgeInsets.only(
+            bottom: SizeConfig.blockSizeVertical * 1.15,
+            left: SizeConfig.blockSizeHorizontal * 2.25,
+            right: SizeConfig.blockSizeHorizontal * 2.25),
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           transactions.isNotEmpty
-              ? const Text(MyLabels.transactions,
+              ? Text(MyLabels.transactions,
                   style: TextStyle(
-                      color: Color(MyColors.colorText),
-                      fontSize: 24.0,
+                      color: const Color(MyColors.colorText),
+                      fontSize: SizeConfig.blockSizeVertical * 3.35,
                       fontWeight: FontWeight.bold))
               : Container(),
-          const SizedBox(height: 16.0),
+          SizedBox(height: SizeConfig.blockSizeVertical * 2.25),
           transactions.isNotEmpty
               ? Transactions(transactions)
               : const Message(MyLabels.noTransactions)

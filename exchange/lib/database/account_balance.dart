@@ -11,7 +11,7 @@ class AccountBalance {
     _sharedPreferences = await SharedPreferences.getInstance();
   }
 
-  static Future<bool> saveAccountBalance(final double accountBalance) async =>
+  static Future<bool> saveAccountBalance(double accountBalance) async =>
       await _sharedPreferences.setDouble(_accountBalance, accountBalance);
 
   static double readAccountBalance() =>

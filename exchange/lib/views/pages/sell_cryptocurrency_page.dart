@@ -3,6 +3,7 @@ import 'package:exchange/blocs/sell_cryptocurrency/sell_cryptocurrency_event.dar
 import 'package:exchange/blocs/sell_cryptocurrency/sell_cryptocurrency_state.dart';
 import 'package:exchange/constants/my_constants.dart';
 import 'package:exchange/models/cryptocurrency.dart';
+import 'package:exchange/utils/size_config.dart';
 import 'package:exchange/views/widgets/loading.dart';
 import '../widgets/confirm_button.dart';
 import '../widgets/keyboard/keyboard.dart';
@@ -18,6 +19,7 @@ class SellCryptocurrencyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig.init(context);
     context
         .read<SellCryptocurrencyBloc>()
         .add(SellCryptocurrencyLoaded(cryptocurrency));
@@ -61,12 +63,13 @@ class SellCryptocurrencyPage extends StatelessWidget {
                 child: Align(
                     alignment: AlignmentDirectional.centerEnd,
                     child: Container(
-                        margin: const EdgeInsets.only(right: 8.0),
+                        margin: EdgeInsets.only(
+                            right: SizeConfig.blockSizeHorizontal * 2.25),
                         child: Text(
                             '${MyLabels.balance}: ${state.cryptocurrency?.amount} ${state.cryptocurrency?.symbol.toUpperCase()}',
-                            style: const TextStyle(
+                            style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 20.0,
+                                fontSize: SizeConfig.blockSizeVertical * 2.80,
                                 fontWeight: FontWeight.bold))))),
             leading: IconButton(
                 icon: const Icon(Icons.arrow_back),
@@ -74,28 +77,34 @@ class SellCryptocurrencyPage extends StatelessWidget {
         body: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Divider(height: 2.0, color: Colors.white),
+              Divider(
+                  height: SizeConfig.blockSizeVertical * 0.30,
+                  color: Colors.white),
               Text(
                   '${state.currentAmountCryptocurrency} ${state.cryptocurrency?.symbol.toUpperCase()}',
-                  style: const TextStyle(fontSize: 48.0, color: Colors.white)),
+                  style: TextStyle(
+                      fontSize: SizeConfig.blockSizeVertical * 6.75,
+                      color: Colors.white)),
               Container(
-                  margin: const EdgeInsets.only(
-                      bottom: 16.0, left: 8.0, right: 8.0),
+                  margin: EdgeInsets.only(
+                      bottom: SizeConfig.blockSizeVertical * 2.25,
+                      left: SizeConfig.blockSizeHorizontal * 2.25,
+                      right: SizeConfig.blockSizeHorizontal * 2.25),
                   child: Column(children: [
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      const Text('${MyLabels.estimated} \$: ',
+                      Text('${MyLabels.estimated} \$: ',
                           style: TextStyle(
-                              fontSize: 16.0,
-                              color: Color(MyColors.colorText))),
+                              fontSize: SizeConfig.blockSizeVertical * 2.25,
+                              color: const Color(MyColors.colorText))),
                       Text('${state.estimatedAmountMoney}',
-                          style: const TextStyle(
-                              fontSize: 20.0,
+                          style: TextStyle(
+                              fontSize: SizeConfig.blockSizeVertical * 2.80,
                               color: Colors.white,
                               fontWeight: FontWeight.bold))
                     ]),
-                    const SizedBox(height: 16.0),
+                    SizedBox(height: SizeConfig.blockSizeVertical * 2.25),
                     const Keyboard(MyLabels.sellMode),
-                    const SizedBox(height: 32.0),
+                    SizedBox(height: SizeConfig.blockSizeVertical * 4.50),
                     const ConfirmButton(MyLabels.sellMode)
                   ]))
             ]));

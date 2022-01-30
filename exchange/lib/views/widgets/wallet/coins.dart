@@ -1,5 +1,6 @@
 import 'package:exchange/constants/my_constants.dart';
 import 'package:exchange/models/cryptocurrency.dart';
+import 'package:exchange/utils/size_config.dart';
 import 'package:exchange/views/pages/sell_cryptocurrency_page.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,7 @@ class Coins extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig.init(context);
     return Expanded(
         child: ListView.builder(
             scrollDirection: Axis.vertical,
@@ -23,7 +25,11 @@ class Coins extends StatelessWidget {
                       elevation: 4,
                       color: const Color(MyColors.brighterBackground),
                       child: Padding(
-                          padding: const EdgeInsets.all(12.0),
+                          padding: EdgeInsets.only(
+                              left: SizeConfig.blockSizeHorizontal * 3.35,
+                              top: SizeConfig.blockSizeVertical * 1.70,
+                              right: SizeConfig.blockSizeHorizontal * 3.35,
+                              bottom: SizeConfig.blockSizeVertical * 1.70),
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -32,12 +38,16 @@ class Coins extends StatelessWidget {
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
                                       CircleAvatar(
-                                        radius: 16.0,
+                                        radius:
+                                            SizeConfig.blockSizeVertical * 2.25,
                                         backgroundImage: NetworkImage(
                                             cryptocurrencies[index].image),
                                         backgroundColor: Colors.transparent,
                                       ),
-                                      const SizedBox(width: 8.0),
+                                      SizedBox(
+                                          width:
+                                              SizeConfig.blockSizeHorizontal *
+                                                  2.25),
                                       Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -46,20 +56,26 @@ class Coins extends StatelessWidget {
                                                 cryptocurrencies[index]
                                                     .symbol
                                                     .toUpperCase(),
-                                                style: const TextStyle(
+                                                style: TextStyle(
                                                     color: Colors.white,
                                                     fontWeight: FontWeight.bold,
-                                                    fontSize: 20.0)),
+                                                    fontSize: SizeConfig
+                                                            .blockSizeVertical *
+                                                        2.80)),
                                             Text(cryptocurrencies[index].name,
-                                                style: const TextStyle(
-                                                    color: Color(
+                                                style: TextStyle(
+                                                    color: const Color(
                                                         MyColors.colorText),
-                                                    fontSize: 16.0))
+                                                    fontSize: SizeConfig
+                                                            .blockSizeVertical *
+                                                        2.25))
                                           ])
                                     ]),
                                 Text('${cryptocurrencies[index].amount}',
-                                    style: const TextStyle(
-                                        color: Colors.white, fontSize: 20.0))
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: SizeConfig.blockSizeVertical *
+                                            2.80))
                               ]))));
             }));
   }

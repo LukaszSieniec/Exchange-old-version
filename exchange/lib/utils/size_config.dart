@@ -9,7 +9,7 @@ class SizeConfig {
   static late double blockSizeHorizontal;
   static late double blockSizeVertical;
 
-  void init(BuildContext context) {
+  static void init(BuildContext context) {
     _mediaQueryData = MediaQuery.of(context);
 
     _screenWidth = _mediaQueryData.size.width;

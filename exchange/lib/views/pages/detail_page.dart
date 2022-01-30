@@ -5,6 +5,7 @@ import 'package:exchange/blocs/market_chart/market_chart_event.dart';
 import 'package:exchange/blocs/market_chart/market_chart_state.dart';
 import 'package:exchange/constants/my_constants.dart';
 import 'package:exchange/models/cryptocurrency_response.dart';
+import 'package:exchange/utils/size_config.dart';
 import 'package:exchange/views/widgets/detail/buy_button.dart';
 import 'package:exchange/views/widgets/detail/cryptocurrency_summary.dart';
 import 'package:exchange/views/widgets/detail/time_button.dart';
@@ -13,8 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
-import 'buy_cryptocurrency_page.dart';
-
 class DetailPage extends StatelessWidget {
   final String id;
 
@@ -22,12 +21,17 @@ class DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig.init(context);
     context.read<MarketChartBloc>().add(MarketChartFetched(id));
     return Scaffold(
         backgroundColor: const Color(MyColors.background),
         body: SafeArea(
             child: Container(
-                margin: const EdgeInsets.all(8.0),
+                margin: EdgeInsets.only(
+                    top: SizeConfig.blockSizeVertical * 1.15,
+                    left: SizeConfig.blockSizeHorizontal * 2.25,
+                    right: SizeConfig.blockSizeHorizontal * 2.25,
+                    bottom: SizeConfig.blockSizeVertical * 1.15),
                 child: BlocBuilder<CryptocurrenciesBloc, CryptocurrenciesState>(
                     builder: (context, state) {
                   final CryptocurrencyResponse cryptocurrency = state
@@ -38,19 +42,26 @@ class DetailPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(children: [
-                            Image.network(cryptocurrency.image, height: 40.0),
-                            const SizedBox(width: 6.0),
+                            Image.network(cryptocurrency.image,
+                                height: SizeConfig.blockSizeVertical * 5.60),
+                            SizedBox(
+                                width: SizeConfig.blockSizeHorizontal * 1.65),
                             Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(cryptocurrency.symbol.toUpperCase(),
-                                      style: const TextStyle(
-                                          color: Color(MyColors.colorText),
-                                          fontSize: 18.0)),
+                                      style: TextStyle(
+                                          color:
+                                              const Color(MyColors.colorText),
+                                          fontSize:
+                                              SizeConfig.blockSizeVertical *
+                                                  2.50)),
                                   Text(cryptocurrency.name,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: 28.0,
+                                          fontSize:
+                                              SizeConfig.blockSizeVertical *
+                                                  3.95,
                                           fontWeight: FontWeight.bold))
                                 ])
                           ]),
@@ -62,30 +73,36 @@ class DetailPage extends StatelessWidget {
                                     style: TextStyle(
                                         color: _getColor(cryptocurrency
                                             .priceChangePercentage24h),
-                                        fontSize: 18.0)),
+                                        fontSize: SizeConfig.blockSizeVertical *
+                                            2.50)),
                                 Text('\$${cryptocurrency.currentPrice}',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 28.0,
+                                        fontSize:
+                                            SizeConfig.blockSizeVertical * 3.95,
                                         fontWeight: FontWeight.bold))
                               ])
                         ]),
                     Expanded(
                         flex: 3,
                         child: Container(
-                            margin: const EdgeInsets.only(top: 16.0),
+                            margin: EdgeInsets.only(
+                                top: SizeConfig.blockSizeVertical * 2.25),
                             child: Card(
                                 shape: RoundedRectangleBorder(
                                     side: const BorderSide(
                                         color: Colors.white10, width: 1),
-                                    borderRadius: BorderRadius.circular(16.0)),
+                                    borderRadius: BorderRadius.circular(
+                                        SizeConfig.blockSizeVertical * 2.25)),
                                 elevation: 2,
                                 color: const Color(MyColors.brighterBackground),
                                 child: Column(children: [
                                   Expanded(
                                       child: Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 8.0),
+                                          padding: EdgeInsets.only(
+                                              top:
+                                                  SizeConfig.blockSizeVertical *
+                                                      1.15),
                                           child: BlocBuilder<MarketChartBloc,
                                                   MarketChartState>(
                                               builder: (context, state) {
@@ -119,14 +136,15 @@ class DetailPage extends StatelessWidget {
                                       length: 6,
                                       initialIndex: 0,
                                       child: TabBar(
-                                          indicator:
-                                              const UnderlineTabIndicator(
-                                                  borderSide: BorderSide(
-                                                      width: 3.0,
-                                                      color: Color(
-                                                          MyColors.orange)),
-                                                  insets: EdgeInsets.symmetric(
-                                                      horizontal: 16.0)),
+                                          indicator: UnderlineTabIndicator(
+                                              borderSide: const BorderSide(
+                                                  width: 3.0,
+                                                  color:
+                                                      Color(MyColors.orange)),
+                                              insets: EdgeInsets.symmetric(
+                                                  horizontal: SizeConfig
+                                                          .blockSizeHorizontal *
+                                                      4.45)),
                                           onTap: (index) => context
                                               .read<MarketChartBloc>()
                                               .add(MarketChartUpdated(
@@ -143,12 +161,13 @@ class DetailPage extends StatelessWidget {
                     Expanded(
                         flex: 2,
                         child: Container(
-                          margin:
-                              const EdgeInsets.only(top: 16.0, bottom: 16.0),
+                          margin: EdgeInsets.only(
+                              top: SizeConfig.blockSizeVertical * 2.25,
+                              bottom: SizeConfig.blockSizeVertical * 2.25),
                           child: CryptocurrencySummary(cryptocurrency),
                         )),
                     BuyButton(cryptocurrency),
-                    const SizedBox(height: 8.0)
+                    SizedBox(height: SizeConfig.blockSizeVertical * 1.15)
                   ]);
                 }))));
   }

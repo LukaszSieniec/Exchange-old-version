@@ -60,7 +60,7 @@ class CryptocurrencyService {
     }
   }
 
-  Future<CryptocurrencyResponse> fetchCryptocurrency(final String id) async {
+  Future<CryptocurrencyResponse> fetchCryptocurrency(String id) async {
     final response = await _dio.get('coins/$id');
 
     if (response.statusCode == 200) {
@@ -70,8 +70,7 @@ class CryptocurrencyService {
     }
   }
 
-  Future<MarketChartData> fetchMarketChart(
-      final String id, final int days) async {
+  Future<MarketChartData> fetchMarketChart(String id, int days) async {
     final response = await _dio.get('coins/$id/market_chart',
         queryParameters: {'vs_currency': 'usd', 'days': days});
 
@@ -82,7 +81,7 @@ class CryptocurrencyService {
     }
   }
 
-  Future<dynamic> fetchPrice(final String id) async {
+  Future<dynamic> fetchPrice(String id) async {
     final response = await _dio.get('simple/price',
         queryParameters: {'vs_currencies': 'usd', 'ids': id});
 

@@ -2,6 +2,7 @@ import 'package:exchange/blocs/wallet/wallet_bloc.dart';
 import 'package:exchange/blocs/wallet/wallet_state.dart';
 import 'package:exchange/constants/my_constants.dart';
 import 'package:exchange/models/cryptocurrency.dart';
+import 'package:exchange/utils/size_config.dart';
 import 'package:exchange/views/widgets/loading.dart';
 import 'package:exchange/views/widgets/wallet/coins.dart';
 import '../widgets/message.dart';
@@ -13,6 +14,7 @@ class WalletPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig.init(context);
     return BlocBuilder<WalletBloc, WalletState>(builder: (context, state) {
       if (state.walletStatus == WalletStatus.loading) {
         return buildLoading();
@@ -27,27 +29,40 @@ class WalletPage extends StatelessWidget {
   Widget _buildWalletBody(
       List<Cryptocurrency> cryptocurrencies, double accountBalance) {
     return Container(
-        margin: const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
+        margin: EdgeInsets.only(
+            bottom: SizeConfig.blockSizeVertical * 1.15,
+            left: SizeConfig.blockSizeHorizontal * 2.25,
+            right: SizeConfig.blockSizeHorizontal * 2.25),
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          const Text(MyLabels.accountBalance,
-              style:
-                  TextStyle(color: Color(MyColors.colorText), fontSize: 16.0)),
-          const SizedBox(height: 4.0),
+          Text(MyLabels.accountBalance,
+              style: TextStyle(
+                  color: const Color(MyColors.colorText),
+                  fontSize: SizeConfig.blockSizeVertical * 2.25)),
+          SizedBox(height: SizeConfig.blockSizeVertical * 0.55),
           Text('\$ $accountBalance',
-              style: const TextStyle(
+              style: TextStyle(
                   color: Colors.white,
-                  fontSize: 32.0,
+                  fontSize: SizeConfig.blockSizeVertical * 4.50,
                   fontWeight: FontWeight.bold)),
-          const SizedBox(height: 24.0),
+          SizedBox(height: SizeConfig.blockSizeVertical * 3.35),
           Row(children: [
-            const Expanded(child: Divider(height: 2, color: Colors.white)),
+            Expanded(
+                child: Divider(
+                    height: SizeConfig.blockSizeVertical * 0.30,
+                    color: Colors.white)),
             Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: const Text(MyLabels.coins,
-                    style: TextStyle(color: Colors.white, fontSize: 16.0))),
-            const Expanded(child: Divider(height: 2, color: Colors.white))
+                margin: EdgeInsets.symmetric(
+                    horizontal: SizeConfig.blockSizeHorizontal * 4.45),
+                child: Text(MyLabels.coins,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: SizeConfig.blockSizeVertical * 2.25))),
+            Expanded(
+                child: Divider(
+                    height: SizeConfig.blockSizeVertical * 0.30,
+                    color: Colors.white))
           ]),
-          const SizedBox(height: 16.0),
+          SizedBox(height: SizeConfig.blockSizeVertical * 2.25),
           cryptocurrencies.isNotEmpty
               ? Coins(cryptocurrencies)
               : const Message(MyLabels.noCryptocurrencies)

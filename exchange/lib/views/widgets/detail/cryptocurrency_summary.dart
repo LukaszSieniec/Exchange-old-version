@@ -1,6 +1,7 @@
 import 'package:exchange/constants/my_constants.dart';
 import 'package:exchange/models/cryptocurrency_response.dart';
 import 'package:exchange/utils/format.dart';
+import 'package:exchange/utils/size_config.dart';
 import 'package:flutter/material.dart';
 
 class CryptocurrencySummary extends StatelessWidget {
@@ -9,9 +10,11 @@ class CryptocurrencySummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig.init(context);
     return Card(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+        shape: RoundedRectangleBorder(
+            borderRadius:
+            BorderRadius.circular(SizeConfig.blockSizeVertical * 2.25)),
         color: const Color(MyColors.brighterBackground),
         child: Column(children: [
           Expanded(
@@ -38,6 +41,7 @@ class CryptocurrencySummary extends StatelessWidget {
       isTopRightRadius = false,
       isBottomLeftRadius = false,
       isBottomRightRadius = false}) {
+    final double sizeConfig = SizeConfig.blockSizeVertical * 2.25;
     return Expanded(
         flex: flex,
         child: Container(
@@ -45,24 +49,26 @@ class CryptocurrencySummary extends StatelessWidget {
                 border: Border.all(width: 1, color: Colors.white10),
                 borderRadius: BorderRadius.only(
                     topLeft: isTopLeftRadius
-                        ? const Radius.circular(16.0)
+                        ? Radius.circular(sizeConfig)
                         : const Radius.circular(0),
                     topRight: isTopRightRadius
-                        ? const Radius.circular(16.0)
+                        ? Radius.circular(sizeConfig)
                         : const Radius.circular(0),
                     bottomLeft: isBottomLeftRadius
-                        ? const Radius.circular(16.0)
+                        ? Radius.circular(sizeConfig)
                         : const Radius.circular(0),
                     bottomRight: isBottomRightRadius
-                        ? const Radius.circular(16.0)
+                        ? Radius.circular(sizeConfig)
                         : const Radius.circular(0))),
             child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               Text(firstText,
-                  style: const TextStyle(
-                      color: Color(MyColors.colorText), fontSize: 16.0)),
+                  style: TextStyle(
+                      color: const Color(MyColors.colorText), fontSize: sizeConfig)),
               Text(secondText,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.white, fontSize: 20.0))
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: SizeConfig.blockSizeVertical * 2.80))
             ])));
   }
 }
